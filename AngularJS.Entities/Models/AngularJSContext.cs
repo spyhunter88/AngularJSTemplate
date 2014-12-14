@@ -35,7 +35,7 @@ namespace AngularJS.Entities.Models
         public DbSet<MenuItem> MenuItems { get; set; }
         public DbSet<CheckPoint> CheckPoints { get; set; }
         public DbSet<Requirement> Requirements { get; set; }
-        // public DbSet<RequirementHistory> RequirementHistories { get; set; }
+        public DbSet<RequirementHistory> RequirementHistories { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -58,11 +58,6 @@ namespace AngularJS.Entities.Models
             modelBuilder.Configurations.Add(new RequirementMap());
             modelBuilder.Configurations.Add(new RequirementHistoryMap());
 
-            // modelBuilder.Entity<Claim>().HasRequired(a => a.Request).WithRequiredPrincipal(b => b.Claim);
-            //modelBuilder.Entity<Claim>()
-            //.HasRequired(a => a.Request)
-            //.WithMany()
-            //.HasForeignKey(u => u.RequestID);
 
             modelBuilder.Entity<CheckPoint>().HasRequired<Claim>(s => s.Claim)
                 .WithMany(s => s.CheckPoints).HasForeignKey(s => s.ClaimID);

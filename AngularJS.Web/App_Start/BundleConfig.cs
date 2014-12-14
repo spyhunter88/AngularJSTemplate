@@ -34,6 +34,7 @@ namespace AngularJS.Web
                     "~/Scripts/misc/loading-bar.min.js",
                     "~/Scripts/misc/angular-local-storage.min.js",
                     "~/Scripts/misc/ui-bootstrap-tpls-0.12.0.min.js",
+                    "~/Scripts/misc/ngToast.min.js",
                     "~/Scripts/misc/xeditable.min.js",
                     "~/Scripts/misc/angular-datatables.min.js"
                 ));
@@ -57,6 +58,7 @@ namespace AngularJS.Web
                       "~/Content/misc/bootstrap.css",
                       "~/Content/site.css",
                       "~/Content/misc/loading-bar.css",
+                      "~/Content/misc/ngToast.min.css",
                       "~/Content/misc/xeditable.css",
                       "~/Content/misc/datatables.bootstrap.min.css",
                       "~/Content/kendo/2014.2.716/kendo.common.min.css",

@@ -30,15 +30,6 @@ namespace AngularJS.Entities.Models.Mapping
             this.Property(t => t.UnitsOnOrder).HasColumnName("UnitsOnOrder");
             this.Property(t => t.ReorderLevel).HasColumnName("ReorderLevel");
             this.Property(t => t.Discontinued).HasColumnName("Discontinued");
-
-            // Relationships
-            this.HasOptional(t => t.Category)
-                .WithMany(t => t.Products)
-                .HasForeignKey(d => d.CategoryID);
-            this.HasOptional(t => t.Supplier)
-                .WithMany(t => t.Products)
-                .HasForeignKey(d => d.SupplierID);
-
         }
     }
 }

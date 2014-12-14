@@ -23,6 +23,7 @@ AngularJS.Web/AngularJS.Web.csproj.user
 AngularJS.Web/_bin_deployableAssemblies
 AngularJS.Web/Content/kendo
 AngularJS.Web/Scripts/kendo
+Test/
 
 # Windows Installer files
 *.cab

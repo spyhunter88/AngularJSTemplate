@@ -235,6 +235,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiControllers\CategoryController.cs" />
     <Compile Include="ApiControllers\ClaimController.cs" />
     <Compile Include="ApiControllers\CustomerController.cs" />
     <Compile Include="ApiControllers\MenuController.cs" />
@@ -495,6 +496,8 @@
     <Content Include="Content\misc\datatables.bootstrap.min.css" />
     <Content Include="Content\misc\loading-bar.css" />
     <Content Include="Content\misc\loading-bar.min.css" />
+    <Content Include="Content\misc\ngToast.css" />
+    <Content Include="Content\misc\ngToast.min.css" />
     <Content Include="Content\misc\xeditable.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -517,13 +520,17 @@
     <Content Include="Scripts\app\controllers\claimUpdateController.js" />
     <Content Include="Scripts\app\controllers\requestController.js" />
     <Content Include="Scripts\app\directives\login-form.html" />
+    <Content Include="Scripts\app\services\categoriesService.js" />
     <Content Include="Scripts\app\services\constants.js" />
     <Content Include="Scripts\app\services\coreService.js" />
     <Content Include="Scripts\app\services\requestService.js" />
     <Content Include="Scripts\app\views\claimUpdate.html" />
     <Content Include="Scripts\misc\angular-datatables.js" />
     <Content Include="Scripts\misc\angular-datatables.min.js" />
+    <Content Include="Scripts\misc\ngToast.js" />
+    <Content Include="Scripts\misc\ngToast.min.js" />
     <Content Include="Scripts\misc\ui-bootstrap-tpls-0.12.0.min.js" />
+    <Content Include="Scripts\misc\xeditable.js" />
     <Content Include="Scripts\misc\xeditable.min.js" />
     <Content Include="Views\Claim\Update.cshtml" />
     <Content Include="Views\Request\Index.cshtml" />
@@ -1205,15 +1212,15 @@
       <Project>{933227cc-0349-4405-9f31-fab5122b1066}</Project>
       <Name>AngularJS.Services</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\01_Source\v3.3.4\Source\Repository.Pattern.Ef6\Repository.Pattern.Ef6.csproj">
+    <ProjectReference Include="..\..\..\01_Source\v3.3.4\Source\Repository.Pattern.Ef6\Repository.Pattern.Ef6.csproj">
       <Project>{f68a1d19-93fb-47c1-a22b-42bea3e4fd8c}</Project>
       <Name>Repository.Pattern.Ef6</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\01_Source\v3.3.4\Source\Repository.Pattern\Repository.Pattern.csproj">
+    <ProjectReference Include="..\..\..\01_Source\v3.3.4\Source\Repository.Pattern\Repository.Pattern.csproj">
       <Project>{6e682a14-c872-4813-b620-76e108dea683}</Project>
       <Name>Repository.Pattern</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\01_Source\v3.3.4\Source\Service.Pattern\Service.Pattern.csproj">
+    <ProjectReference Include="..\..\..\01_Source\v3.3.4\Source\Service.Pattern\Service.Pattern.csproj">
       <Project>{86f86650-ee3c-4372-8fec-40c2fe015022}</Project>
       <Name>Service.Pattern</Name>
     </ProjectReference>

@@ -6,15 +6,12 @@ namespace AngularJS.Entities.Models
 {
     public partial class Category : Entity
     {
-        public Category()
-        {
-            this.Products = new List<Product>();
-        }
+        public Category() {}
 
         public int CategoryID { get; set; }
-        public string CategoryName { get; set; }
-        public string Description { get; set; }
-        public byte[] Picture { get; set; }
-        public virtual ICollection<Product> Products { get; set; }
+        public String Type { get; set; }
+        public String Code { get; set; }
+        public String Value { get; set; }
+        public String Description { get; set; }
     }
 }

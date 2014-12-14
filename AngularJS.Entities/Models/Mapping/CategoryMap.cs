@@ -11,16 +11,28 @@ namespace AngularJS.Entities.Models.Mapping
             this.HasKey(t => t.CategoryID);
 
             // Properties
-            this.Property(t => t.CategoryName)
+            this.Property(t => t.Type)
                 .IsRequired()
-                .HasMaxLength(15);
+                .HasMaxLength(100);
+
+            this.Property(t => t.Code)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            this.Property(t => t.Value)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            this.Property(t => t.Description)
+                .HasMaxLength(255);
 
             // Table & Column Mappings
-            this.ToTable("Categories");
-            this.Property(t => t.CategoryID).HasColumnName("CategoryID");
-            this.Property(t => t.CategoryName).HasColumnName("CategoryName");
+            this.ToTable("Category");
+            this.Property(t => t.CategoryID).HasColumnName("ID");
+            this.Property(t => t.Type).HasColumnName("Type");
+            this.Property(t => t.Code).HasColumnName("Code");
+            this.Property(t => t.Value).HasColumnName("Value");
             this.Property(t => t.Description).HasColumnName("Description");
-            this.Property(t => t.Picture).HasColumnName("Picture");
         }
     }
 }
