@@ -1,0 +1,44 @@
+﻿<div>
+    <h2 ng-cloak>{{title}}</h2>
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label for="product_name" class="col-sm-2 control-label">BU Name</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" ng-model="claim.buName" placeholder="BU name">
+            </div>
+
+            <label for="product_name" class="col-sm-2 control-label">Participant</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" ng-model="claim.participantClaim" placeholder="Participant name">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="product_name" class="col-sm-2 control-label">Unit Claim</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" ng-model="claim.unitClaim" placeholder="Unit Claim">
+            </div>
+
+            <label class="col-sm-2 control-label">&zwnj;</label>
+            <div class="col-sm-4"></div>
+        </div>
+        <div class="form-group">
+            <label for="product_name" class="col-sm-2 control-label">FTG Program Code</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" ng-model="claim.ftgProgramCode" placeholder="Code">
+            </div>
+
+            <label for="product_name" class="col-sm-2 control-label">Vendor Program Code</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" ng-model="claim.vendorProgramCode" placeholder="Code">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="product_name" class="col-sm-2 control-label">Program Content</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" ng-model="claim.programContent" placeholder="Code">
+            </div>
+        </div>
+    </div>
+</div>

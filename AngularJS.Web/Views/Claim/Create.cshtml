@@ -1,0 +1,150 @@
+﻿
+<div>
+    <h2 ng-cloak>{{title}}</h2>
+
+    <form name="claimForm" class="form-horizontal" novalidate>
+
+        <div class="row">
+            <div class="control-group">
+                <label class="col-md-2 control-label" ng-class="{ 'has-error': claimForm.buName.$invalid }">BU Name</label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control input-sm" name="buName" ng-model="claim.buName" placeholder="BU name" required>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="col-md-2 control-label">Participant</label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control input-sm" ng-model="claim.participantClaim" placeholder="Participant Name">
+                </div>
+            </div>
+        </div> <!-- class="row" -->
+
+        <div class="row">
+            <div class="control-group">
+                <label class="col-md-2 control-label">Unit Claim</label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control input-sm" ng-model="claim.unitClaim" placeholder="Unit Claim">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="col-md-2 control-label">&zwnj;</label>
+                <div class="col-md-4"></div>
+            </div>
+        </div> <!-- class="row" -->
+
+        <div class="row">
+            <div class="control-group" ng-class="{ 'has-error': claimForm.ftgProgramCode.$invalid }">
+                <label class="col-md-2 control-label">FTG Program Code</label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control input-sm" name="ftgProgramCode" ng-model="claim.ftgProgramCode" placeholder="Program Code" required>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="col-md-2 control-label">Vendor Program Code</label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control input-sm" ng-model="claim.vendorProgramCode" placeholder="MKT Code">
+                </div>
+            </div>
+        </div> <!-- class="row" -->
+
+        <div class="row">
+            <div class="control-group">
+                <label class="col-md-2 control-label">Program Content</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control input-sm" ng-model="claim.programContent" placeholder="Code">
+                </div>
+            </div>
+        </div> <!-- class="row" -->
+
+        <div class="row">
+            <div class="control-group">
+                <label class="col-md-2 control-label" ng-class="{ 'has-error': claimForm.programType.$invalid }">Program Type</label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control input-sm" name="programType" ng-model="claim.programType" placeholder="Program Type" required>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="col-md-2 control-label" ng-class="{ 'has-error': claimForm.paymentMethod.$invalid }">Payment Method</label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control input-sm" name="paymentMethod" ng-model="claim.paymentMethod" placeholder="Payment Method" required>
+                </div>
+            </div>
+        </div> <!-- class="row" -->
+
+        <div class="row">
+            <div class="control-group">
+                <label class="col-md-2 control-label" ng-class="{ 'has-error': claimForm.vendorName.$invalid }">Vendor Name</label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control input-sm" name="vendorName" ng-model="claim.vendorName" placeholder="Vendor Name" required>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="col-md-2 control-label" ng-class="{ 'has-error': claimForm.productLine.$invalid }">Product Line</label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control input-sm" name="productLine" ng-model="claim.productLine" placeholder="Product Line" required>
+                </div>
+            </div>
+        </div> <!-- class="row" -->
+
+        <div class="row">
+            <div class="control-group">
+                <label class="col-md-2 control-label" ng-class="{ 'has-error': claimForm.startDate.$invalid }">Start Date</label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control input-sm" name="startDate" ng-model="claim.startDate" placeholder="Start Date" required>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="col-md-2 control-label" ng-class="{ 'has-error': claimForm.endDate.$invalid }">End Date</label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control input-sm" name="endDate" ng-model="claim.endDate" placeholder="End Date" required>
+                </div>
+            </div>
+        </div> <!-- class="row" -->
+
+        <div class="row">
+            <div class="control-group">
+                <label class="col-md-2 control-label">Deadline Claim</label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control input-sm" name="deadlineClaimDate" ng-model="claim.deadlineClaimDate" placeholder="Deadline Claim">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="col-md-2 control-label">Require Document</label>
+                <div class="col-md-4">
+                    <input type="checkbox" name="requireClaimDoc" ng-model="claim.requireClaimdoc" />
+                </div>
+            </div>
+        </div> <!-- class="row" -->
+
+        <div class="row">
+            <div class="control-group">
+                <label class="col-md-2 control-label">Create</label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control input-sm" name="createUser" ng-model="claim.createUser">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="col-md-2 control-label">PrePaid</label>
+                <div class="col-md-4">
+                    <input type="checkbox" name="prePaid" ng-model="claim.prePaid" />
+                </div>
+            </div>
+        </div> <!-- class="row" -->
+
+        <div class="row">
+            <div class="control-group">
+                <label class="col-sm-2 control-label">&zwnj;</label>
+                <div class="col-sm-10">
+                    <a ng-show="actions.isSave" class="btn btn-default">Save</a>
+                </div>
+            </div>
+        </div>
+
+        <hr />
+
+        <tabset>
+            <tab heading="CheckPoint & Requirement">Content</tab>
+            <tab heading="Document">Content 2</tab>
+        </tabset>
+    </form>
+</div>

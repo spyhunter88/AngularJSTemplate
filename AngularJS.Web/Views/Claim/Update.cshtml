@@ -1,0 +1,73 @@
+﻿<div>
+    <h2 ng-cloak>{{title}}</h2>
+
+    <form name="claimForm" class="form-horizontal">
+        <div class="row">
+            <div class="control-group">
+                <label for="product_name" class="col-md-2 control-label" ng-class="{ 'has-error': claimForm.buName.$invalid }">BU Name</label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" name="buName" ng-model="claim.buName" placeholder="BU name" required>
+                </div>
+            </div>
+            <div class="control-group">
+                <label for="product_name" class="col-md-2 control-label">Participant</label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" ng-model="claim.participantClaim" placeholder="Participant name">
+                </div>
+            </div>
+        </div> <!-- class="row" -->
+
+        <div class="row">
+            <div class="control-group">
+                <label for="product_name" class="col-md-2 control-label">Unit Claim</label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" ng-model="claim.unitClaim" placeholder="Unit Claim">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="col-md-2 control-label">&zwnj;</label>
+                <div class="col-md-4"></div>
+            </div>
+        </div> <!-- class="row" -->
+
+        <div class="row">
+            <div class="control-group" ng-class="{ 'has-error': claimForm.ftgProgramCode.$invalid }">
+                <label for="product_name" class="col-md-2 control-label">FTG Program Code</label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" name="ftgProgramCode" ng-model="claim.ftgProgramCode" placeholder="Code" required>
+                </div>
+            </div>
+            <div class="control-group">
+                <label for="product_name" class="col-md-2 control-label">Vendor Program Code</label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" ng-model="claim.vendorProgramCode" placeholder="Code">
+                </div>
+            </div>
+        </div> <!-- class="row" -->
+
+        <div class="row">
+            <div class="control-group">
+                <label for="product_name" class="col-md-2 control-label">Program Content</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" ng-model="claim.programContent" placeholder="Code">
+                </div>
+            </div>
+        </div> <!-- class="row" -->
+
+        <div class="row">
+            <div class="control-group">
+                <label class="col-sm-2 control-label">&zwnj;</label>
+                <div class="col-sm-10">
+                    <a ng-show="actions.isSave" class="btn btn-default">Save</a>
+                </div>
+            </div>
+        </div>
+
+        <hr/>
+
+        <tabset>
+            <tab heading="CheckPoint & Requirement">Content</tab>
+            <tab heading="Document">Content 2</tab>
+        </tabset>
+    </form>
+</div>

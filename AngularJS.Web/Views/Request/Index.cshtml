@@ -1,0 +1,43 @@
+﻿
+<div>
+    <h2 ng-cloak>{{title}}</h2>
+	
+	<!-- Global and Advance Search go here -->
+	<button ng-click="onClick()" class="btn btn-default">Search Request</button>
+	
+	<table id="requests" class="table table-striped">
+		<!-- Table Header here -->
+		<thead>
+			<tr>
+				<th ng-repeat="header in headers">
+                    {{header.name}}&nbsp;<a ng-click="sortBy(header.colName)">
+					<i class="glyphicon glyphicon-sort" ng-show="header.colName != '' && header.sortDir == 0"></i>
+					<i class="glyphicon glyphicon-chevron-down" ng-show="header.colName != '' && header.sortDir == -1"></i>
+					<i class="glyphicon glyphicon-chevron-up" ng-show="header.colName != '' && header.sortDir == 1"></i>
+					</a>
+                </th>
+            </tr>
+		</thead>
+		
+		<!-- Use ng-repeat here to so the result -->
+		<tbody>
+            <tr ng-repeat="request in requests">
+                <td>{{request.status}}</td>
+                <td><a class="btn btn-default" href="#/request/{{request.requestID}}"><i class="glyphicon glyphicon-link"></i></a></td>
+                <td>{{request.vendorName}}</td>
+                <td>{{request.productLine}}</td>
+                <td>{{request.representation}}</td>
+                <td>{{request.representationPosition}}</td>
+                <td>{{request.programName}}</td>
+                <td>{{request.model}}</td>
+                <td>{{request.target | number:0}}</td>
+                <td>{{request.startDate | date: 'MM/dd/yyyy'}}</td>
+                <td>{{request.endDate | date: 'MM/dd/yyyy'}}</td>
+            </tr>
+		</tbody>
+	</table>
+	
+	<!-- Another part: Number of item, page number -->
+    <pagination total-items="totalItems" ng-model="filterCriteria.page" max-size="filterCriteria.pageSize" class="pagination-sm" ng-change="selectPage(page)">
+    </pagination>
+</div>

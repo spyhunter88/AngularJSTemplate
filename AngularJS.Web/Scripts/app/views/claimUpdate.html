@@ -1,0 +1,48 @@
+﻿<div>
+    <h2 ng-cloak>{{title}}</h2>
+
+    <div class="form-group">
+        <label for="product_name" class="col-sm-2 control-label">BU Name</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" ng-model="claim.BuName" placeholder="BU name">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="product_name" class="col-sm-2 control-label">Participant</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" ng-model="claim.ParticipantClaim" placeholder="Participant name">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="product_name" class="col-sm-2 control-label">Unit Claim</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" ng-model="claim.UnitClaim" placeholder="Unit Claim">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label"></label>
+        <div class="col-sm-4"></div>
+    </div>
+
+    <div class="form-group">
+        <label for="product_name" class="col-sm-2 control-label">FTG Program Code</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" ng-model="claim.FTGProgramCode" placeholder="Code">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="product_name" class="col-sm-2 control-label">Vendor Program Code</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" ng-model="claim.VendorProgramCode" placeholder="Code">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <a ng-show="policies.isSave" class="btn btn-default">Save</a>
+
+    </div>
+</div>
