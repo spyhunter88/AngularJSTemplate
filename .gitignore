@@ -7,6 +7,22 @@ Desktop.ini
 
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
+packages/
+AngularJS.Entities/bin
+AngularJS.Entities/obj
+AngularJS.Entities/AngularJS.Entities.csproj.user
+AngularJS.Repository/bin
+AngularJS.Repository/obj
+AngularJS.Repository/AngularJS.Repository.csproj.user
+AngularJS.Services/bin
+AngularJS.Services/obj
+AngularJS.Services/AngularJS.Services.csproj.user
+AngularJS.Web/bin
+AngularJS.Web/obj
+AngularJS.Web/AngularJS.Web.csproj.user
+AngularJS.Web/_bin_deployableAssemblies
+AngularJS.Web/Content/kendo
+AngularJS.Web/Scripts/kendo
 
 # Windows Installer files
 *.cab
@@ -26,7 +42,8 @@ $RECYCLE.BIN/
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*
@@ -41,3 +58,4 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+
