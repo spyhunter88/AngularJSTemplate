@@ -34,7 +34,8 @@ app.controller('claimUpdateController', ['$scope', '$routeParams', '$timeout', '
             */
         };
 		
-		var _addCP = function(cp) {
+        var _addCP = function (cp) {
+            if ($scope.claim.checkPoints == undefined) $scope.claim.checkPoints = [];
 			cp.id = 0;
 			$scope.claim.checkPoints.push(cp);
 		};

@@ -148,26 +148,24 @@
 				<table class="table table-bordered table-hover">
 				  <thead>
 					<th>
-					  <div class="form-group">
-						   <input class="input-sm" type="text" ng-model="cp2Add.action" value="" />
+					  <div class="control-group">
+						   <input class="form-control input-sm" type="text" ng-model="cp2Add.action" value="" />
 					  </div>
 					</th>
 					<th>
-					  <div>
+					  <div class="control-group">
 						   <input type="text" class="form-control input-sm" datepicker-popup="dd/MM/yyyy" ng-model="cp2Add.checkDate" ng-required="true" />
 					  </div>
 					</th>
 					<th>
-					  <div class="form-group">
-						<label>
-						   <input type="text" class="form-control input-sm" datepicker-popup="dd/MM/yyyy" ng-model="cp2Add.reportDate" ng-required="true" />
-						</label>
-					  </div>
+                        <div class="control-group">
+                            <input type="text" class="form-control input-sm" datepicker-popup="dd/MM/yyyy" ng-model="cp2Add.reportDate" ng-required="true" />
+                        </div>
 					</th>
 					<th>
-					  <div class="form-group">
-						   <button type="submit" class="btn btn-success btn-sm" ng-click="addCheckPoint(cp2Add)"><i class="glyphicon glyphicon-plus"></i></button>
-					  </div>
+                        <div class="control-group">
+                            <button type="submit" class="btn btn-success btn-sm" ng-click="addCheckPoint(cp2Add)"><i class="glyphicon glyphicon-plus"></i></button>
+                        </div>
 					</th>
 				  </thead>
 				  <tbody>
@@ -180,19 +178,19 @@
 					
 					<tr ng-repeat="cp in claim.checkPoints">
 					  <td>
-						<div class="form-group">
-						  <input type="text" class="form-control input-sm" ng-model="cp.action" ng-required="true" />
-						</div>
+                        <div class="control-group">
+                            <input type="text" class="form-control input-sm" ng-model="cp.action" ng-required="true" />
+                        </div>
 					  </td>
 					  <td>
-						<div class="form-group">
-						  <input type="text" class="form-control input-sm" datepicker-popup="dd/MM/yyyy" ng-model="cp.checkDate" ng-required="true" />
-						</div>
+                        <div class="control-group">
+                            <input type="text" class="form-control input-sm" datepicker-popup="dd/MM/yyyy" ng-model="cp.checkDate" ng-required="true" />
+                        </div>
 					  </td>
 					  <td>
-						<div class="form-group">
-						  <input type="text" class="form-control input-sm" datepicker-popup="dd/MM/yyyy" ng-model="cp.reportDate" ng-required="true" />
-						</div>
+                        <div class="control-group">
+                            <input type="text" class="form-control input-sm" datepicker-popup="dd/MM/yyyy" ng-model="cp.reportDate" ng-required="true" />
+                        </div>
 					  </td>
 					  <td>
 						<button class="btn btn-danger btn-sm" ng-click="removeCheckPoint(cp)">del</button>
