@@ -510,6 +510,8 @@
     <Content Include="Scripts\angular\angular-local-storage.min.js" />
     <Content Include="Scripts\angular\angular-route.js" />
     <Content Include="Scripts\angular\angular-route.min.js" />
+    <Content Include="Scripts\angular\angular-sanitize.js" />
+    <Content Include="Scripts\angular\angular-sanitize.min.js" />
     <Content Include="Scripts\angular\angular.js" />
     <Content Include="Scripts\angular\angular.min.js" />
     <Content Include="Content\kendo\2014.2.716\images\kendoui.ttf" />
@@ -536,6 +538,7 @@
     <Content Include="Views\Request\Index.cshtml" />
     <Content Include="Views\Request\Update.cshtml" />
     <Content Include="Views\Claim\Create.cshtml" />
+    <Content Include="Scripts\angular\angular-sanitize.min.js.map" />
     <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceme40.dll" />
@@ -1212,15 +1215,15 @@
       <Project>{933227cc-0349-4405-9f31-fab5122b1066}</Project>
       <Name>AngularJS.Services</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\v3.3.4\Source\Repository.Pattern.Ef6\Repository.Pattern.Ef6.csproj">
+    <ProjectReference Include="..\..\..\01_Source\v3.3.4\Source\Repository.Pattern.Ef6\Repository.Pattern.Ef6.csproj">
       <Project>{f68a1d19-93fb-47c1-a22b-42bea3e4fd8c}</Project>
       <Name>Repository.Pattern.Ef6</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\v3.3.4\Source\Repository.Pattern\Repository.Pattern.csproj">
+    <ProjectReference Include="..\..\..\01_Source\v3.3.4\Source\Repository.Pattern\Repository.Pattern.csproj">
       <Project>{6e682a14-c872-4813-b620-76e108dea683}</Project>
       <Name>Repository.Pattern</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\v3.3.4\Source\Service.Pattern\Service.Pattern.csproj">
+    <ProjectReference Include="..\..\..\01_Source\v3.3.4\Source\Service.Pattern\Service.Pattern.csproj">
       <Project>{86f86650-ee3c-4372-8fec-40c2fe015022}</Project>
       <Name>Service.Pattern</Name>
     </ProjectReference>

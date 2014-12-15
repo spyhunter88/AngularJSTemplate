@@ -25,6 +25,7 @@ AngularJS.Web/Content/kendo
 AngularJS.Web/Scripts/kendo
 Test/
 AngularJSAuthentication.sln
+AngularJSAuthentication.v12.suo
 
 # Windows Installer files
 *.cab
