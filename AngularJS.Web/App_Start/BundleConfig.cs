@@ -24,9 +24,10 @@ namespace AngularJS.Web
                       "~/Scripts/misc/respond.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
-                    "~/Scripts/angular/angular.js",
-                    "~/Scripts/angular/angular-route.js",
-                    "~/Scripts/angular/angular-animate.js",
+                    "~/Scripts/angular/angular.min.js",
+                    "~/Scripts/angular/angular-route.min.js",
+                    "~/Scripts/angular/angular-animate.min.js",
+                    "~/Scripts/angular/angular-sanitize.min.js",
                     "~/Scripts/kendo/2014.2.716/kendo.angular.min.js"
                 ));
 

@@ -24,6 +24,7 @@ AngularJS.Web/_bin_deployableAssemblies
 AngularJS.Web/Content/kendo
 AngularJS.Web/Scripts/kendo
 Test/
+AngularJSAuthentication.sln
 
 # Windows Installer files
 *.cab
