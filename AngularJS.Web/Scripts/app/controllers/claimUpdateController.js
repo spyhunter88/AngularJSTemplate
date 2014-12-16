@@ -10,7 +10,7 @@ app.controller('claimUpdateController', ['$scope', '$routeParams', '$timeout', '
                 $scope.options.units = data;
 				ngToast.create('Load UNIT success!');
             }, function (error) {
-                // ngToast.create('Error due loading UNIT!');
+                ngToast.create('Error due loading UNIT!');
             });
         };
 
@@ -25,24 +25,28 @@ app.controller('claimUpdateController', ['$scope', '$routeParams', '$timeout', '
             }, function(error) {
                 alert('Lỗi');
             });
-
-            /*
-            $http.get('api/Claim/' + claimId)
-                .success(function (data, status) {
-                    $scope.claim = data;
-            });
-            */
         };
 		
+		// Add/Remove CheckPoint
         var _addCP = function (cp) {
             if ($scope.claim.checkPoints == undefined) $scope.claim.checkPoints = [];
 			cp.id = 0;
 			$scope.claim.checkPoints.push(cp);
 		};
-		
 		var _removeCP = function(cp) {
 			var idx = $scope.claim.checkPoints.indexOf(cp);
 			$scope.claim.checkPoints.splice(idx, 1);
+		};
+		
+		// Add/Remove Requirement
+		var _addReq = function (rq) {
+			if ($scope.claim.requirements == undefined) $scope.claim.requirements = [];
+			rq.id = 0;
+			$scope.claim.requirements.pust(rq);
+		};
+		var _removeReq = function (rq) {
+			var idx = $scope.claim.requirements.indexOf(rq);
+			$scope.claim.requirements.splice(idx, 1);
 		};
 
         // Create new Claim
@@ -59,6 +63,8 @@ app.controller('claimUpdateController', ['$scope', '$routeParams', '$timeout', '
         $scope.init = _init;
 		$scope.addCheckPoint = _addCP;
 		$scope.removeCheckPoint = _removeCP;
+		$scope.addRequirement = _addReq;
+		$scope.removeRequirement = _removeReq;
         $scope.init();
         $timeout(function () { $scope.$apply(function() { $scope.load($routeParams.claimId) }) }, 500);
 }]);
