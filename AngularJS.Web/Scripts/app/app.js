@@ -1,4 +1,4 @@
-var app = angular.module('AngularAuthApp', ['kendo.directives', 'ngRoute', 'LocalStorageModule', 'angular-loading-bar', 'ui.bootstrap', 'ngToast', 'extUiBootstrap']);
+var app = angular.module('AngularAuthApp', ['kendo.directives', 'ngRoute', 'LocalStorageModule', 'angular-loading-bar', 'ui.bootstrap', 'ngToast', 'myExt']);
 
 app.config(function ($routeProvider) {
 	$routeProvider.when("/", {
