@@ -28,10 +28,11 @@ app.controller('claimUpdateController', ['$scope', '$routeParams', '$timeout', '
         };
 		
 		// Add/Remove CheckPoint
-        var _addCP = function (cp) {
+        var _addCP = function (cp2Add) {
+            if (cp2Add == undefined || cp2Add.$invalid) return;
             if ($scope.claim.checkPoints == undefined) $scope.claim.checkPoints = [];
-			cp.id = 0;
-			$scope.claim.checkPoints.push(cp);
+            cp2Add.id = 0;
+            $scope.claim.checkPoints.push(angular.copy(cp2Add));
 		};
 		var _removeCP = function(cp) {
 			var idx = $scope.claim.checkPoints.indexOf(cp);
@@ -40,9 +41,11 @@ app.controller('claimUpdateController', ['$scope', '$routeParams', '$timeout', '
 		
 		// Add/Remove Requirement
 		var _addReq = function (rq) {
+            if (rq == undefined || rq.$invalid) return;
 			if ($scope.claim.requirements == undefined) $scope.claim.requirements = [];
 			rq.id = 0;
-			$scope.claim.requirements.pust(rq);
+			$scope.claim.requirements.pust(angular.copy(rq));
+            rq = {};
 		};
 		var _removeReq = function (rq) {
 			var idx = $scope.claim.requirements.indexOf(rq);
@@ -50,7 +53,7 @@ app.controller('claimUpdateController', ['$scope', '$routeParams', '$timeout', '
 		};
 
         // Create new Claim
-        var newClaim = function () {
+		var _createClaim = function () {
             // validate first
             // save
             claimApi.saveClaim($scope.claim).then(function (data) {
@@ -65,6 +68,7 @@ app.controller('claimUpdateController', ['$scope', '$routeParams', '$timeout', '
 		$scope.removeCheckPoint = _removeCP;
 		$scope.addRequirement = _addReq;
 		$scope.removeRequirement = _removeReq;
+		$scope.createClaim = _createClaim;
         $scope.init();
         $timeout(function () { $scope.$apply(function() { $scope.load($routeParams.claimId) }) }, 500);
 }]);

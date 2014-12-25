@@ -117,7 +117,7 @@ namespace AngularJS.Web.Api
         //
         // POST api/Claim
         [ResponseType(typeof(Claim))]
-        public async Task<IHttpActionResult> PostClaim(ClaimDTO claim)
+        public async Task<IHttpActionResult> PostClaim([FromBody]ClaimDTO claim)
         {
             if (!ModelState.IsValid)
             {

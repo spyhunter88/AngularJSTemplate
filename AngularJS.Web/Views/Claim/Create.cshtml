@@ -145,98 +145,104 @@
                 </div>
             </div>
         </div>
-
-        <hr />
-
-        <tabset>
-            <tab heading="CheckPoint & Requirement">
-				<h5>CheckPoints</h5>
-				<table class="table table-bordered table-hover">
-				  <thead>
-					<th>
-					  <div class="control-group">
-						   <input class="form-control input-sm" type="text" ng-model="cp2Add.action" value="" />
-					  </div>
-					</th>
-					<th>
-					  <div class="control-group input-group">
-                <input type="text" class="form-control input-sm" ng-model="cp2Add.checkDate" ng-required="true" datepicker-popup="yyyy-MM-dd" />
-					  </div>
-					</th>
-					<th>
-                        <div class="control-group input-group">
-                            <input type="text" class="form-control input-sm" datepicker-popup="yyyy-MM-dd" ng-model="cp2Add.reportDate" ng-required="true" />
-                        </div>
-					</th>
-					<th>
-                        <div class="control-group">
-                            <button type="submit" class="btn btn-success btn-sm" ng-click="addCheckPoint(cp2Add)"><i class="glyphicon glyphicon-plus"></i></button>
-                        </div>
-					</th>
-				  </thead>
-				  <tbody>
-					<tr style="font-weight: bold">
-					  <td style="width:35%">Action</td>
-					  <td style="width:20%">Check Date</td>
-					  <td style="width:20%">Report Date</td>
-					  <td style="width:25%"></td>
-					</tr>
-					
-					<tr ng-repeat="cp in claim.checkPoints">
-					  <td>
-                        <div class="control-group">
-                            <input type="text" class="form-control input-sm" ng-model="cp.action" ng-required="true" />
-                        </div>
-					  </td>
-					  <td>
-                        <div class="control-group">
-                            <input type="text" class="form-control input-sm" datepicker-popup="yyyy-MM-dd" ng-model="cp.checkDate" ng-required="true" />
-                        </div>
-					  </td>
-					  <td>
-                        <div class="control-group">
-                            <input type="text" class="form-control input-sm" datepicker-popup="yyyy-MM-dd" ng-model="cp.reportDate" ng-required="true" />
-                        </div>
-					  </td>
-					  <td>
-						<button class="btn btn-danger btn-sm" ng-click="removeCheckPoint(cp)">del</button>
-					  </td>
-					</tr>
-				  </tbody>
-				</table>
-				<hr/>
-				<h5>Requirements</h5>
-				<table class="table talbe-bordered table-hover">
-					<tr style="font-weight: bold">
-					  <td style="width:15%">Name</td>
-					  <td style="width:15%">Operation</td>
-					  <td style="width:10%">Target</td>
-					  <td style="width:15%">Report Date</td>
-					  <td style="width:20%">Actual Amount</td>
-					  <td style="width:20%">Note</td>
-					  <td style="width:15%">Edit</td>
-					</tr>
-					
-					<tr ng-repeat="rq in claim.requirements">
-					  <td>
-						<span editable-text="rq.name" e-required>{{rq.name || 'empty' }}</span>
-					  </td>
-					  <td>
-						<span editable-text="rq.operation" e-required>{{rq.operation || 'empty' }}</span>
-					  </td>
-					  <td>
-						<span editable-text="rq.target" e-required>{{rq.target | number:0 || 'empty' }}</span>
-					  </td>
-					  <td>
-						<span editable-bsdate="rq.reportDate" e-datepicker-popup="dd-MMMM-yyyy" e-required>{{rq.reportDate | date: "dd/MM/yyyy" || 'empty' }}</span>
-					  </td>
-					  <td>
-						<span editable-text="rq.note" e-required>{{rq.note || 'empty' }}</span>
-					  </td>
-					</tr>
-				</table>
-			</tab>
-            <tab heading="Document">Content 2</tab>
-        </tabset>
     </form>
+    <hr />
+
+    <tabset>
+        <tab heading="CheckPoint & Requirement">
+			<h5>CheckPoints</h5>
+            <table class="table table-bordered table-hover no-border">
+                <thead>
+                    <tr ng-form name="newCP">
+                        <th>
+                            <div class="control-group" ng-class="{ 'has-error': newCP.action.$invalid }">
+                                <input type="text" class="form-control input-sm" name="action" ng-model="cp2Add.action" required />
+                            </div>
+                        </th>
+                        <th>
+                            <div class="control-group input-group" ng-class="{'has-error': newCP.checkDate.$invalid }">
+                                <input type="text" class="form-control input-sm" name="checkDate" ng-model="cp2Add.checkDate" datepicker-popup="yyyy-MM-dd" ng-required="true" />
+                            </div>
+                        </th>
+                        <th>
+                            <div class="control-group input-group" ng-class="{'has-error': newCP.reportDate.$invalid }">
+                                <input type="text" class="form-control input-sm" name="reportDate" ng-model="cp2Add.reportDate" datepicker-popup="yyyy-MM-dd" ng-required="true" />
+                            </div>
+                        </th>
+                        <th>
+                            <div class="control-group">
+                                <button type="submit" class="btn btn-success btn-sm" ng-click="addCheckPoint(cp2Add)" ng-disabled="newCP.$invalid"><i class="glyphicon glyphicon-plus"></i></button>
+                            </div>
+                        </th>
+                    </tr>
+                    <tr style="font-weight: bold">
+                        <td style="width:35%">Action</td>
+                        <td style="width:20%">Check Date</td>
+                        <td style="width:20%">Report Date</td>
+                        <td style="width:25%"></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="cp in claim.checkPoints">
+                        <td>
+                            <div class="control-group">
+                                <input type="text" class="form-control input-sm" ng-model="cp.action" ng-required="true" />
+                            </div>
+                        </td>
+                        <td>
+                            <div class="control-group input-group">
+                                <input type="date" class="form-control input-sm" datepicker-popup="yyyy-MM-dd" ng-model="cp.checkDate" ng-required="true" />
+                            </div>
+                        </td>
+                        <td>
+                            <div class="control-group input-group">
+                                <input type="date" class="form-control input-sm" datepicker-popup="yyyy-MM-dd" ng-model="cp.reportDate" ng-required="true" />
+                            </div>
+                        </td>
+                        <td>
+                            <button class="btn btn-danger btn-sm" ng-click="removeCheckPoint(cp)">del</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+			<hr/>
+			<h5>Requirements</h5>
+			<table class="table talbe-bordered table-hover">
+				<tr style="font-weight: bold">
+					<td style="width:15%">Name</td>
+					<td style="width:15%">Operation</td>
+					<td style="width:10%">Target</td>
+					<td style="width:15%">Report Date</td>
+					<td style="width:20%">Actual Amount</td>
+					<td style="width:20%">Note</td>
+					<td style="width:15%">Edit</td>
+				</tr>
+					
+				<tr ng-repeat="rq in claim.requirements">
+					<td>
+					<span editable-text="rq.name" e-required>{{rq.name || 'empty' }}</span>
+					</td>
+					<td>
+					<span editable-text="rq.operation" e-required>{{rq.operation || 'empty' }}</span>
+					</td>
+					<td>
+					<span editable-text="rq.target" e-required>{{rq.target | number:0 || 'empty' }}</span>
+					</td>
+					<td>
+					<span editable-bsdate="rq.reportDate" e-datepicker-popup="dd-MMMM-yyyy" e-required>{{rq.reportDate | date: "dd/MM/yyyy" || 'empty' }}</span>
+					</td>
+					<td>
+					<span editable-text="rq.note" e-required>{{rq.note || 'empty' }}</span>
+					</td>
+				</tr>
+			</table>
+		</tab>
+        <tab heading="Document">Content 2</tab>
+    </tabset>
+    
+    <hr/>
+    <div class="row">
+        <button class="btn btn-primary" ng-click="createClaim()">Create</button>
+    </div>
+
 </div>

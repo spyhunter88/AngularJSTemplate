@@ -64,3 +64,27 @@ body {
     margin-left: 0;
     margin-right: 0;
 }
+
+/* TABLE for input without space between input and border */
+table.no-border > thead > tr > th, 
+table.no-border > tbody > tr > td,
+table.no-border > tfoot > tr > td {
+	border-bottom-width: 0px;
+	padding: 0px;
+}
+
+table.no-border > thead > tr > th > div > input,
+table.no-border > tbody > tr > td > div > input,
+table.no-border > tfoot > tr > td > div > input
+ {
+	border-radius: 0px;
+	border: 1px solid transparent;
+}
+
+table.no-border > thead > tr > th > div > span > button,
+table.no-border > tbody > tr > td > div > span > button,
+table.no-border > tfoot > tr > td > div > span > button
+{
+	margin: 0px !important;
+	border-radius: 0px;
+}
