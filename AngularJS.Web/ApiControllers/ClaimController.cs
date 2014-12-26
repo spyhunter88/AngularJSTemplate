@@ -124,7 +124,14 @@ namespace AngularJS.Web.Api
                 return BadRequest(ModelState);
             }
 
-            int newId = await _claimSerivce.PostClaim(claim);
+            try
+            {
+                int newId = await _claimSerivce.PostClaim(claim);
+            }
+            catch (Exception e)
+            {
+                Console.Write(e.Message);
+            }
 
             return CreatedAtRoute("DefaultApi", new { id = claim.ClaimID }, claim);
         }

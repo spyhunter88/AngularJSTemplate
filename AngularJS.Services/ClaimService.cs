@@ -13,7 +13,7 @@ using Repository.Pattern.UnitOfWork;
 
 namespace AngularJS.Service
 {
-    public interface IClaimService : IService<Claim>
+    public interface IClaimService
     {
         List<ClaimLiteDTO> SearchClaim(String searchText, string orderBy, bool descending, int pageSize, int page, out int totalCount);
 
@@ -22,11 +22,11 @@ namespace AngularJS.Service
         Task<int> PostClaim(ClaimDTO claim);
     }
 
-    public class ClaimService : Service<Claim>, IClaimService
+    public class ClaimService : IClaimService
     {
-        public ClaimService(IRepositoryAsync<Claim> repository)
-            : base(repository)
+        public ClaimService(IUnitOfWorkAsync unitOfWorkAsync)
         {
+            _unitOfWorkAsync = unitOfWorkAsync;
         }
 
         private readonly IUnitOfWorkAsync _unitOfWorkAsync;
@@ -36,7 +36,7 @@ namespace AngularJS.Service
             if (orderBy == "") orderBy = "CreateTime";
 
             // Load
-            List<Claim> _claims = new List<Claim>(base.Query(x => x.FtgProgramCode.Contains(searchText) || x.ProgramName.Contains(searchText))
+            List<Claim> _claims = new List<Claim>(_unitOfWorkAsync.RepositoryAsync<Claim>().Query(x => x.FtgProgramCode.Contains(searchText) || x.ProgramName.Contains(searchText))
                                     .OrderBy(q => q.OrderBy(orderBy, descending))
                                     .SelectPage(page, pageSize, out totalCount)
             );
@@ -59,7 +59,7 @@ namespace AngularJS.Service
 
         public async Task<ClaimDTO> GetClaimAsync(int id)
         {
-            var claims = await base.Query(x => x.ClaimID == id)
+            var claims = await _unitOfWorkAsync.RepositoryAsync<Claim>().Query(x => x.ClaimID == id)
                 // .Include(x => x.CheckPoints)
                 // .Include(x => x.Requirements)
                 .SelectAsync();
