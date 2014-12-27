@@ -82,6 +82,8 @@ namespace AngularJS.Service
             _claim.CheckPoints = Mapper.Map<List<CheckPointDTO>, ICollection<CheckPoint>>(claim.CheckPoints);
             _claim.Requirements = Mapper.Map<List<RequirementDTO>, ICollection<Requirement>>(claim.Requirements);
 
+            _claim.StatusID = 1;
+
             _claim.ObjectState = ObjectState.Added;
             foreach (CheckPoint cp in _claim.CheckPoints)
             {

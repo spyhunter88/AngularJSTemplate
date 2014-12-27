@@ -91,7 +91,7 @@
                 <label class="col-md-2 control-label" ng-class="{ 'has-error': claimForm.startDate.$invalid }">Start Date</label>
                 <div class="col-md-4">
                     <p class="input-group">
-                        <input type="text" class="form-control input-sm" name="startDate" ng-model="claim.startDate" placeholder="Start Date" required datepicker-popup="yyyy-MM-dd">
+                        <input type="text" class="form-control input-sm" name="startDate" ng-model="claim.startDate" placeholder="Start Date" required datepicker-popup="yyyy-MM-dd" datepicker-localdate>
                     </p>
                 </div>
             </div>
@@ -99,7 +99,7 @@
                 <label class="col-md-2 control-label" ng-class="{ 'has-error': claimForm.endDate.$invalid }">End Date</label>
                 <div class="col-md-4">
                     <p class="input-group">
-                        <input type="text" class="form-control input-sm" name="endDate" ng-model="claim.endDate" placeholder="End Date" required datepicker-popup="yyyy-MM-dd">
+                        <input type="text" class="form-control input-sm" name="endDate" ng-model="claim.endDate" placeholder="End Date" required datepicker-popup="yyyy-MM-dd" datepicker-localdate>
                     </p>
                 </div>
             </div>
@@ -110,7 +110,7 @@
                 <label class="col-md-2 control-label">Deadline Claim</label>
                 <div class="col-md-4">
                     <p class="input-group">
-                        <input type="text" class="form-control input-sm" name="deadlineClaimDate" ng-model="claim.deadlineClaimDate" placeholder="Deadline Claim" datepicker-popup="yyyy-MM-dd">
+                        <input type="text" class="form-control input-sm" name="deadlineClaimDate" ng-model="claim.deadlineClaimDate" placeholder="Deadline Claim" datepicker-popup="yyyy-MM-dd" datepicker-localdate>
                     </p>
                 </div>
             </div>
@@ -161,12 +161,12 @@
                         </th>
                         <th>
                             <div class="control-group input-group" ng-class="{'has-error': newCP.checkDate.$invalid }">
-                                <input type="date" class="form-control input-sm" name="checkDate" ng-model="cp2Add.checkDate" datepicker-popup="yyyy-MM-dd" ng-required="true" />
+                                <input type="date" class="form-control input-sm" name="checkDate" ng-model="cp2Add.checkDate" datepicker-popup="yyyy-MM-dd" ng-required="true" datepicker-localdate />
                             </div>
                         </th>
                         <th>
                             <div class="control-group input-group" ng-class="{'has-error': newCP.reportDate.$invalid }">
-                                <input type="text" class="form-control input-sm" name="reportDate" ng-model="cp2Add.reportDate" datepicker-popup="yyyy-MM-dd" ng-required="true" />
+                                <input type="text" class="form-control input-sm" name="reportDate" ng-model="cp2Add.reportDate" datepicker-popup="yyyy-MM-dd" ng-required="true" datepicker-localdate />
                             </div>
                         </th>
                         <th>
@@ -191,16 +191,16 @@
                         </td>
                         <td>
                             <div class="control-group input-group">
-                                <input type="date" class="form-control input-sm" datepicker-popup="yyyy-MM-dd" ng-model="cp.checkDate" ng-required="true" />
+                                <input type="date" class="form-control input-sm" datepicker-popup="yyyy-MM-dd" ng-model="cp.checkDate" ng-required="true" datepicker-localdate />
                             </div>
                         </td>
                         <td>
                             <div class="control-group input-group">
-                                <input type="date" class="form-control input-sm" datepicker-popup="yyyy-MM-dd" ng-model="cp.reportDate" ng-required="true" />
+                                <input type="date" class="form-control input-sm" datepicker-popup="yyyy-MM-dd" ng-model="cp.reportDate" ng-required="true" datepicker-localdate />
                             </div>
                         </td>
                         <td>
-                            <button class="btn btn-danger btn-sm" ng-click="removeCheckPoint(cp)">del</button>
+                            <button class="btn btn-danger btn-sm" ng-click="removeCheckPoint(cp)"><i class="glyphicon glyphicon-minus"></i></button>
                         </td>
                     </tr>
                 </tbody>

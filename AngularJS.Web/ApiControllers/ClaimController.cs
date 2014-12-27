@@ -126,14 +126,16 @@ namespace AngularJS.Web.Api
 
             try
             {
+                claim.CreateTime = DateTime.Now;
                 int newId = await _claimSerivce.PostClaim(claim);
+                claim.ClaimID = newId;
             }
             catch (Exception e)
             {
                 Console.Write(e.Message);
             }
 
-            return CreatedAtRoute("DefaultApi", new { id = claim.ClaimID }, claim);
+            return CreatedAtRoute("DefaultApi", new { controller = "Claim", id = claim.ClaimID }, claim);
         }
 
         //

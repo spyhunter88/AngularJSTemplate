@@ -54,13 +54,15 @@ app.controller('claimUpdateController', ['$scope', '$routeParams', '$timeout', '
 
         // Create new Claim
 		var _createClaim = function () {
-            // validate first
+		    // validate first
+		    console.log($scope.claim);
             // save
             claimApi.saveClaim($scope.claim).then(function (data) {
                 $scope.claim = data;
             }, function (error) {
                 alert('1123');
             });
+            
         };
 
         $scope.init = _init;
