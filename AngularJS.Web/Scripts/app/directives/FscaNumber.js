@@ -4,7 +4,7 @@
     var fscaNumberModule,
         __hasProp = {}.hasOwnProperty;
 
-    fscaNumberModule = angular.module('fsca-number', []);
+    fscaNumberModule = angular.module('fscaNumber', []);
 
     fscaNumberModule.directive('fscaNumber', [
         'fscaNumberConfig', function (fscaNumberConfig) {
@@ -26,10 +26,13 @@
             };
 
             isNumber = function (val) {
-                return !NaN(parseFloat(val)) && isFinite(val);
+                return !isNaN(parseFloat(val)) && isFinite(val);
             };
             isNotDigit = function (which) {
-                return which < 44 || which > 57 || which === 47;
+                return which < 44 || (which > 57 && which < 96) || which > 105 || which === 47;
+            };
+            isDigitChar = function (which) {
+                return which === 8 || which === 173 || which === 188 || which === 190 || which === 110; // "-", "," and "." and "." in num lock
             };
             controlKeys = [0, 8, 13];
             isNotContrlKey = function (which) {
@@ -181,17 +184,32 @@
                             val = val.replace(options.append, '');
                         }
                         // Do not remove commas while focus
-                        // elem.val(val.replace(/,/g, ''));
+                        if (options.formatAsType === undefined || !options.formatAsType) elem.val(val.replace(/,/g, ''));
                         return elem[0].select();
                     });
 
                     // Re-format while number change, only for commas, decimal'll be formatted on 'blur'
-                    elem.on('keypress', function (event) {
-                        if (isNotDigit(event.which)) return;
+                    elem.on('keyup', function (event) {
+                        console.log(options);
+                        if (options.formatAsType === undefined || !options.formatAsType) return;
+                        if (isNotDigit(event.which) && event.which !== 8 && event.which !== 46) return; // 8 - Backspace, 46 - Delete
 
-                        var val;
+                        var val, nonCommasVal;
                         val = elem.val();
+                        console.log(event);
 
+                        nonCommasVal = val.replace(/,/g, '');
+                        if (nonCommasVal == null || !isValid(nonCommasVal)) return;
+
+                        var formatter, _i, _len, _ref;
+                        _ref = ngModelCtrl.$formatters;
+                        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                            formatter = _ref[_i];
+                            nonCommasVal = formatter(nonCommasVal);
+                        }
+
+                        ngModelCtrl.$viewValue = nonCommasVal;
+                        ngModelCtrl.$render();
                     });
                 }
             };
@@ -200,7 +218,7 @@
 
     fscaNumberModule.provider('fscaNumberConfig', function () {
         var _defaultOptions;
-        _defaultOptions = {};
+        _defaultOptions = { formatAsType: true };
         this.setDefaultOptions = function (defaultOptions) {
             return _defaultOptions = defaultOptions;
         };
