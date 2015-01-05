@@ -44,7 +44,7 @@ app.controller('claimUpdateController', ['$scope', '$routeParams', '$timeout', '
             if (rq == undefined || rq.$invalid) return;
 			if ($scope.claim.requirements == undefined) $scope.claim.requirements = [];
 			rq.id = 0;
-			$scope.claim.requirements.pust(angular.copy(rq));
+			$scope.claim.requirements.push(angular.copy(rq));
             rq = {};
 		};
 		var _removeReq = function (rq) {

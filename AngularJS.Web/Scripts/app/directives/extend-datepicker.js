@@ -29,7 +29,9 @@
                     return dt.toISOString().substring(0, 10);
                 });
  
+                // This function helps automatic add TimezoneOffset while server save UTC time, if server has the right time, do not override
                 // called with a 'yyyy-mm-dd' string to format
+                /*
                 ngModelController.$formatters.push(function (modelValue) {
                     if (!modelValue) {
                         return undefined;
@@ -40,6 +42,7 @@
                     dt.setMinutes(dt.getMinutes() + dt.getTimezoneOffset());
                     return dt;
                 });
+                */
             }
         }])
        .config(function ($provide) {
@@ -53,11 +56,9 @@
                 return function (scope, elem, attr) {
                     if (attr.dateDisabled) attr.disabled = true;
 
-                    // Add attribute
-                    attr.datepickerLocaldate="";
-
                     var appendBtn = angular.element('<span class="input-group-btn"><button '
-                    + (attr.disabled ? 'disabled' : '') + ' type="button" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-calendar"></i></button></span>');
+                    + (attr.disabled ? 'disabled' : '')
+                    + ' type="button" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-calendar"></i></button></span>');
                     elem.after(appendBtn);
                     appendBtn.bind('click', function (event) {
                         event.stopPropagation();

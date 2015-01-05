@@ -1,4 +1,4 @@
-﻿app.directive('datepickerLocaldate', ['$parse', function ($parse) {
+﻿app11.directive('datepickerLocaldate', ['$parse', function ($parse) {
     var directive = {
         restrict: 'A',
         require: ['ngModel'],

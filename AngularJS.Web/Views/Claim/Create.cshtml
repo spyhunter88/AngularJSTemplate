@@ -150,10 +150,16 @@
 
     <tabset>
         <tab heading="CheckPoint & Requirement">
-			<h5>CheckPoints</h5>
-            <table class="table table-bordered table-hover no-border">
+            <h5 ng-show="!claim.prePaid">CheckPoints</h5>
+            <table class="table table-bordered table-hover no-border" ng-show="!claim.prePaid">
                 <thead>
-                    <tr ng-form name="newCP">
+                    <tr style="font-weight: bold">
+                        <td >Action</td>
+                        <td style="width:150px">Check Date</td>
+                        <td style="width:150px">Report Date</td>
+                        <td style="width:100px"></td>
+                    </tr>
+                    <tr ng-form name="newCP" style="padding-bottom: 10px">
                         <th>
                             <div class="control-group" ng-class="{ 'has-error': newCP.action.$invalid }">
                                 <input type="text" class="form-control input-sm" name="action" ng-model="cp2Add.action" required />
@@ -161,7 +167,7 @@
                         </th>
                         <th>
                             <div class="control-group input-group" ng-class="{'has-error': newCP.checkDate.$invalid }">
-                                <input type="date" class="form-control input-sm" name="checkDate" ng-model="cp2Add.checkDate" datepicker-popup="yyyy-MM-dd" ng-required="true" datepicker-localdate />
+                                <input type="text" class="form-control input-sm" name="checkDate" ng-model="cp2Add.checkDate" datepicker-popup="yyyy-MM-dd" ng-required="true" datepicker-localdate />
                             </div>
                         </th>
                         <th>
@@ -175,12 +181,6 @@
                             </div>
                         </th>
                     </tr>
-                    <tr style="font-weight: bold">
-                        <td style="width:35%">Action</td>
-                        <td style="width:20%">Check Date</td>
-                        <td style="width:20%">Report Date</td>
-                        <td style="width:25%"></td>
-                    </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="cp in claim.checkPoints">
@@ -191,12 +191,12 @@
                         </td>
                         <td>
                             <div class="control-group input-group">
-                                <input type="date" class="form-control input-sm" datepicker-popup="yyyy-MM-dd" ng-model="cp.checkDate" ng-required="true" datepicker-localdate />
+                                <input type="text" class="form-control input-sm" datepicker-popup="yyyy-MM-dd" ng-model="cp.checkDate" ng-required="true" datepicker-localdate />
                             </div>
                         </td>
                         <td>
                             <div class="control-group input-group">
-                                <input type="date" class="form-control input-sm" datepicker-popup="yyyy-MM-dd" ng-model="cp.reportDate" ng-required="true" datepicker-localdate />
+                                <input type="text" class="form-control input-sm" datepicker-popup="yyyy-MM-dd" ng-model="cp.reportDate" ng-required="true" datepicker-localdate />
                             </div>
                         </td>
                         <td>
@@ -205,36 +205,70 @@
                     </tr>
                 </tbody>
             </table>
-			<hr/>
+            <hr ng-show="!claim.prePaid" />
 			<h5>Requirements</h5>
-			<table class="table talbe-bordered table-hover">
-				<tr style="font-weight: bold">
-					<td style="width:15%">Name</td>
-					<td style="width:15%">Operation</td>
-					<td style="width:10%">Target</td>
-					<td style="width:15%">Report Date</td>
-					<td style="width:20%">Actual Amount</td>
-					<td style="width:20%">Note</td>
-					<td style="width:15%">Edit</td>
-				</tr>
-					
-				<tr ng-repeat="rq in claim.requirements">
-					<td>
-					<span editable-text="rq.name" e-required>{{rq.name || 'empty' }}</span>
-					</td>
-					<td>
-					<span editable-text="rq.operation" e-required>{{rq.operation || 'empty' }}</span>
-					</td>
-					<td>
-					<span editable-text="rq.target" e-required>{{rq.target | number:0 || 'empty' }}</span>
-					</td>
-					<td>
-					<span editable-bsdate="rq.reportDate" e-datepicker-popup="dd-MMMM-yyyy" e-required>{{rq.reportDate | date: "dd/MM/yyyy" || 'empty' }}</span>
-					</td>
-					<td>
-					<span editable-text="rq.note" e-required>{{rq.note || 'empty' }}</span>
-					</td>
-				</tr>
+			<table class="table table-bordered table-hover no-border">
+                <thead>
+                    <tr style="font-weight: bold">
+                        <td style="width:15%">Name</td>
+                        <td style="width:15%">Operation</td>
+                        <td style="width:10%">Target</td>
+                        <td style="width:150px">Report Date</td>
+                        <td style="width:20%">Note</td>
+                        <td style="width:100px"></td>
+                    </tr>
+                    <tr ng-form name="newReq" style="padding-bottom: 10px">
+                        <th>
+                            <div class="control-group">
+                                <input type="text" class="form-control input-sm" ng-model="req2Add.name" required />
+                            </div>
+                        </th>
+                        <th>
+                            <div class="control-group">
+                                <input type="text" class="form-control input-sm" ng-model="req2Add.operation" required />
+                            </div>
+                        </th>
+                        <th>
+                            <div class="control-group">
+                                <input type="number" class="form-control input-sm" ng-model="req2Add.target" required />
+                            </div>
+                        </th>
+                        <th>
+                            <div class="control-group input-group">
+                                <input type="text" class="form-control input-sm" ng-model="req2Add.reportDate" datepicker-popup="yyyy-MM-dd" required datepicker-localdate />
+                            </div>
+                        </th>
+                        <th>
+                            <div class="control-group">
+                                <input type="text" class="form-control input-sm" ng-model="req2Add.note" />
+                            </div>
+                        </th>
+                        <th>
+                            <div class="control-group">
+                                <button type="submit" class="btn btn-success btn-sm" ng-click="addRequirement(req2Add)"><i class="glyphicon glyphicon-plus"></i></button>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="rq in claim.requirements">
+                        <td>
+                            <span editable-text="rq.name" e-required>{{rq.name || 'empty' }}</span>
+                        </td>
+                        <td>
+                            <span editable-text="rq.operation" e-required>{{rq.operation || 'empty' }}</span>
+                        </td>
+                        <td>
+                            <span editable-text="rq.target" e-required>{{rq.target | number:0 || 'empty' }}</span>
+                        </td>
+                        <td>
+                            <span editable-bsdate="rq.reportDate" e-datepicker-popup="dd-MMMM-yyyy" e-required>{{rq.reportDate | date: "dd/MM/yyyy" || 'empty' }}</span>
+                        </td>
+                        <td>
+                            <span editable-text="rq.note" e-required>{{rq.note || 'empty' }}</span>
+                        </td>
+                    </tr>
+                </tbody>
 			</table>
 		</tab>
         <tab heading="Document">Content 2</tab>

@@ -101,3 +101,14 @@ table.no-border > tfoot > tr > td > div > span > button
 	margin: 0px !important;
 	border-radius: 0px;
 }
+
+table.no-border > thead > tr > th {
+    padding-left: 18px;
+    padding-right: 18px;
+    padding-bottom: 10px;
+}
+
+table.no-border > thead,
+table.no-border > thead > tr > th > div > input {
+    background-color: azure;
+}
