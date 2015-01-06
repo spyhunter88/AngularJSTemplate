@@ -253,19 +253,34 @@
                 <tbody>
                     <tr ng-repeat="rq in claim.requirements">
                         <td>
-                            <span editable-text="rq.name" e-required>{{rq.name || 'empty' }}</span>
+                            <div class="control-group">
+                                <input type="text" class="form-control input-sm" ng-model="rq.name" required />
+                            </div>
                         </td>
                         <td>
-                            <span editable-text="rq.operation" e-required>{{rq.operation || 'empty' }}</span>
+                            <div class="control-group">
+                                <input type="text" class="form-control input-sm" ng-model="rq.operation" required />
+                            </div>
                         </td>
                         <td>
-                            <span editable-text="rq.target" e-required>{{rq.target | number:0 || 'empty' }}</span>
+                            <div class="control-group">
+                                <input type="text" class="form-control input-sm" ng-model="rq.target" required fsca-number />
+                            </div>
                         </td>
                         <td>
-                            <span editable-bsdate="rq.reportDate" e-datepicker-popup="dd-MMMM-yyyy" e-required>{{rq.reportDate | date: "dd/MM/yyyy" || 'empty' }}</span>
+                            <div class="control-group input-group">
+                                <input type="text" class="form-group input-sm" ng-model="rq.reportDate" required datepicker-popup="yyyy-MM-dd" datepicker-localdate />
+                            </div>
                         </td>
                         <td>
-                            <span editable-text="rq.note" e-required>{{rq.note || 'empty' }}</span>
+                            <div class="control-group">
+                                <input type="text" class="form-control input-sm" ng-model="note" />
+                            </div>
+                        </td>
+                        <td>
+                            <div class="control-group">
+                                <button type="submit" class="btn btn-danger btn-sm" ng-click="removeRequirement(rq)"><i class="glyphicon glyphicon-minus"></i></button>
+                            </div>
                         </td>
                     </tr>
                 </tbody>

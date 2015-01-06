@@ -92,6 +92,7 @@ table.no-border > tfoot > tr > td > div > input:focus
  {
     outline: none !important;
     border: 1px solid;
+    background-color: #F8FCC2;
 }
 
 table.no-border > thead > tr > th > div > span > button,

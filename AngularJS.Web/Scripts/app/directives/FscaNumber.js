@@ -196,7 +196,6 @@
 
                         var val, nonCommasVal;
                         val = elem.val();
-                        console.log(event);
 
                         nonCommasVal = val.replace(/,/g, '');
                         if (nonCommasVal == null || !isValid(nonCommasVal)) return;
