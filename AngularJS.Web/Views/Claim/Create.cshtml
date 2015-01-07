@@ -286,7 +286,11 @@
                 </tbody>
 			</table>
 		</tab>
-        <tab heading="Document">Content 2</tab>
+        <tab heading="Documents">
+            <button class="btn btn-success" ng-file-select ng-model="uploadFiles" ng-file-change="fileSelected($files, $event)">
+                Upload
+            </button>
+        </tab>
     </tabset>
     
     <hr/>

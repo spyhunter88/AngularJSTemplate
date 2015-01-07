@@ -4,6 +4,7 @@ app.controller('claimUpdateController', ['$scope', '$routeParams', '$timeout', '
     function ($scope, $routeParams, $timeout, claimApi, catApi, ngToast) {
         $scope.title = "Claim Management";
         $scope.options = {};
+        $scope.uploadFiles = [];
 
         var _init = function () {
             catApi.getCategories({ type: 'UNIT' }).then(function (data) {
@@ -63,7 +64,18 @@ app.controller('claimUpdateController', ['$scope', '$routeParams', '$timeout', '
                 alert('1123');
             });
             
-        };
+		};
+
+        // Upload File
+		var _fileSelected = function ($files, $event) {
+		    for (var i = 0; i < $files.length; i++) {
+		        $scope.upload = $upload.upload({
+                    // data: 
+		        });
+		    }
+		    console.log($files);
+		    console.log($event);
+		};
 
         $scope.init = _init;
 		$scope.addCheckPoint = _addCP;
@@ -71,6 +83,7 @@ app.controller('claimUpdateController', ['$scope', '$routeParams', '$timeout', '
 		$scope.addRequirement = _addReq;
 		$scope.removeRequirement = _removeReq;
 		$scope.createClaim = _createClaim;
+		$scope.fileSelected = _fileSelected;
         $scope.init();
         $timeout(function () { $scope.$apply(function() { $scope.load($routeParams.claimId) }) }, 500);
 }]);

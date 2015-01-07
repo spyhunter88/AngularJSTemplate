@@ -37,7 +37,9 @@ namespace AngularJS.Web
                     "~/Scripts/misc/ui-bootstrap-tpls-0.12.0.min.js",
                     "~/Scripts/misc/ngToast.min.js",
                     "~/Scripts/misc/xeditable.min.js",
-                    "~/Scripts/misc/angular-datatables.min.js"
+                    "~/Scripts/misc/angular-datatables.min.js",
+					"~/Scripts/misc/angular-file-upload-shim.min.js",
+					"~/Scripts/misc/angular-file-upload.min.js"
                 ));
 
             // This's still bug
