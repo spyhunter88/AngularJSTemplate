@@ -1,7 +1,7 @@
 ﻿'use strict';
 
-app.controller('claimUpdateController', ['$scope', '$routeParams', '$timeout', 'claim.api', 'category.api', 'ngToast',
-    function ($scope, $routeParams, $timeout, claimApi, catApi, ngToast) {
+app.controller('claimUpdateController', ['$scope', '$routeParams', '$timeout', 'claim.api', 'category.api', 'file.api', 'ngToast',
+    function ($scope, $routeParams, $timeout, claimApi, catApi, fileApi, ngToast) {
         $scope.title = "Claim Management";
         $scope.options = {};
         $scope.uploadFiles = [];
@@ -69,9 +69,14 @@ app.controller('claimUpdateController', ['$scope', '$routeParams', '$timeout', '
         // Upload File
 		var _fileSelected = function ($files, $event) {
 		    for (var i = 0; i < $files.length; i++) {
-		        $scope.upload = $upload.upload({
-                    // data: 
-		        });
+		        fileApi.uploadClaimFile($scope.claim.claimId, file)
+                .then(function (data) {
+                    console.log(data);
+                }, function (error) {
+                    console.log(error);
+                }, function (evt) {
+                    console.log(evt);
+                });
 		    }
 		    console.log($files);
 		    console.log($event);

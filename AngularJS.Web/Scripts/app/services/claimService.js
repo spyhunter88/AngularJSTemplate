@@ -21,22 +21,4 @@ app
 		};
 
 		return api;
-		/*
-		return {
-		loadClaims: function(filterCriteria) {
-			$http
-				.get('api/Claims', { param: { filterCriteria: filterCriteria } })
-				.success(function(data, status) {
-					$scope.claims = data.claims;
-					$scope.totalPages = data.total;
-			});
-		},
-		loadClaim: function (claimId) {
-		    $http.get('api/Claim?claimId=' + claimId)
-                .success(function (data, status) {
-                    $scope.claim = data;
-                });
-		}
-		}
-		*/
 }]);

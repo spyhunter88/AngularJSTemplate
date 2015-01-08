@@ -1,0 +1,23 @@
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.Controllers;
+using System.Web.Http.Filters;
+
+namespace AngularJS.Controllers.Filter
+{
+	public class ValidateMimeMultipartContentFilter : ActionFilterAttribute
+	{
+		public override void OnActionExecuting(HttpActionContenxt actionContext)
+		{
+			if (!actionContext.Request.Content.IsMimeMultipartContent())
+			{
+				throw new HttpResponseException(HttpStatusCode.UnsupportMediaType);
+			}
+		}
+		
+		public override void OnActionExecuted(HttpActionExecutedContext actionContext)
+		{
+		}
+	}
+}
