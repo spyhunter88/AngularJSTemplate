@@ -8,11 +8,11 @@ namespace AngularJS.Controllers.Filter
 {
 	public class ValidateMimeMultipartContentFilter : ActionFilterAttribute
 	{
-		public override void OnActionExecuting(HttpActionContenxt actionContext)
+		public override void OnActionExecuting(HttpActionContext actionContext)
 		{
 			if (!actionContext.Request.Content.IsMimeMultipartContent())
 			{
-				throw new HttpResponseException(HttpStatusCode.UnsupportMediaType);
+				throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
 			}
 		}
 		

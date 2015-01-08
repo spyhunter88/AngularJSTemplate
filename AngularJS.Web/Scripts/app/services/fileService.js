@@ -5,21 +5,22 @@ app
 		fileUrl: 'api/File'
 	})
 	.factory('file.api', ['file.url', '$upload',
-	function(fileUrl, $upload) {
+	function(url, $upload) {
 		var api = {
 			uploadClaimFile: function(claimId, file) {
 				var up = $upload.upload({
-					url: fileUrl,
+					url: url.fileUrl,
 					method: 'POST',
 					data: { claimId: claimId },
-					file: file
+					file: file,
+					fileFormDataName: file
 				});
 
 				return up;
 			},
 			uploadRequestFile: function(requestId, file) {
 				var up = $upload.upload({
-					url: fileUrl,
+				    url: url.fileUrl,
 					method: 'POST',
 					data: { requestId: requestId },
 					file: file
@@ -29,7 +30,7 @@ app
 			},
 			uploadCheckPointFile: function(claimId, checkPointId, file) {
 				var up = $upload.upload({
-					url: fileUrl,
+				    url: url.fileUrl,
 					method: 'POST',
 					data: { claimId: claimId, checkPointId: checkPointId },
 					file: file

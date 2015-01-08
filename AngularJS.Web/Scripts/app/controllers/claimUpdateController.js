@@ -69,7 +69,10 @@ app.controller('claimUpdateController', ['$scope', '$routeParams', '$timeout', '
         // Upload File
 		var _fileSelected = function ($files, $event) {
 		    for (var i = 0; i < $files.length; i++) {
-		        fileApi.uploadClaimFile($scope.claim.claimId, file)
+		        var file = $files[i];
+		        var claimId = 0;
+		        if ($scope.claim !== undefined && $scope.claim.claimId !== undefined) claimId = $scope.claim.claimId;
+		        fileApi.uploadClaimFile(claimId, file)
                 .then(function (data) {
                     console.log(data);
                 }, function (error) {

@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Threading.Taks;
+using System.Threading.Tasks;
 using System.Web.Http;
 using AngularJS.Controllers.Filter;
 
@@ -12,13 +12,13 @@ namespace AngularJS.Api
 	[RoutePrefix("api/File")]
 	public class FileController : ApiController
 	{
-		private static readonly string ServerUploadFolder = "E:\\workspace";
+		private static readonly string ServerUploadFolder = "E:\\Uploads";
 		
 		[HttpPost]
 		[ValidateMimeMultipartContentFilter]
-		public async Task<FileResult> UploadSingleFile()
+        public async Task<IHttpActionResult> UploadSingleFile()
 		{
-			var streamProvider = new MultiparFormDataStreamProvider(ServerUploadFolder);
+			var streamProvider = new MultipartFormDataStreamProvider(ServerUploadFolder);
 			await Request.Content.ReadAsMultipartAsync(streamProvider);
 			
 			foreach (var file in streamProvider.Contents)
