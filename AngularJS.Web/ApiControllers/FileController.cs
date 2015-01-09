@@ -8,16 +8,19 @@ using System.Web;
 using System.Web.Http;
 using AngularJS.Controllers.Filter;
 using Newtonsoft.Json;
+using AngularJS.Services.DTO;
+using System.Web.Http.Description;
 
 namespace AngularJS.Api
 {
 	[RoutePrefix("api/File")]
 	public class FileController : ApiController
 	{
-        private static readonly string ServerUploadFolder = "E:\\workspace";
+        private static readonly string ServerUploadFolder = "E:\\Uploads";
 		
 		[HttpPost]
 		[ValidateMimeMultipartContentFilter]
+        [ResponseType(typeof(DocumentDTO))]
         public async Task<IHttpActionResult> UploadSingleFile()
 		{
 			var streamProvider = new MultipartFormDataStreamProvider(ServerUploadFolder);
@@ -30,15 +33,34 @@ namespace AngularJS.Api
             // uploadFileInfo will give you some addition information
             var uploadFileInfo = new FileInfo(streamProvider.FileData.First().LocalFileName);
 
-
-
 			foreach (var file in streamProvider.FileData)
 			{
                 // var buffer = await file.Headers;
 			}
-			
-			return Ok("OK!");
+
+            var _NewDocument = new DocumentDTO {
+                TempName = uploadFileInfo.Name
+            };
+
+            return Ok(_NewDocument);
 		}
+
+        [HttpPost]
+        [ValidateMimeMultipartContentFilter]
+        [Route("api/File/Claim")]
+        public IHttpActionResult UploadFileClaim()
+        {
+            var result = new {  };
+
+            return Ok();
+        }
+
+        #region Separate when Entity is exists
+        private void MoveToClaim(int claimId, string source, string dest)
+        {
+
+        }
+        #endregion
 
         #region Support
         // You could extract these two private methods to a separate utility class since

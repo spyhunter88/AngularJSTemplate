@@ -75,7 +75,11 @@ namespace AngularJS.Service
             return claim;
         }
 
-
+        /// <summary>
+        /// Create new Claim, include CheckPoints, Requirements and Documents' path
+        /// </summary>
+        /// <param name="claim"></param>
+        /// <returns></returns>
         public async Task<int> PostClaim(ClaimDTO claim)
         {
             Claim _claim = Mapper.Map<ClaimDTO, Claim>(claim);
@@ -96,6 +100,10 @@ namespace AngularJS.Service
 
             _unitOfWorkAsync.RepositoryAsync<Claim>().Insert(_claim);
             int newId = await _unitOfWorkAsync.SaveChangesAsync();
+
+            // TODO: Rename and move documents to Claim's folder
+
+
             return newId;
         }
     }

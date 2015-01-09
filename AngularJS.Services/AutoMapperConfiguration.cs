@@ -10,12 +10,11 @@ namespace AngularJS.Services
         public static void Configure()
         {
             Mapper.CreateMap<Claim, ClaimDTO>().ReverseMap();
-            // Mapper.CreateMap<ClaimDTO, Claim>();
             Mapper.CreateMap<Claim, ClaimLiteDTO>();
             Mapper.CreateMap<CheckPoint, CheckPointDTO>().ReverseMap();
-            // Mapper.CreateMap<CheckPointDTO, CheckPoint>();
             Mapper.CreateMap<Requirement, RequirementDTO>().ReverseMap();
-            // Mapper.CreateMap<RequirementDTO, Requirement>();
+
+            Mapper.CreateMap<Document, DocumentDTO>().ReverseMap();
             // Mapper.CreateMap<Feed, FeedDTO>();
         }
     }

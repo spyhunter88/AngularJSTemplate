@@ -445,7 +445,6 @@ E:\workspace\LinhNH13\Source\Repos\AngularJSTemplate\AngularJS.Web\bin\zh-Hant\S
 E:\workspace\LinhNH13\Source\Repos\AngularJSTemplate\AngularJS.Web\obj\Debug\AngularJS.Web.csprojResolveAssemblyReference.cache
 E:\workspace\LinhNH13\Source\Repos\AngularJSTemplate\AngularJS.Web\obj\Debug\AngularJS.Web.dll
 E:\workspace\LinhNH13\Source\Repos\AngularJSTemplate\AngularJS.Web\obj\Debug\AngularJS.Web.pdb
-D:\Workspace\UnitOfWork\AngularJSAuthentication\AngularJSTemplate\AngularJS.Web\obj\Debug\AngularJS.Web.csprojResolveAssemblyReference.cache
 D:\Workspace\UnitOfWork\AngularJSAuthentication\AngularJSTemplate\AngularJS.Web\bin\AutoMapper.Net4.dll
 D:\Workspace\UnitOfWork\AngularJSAuthentication\AngularJSTemplate\AngularJS.Web\bin\AngularJS.Web.dll.config
 D:\Workspace\UnitOfWork\AngularJSAuthentication\AngularJSTemplate\AngularJS.Web\bin\AngularJS.Web.dll
@@ -592,5 +591,6 @@ D:\Workspace\UnitOfWork\AngularJSAuthentication\AngularJSTemplate\AngularJS.Web\
 D:\Workspace\UnitOfWork\AngularJSAuthentication\AngularJSTemplate\AngularJS.Web\bin\ru\System.Spatial.resources.dll
 D:\Workspace\UnitOfWork\AngularJSAuthentication\AngularJSTemplate\AngularJS.Web\bin\zh-Hans\System.Spatial.resources.dll
 D:\Workspace\UnitOfWork\AngularJSAuthentication\AngularJSTemplate\AngularJS.Web\bin\zh-Hant\System.Spatial.resources.dll
+D:\Workspace\UnitOfWork\AngularJSAuthentication\AngularJSTemplate\AngularJS.Web\obj\Debug\AngularJS.Web.csprojResolveAssemblyReference.cache
 D:\Workspace\UnitOfWork\AngularJSAuthentication\AngularJSTemplate\AngularJS.Web\obj\Debug\AngularJS.Web.dll
 D:\Workspace\UnitOfWork\AngularJSAuthentication\AngularJSTemplate\AngularJS.Web\obj\Debug\AngularJS.Web.pdb

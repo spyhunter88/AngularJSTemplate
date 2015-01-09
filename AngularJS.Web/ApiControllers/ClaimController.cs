@@ -61,7 +61,7 @@ namespace AngularJS.Web.Api
         //
         // GET api/Claim/5
         [Authorize]
-        [ResponseType(typeof(Claim))]
+        [ResponseType(typeof(ClaimDTO))]
         public async Task<IHttpActionResult> GetClaim(int id)
         {
             // Claim claim = await _unitOfWorkAsync.RepositoryAsync<Claim>().FindAsync(id);
@@ -92,8 +92,6 @@ namespace AngularJS.Web.Api
             Claim _claim = await _unitOfWorkAsync.RepositoryAsync<Claim>().FindAsync(id);
 
             _claim.ObjectState = ObjectState.Added;
-
-
 
             try
             {

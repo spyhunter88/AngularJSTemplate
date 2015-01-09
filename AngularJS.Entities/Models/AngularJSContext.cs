@@ -36,6 +36,7 @@ namespace AngularJS.Entities.Models
         public DbSet<CheckPoint> CheckPoints { get; set; }
         public DbSet<Requirement> Requirements { get; set; }
         public DbSet<RequirementHistory> RequirementHistories { get; set; }
+        public DbSet<Document> Documents { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -57,6 +58,7 @@ namespace AngularJS.Entities.Models
             modelBuilder.Configurations.Add(new CheckPointMap());
             modelBuilder.Configurations.Add(new RequirementMap());
             modelBuilder.Configurations.Add(new RequirementHistoryMap());
+            modelBuilder.Configurations.Add(new DocumentMap());
 
 
             modelBuilder.Entity<CheckPoint>().HasRequired<Claim>(s => s.Claim)

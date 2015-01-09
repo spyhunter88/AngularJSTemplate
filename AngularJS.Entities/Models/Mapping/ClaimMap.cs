@@ -117,7 +117,5 @@ namespace AngularJS.Entities.Models.Mapping
 			this.Property(t => t.LastApproveBy).HasColumnName("LastApproveBy");
 			this.Property(t => t.LastApproveTime).HasColumnName("LastApproveTime");
 		}
-		
-		
 	}
 }

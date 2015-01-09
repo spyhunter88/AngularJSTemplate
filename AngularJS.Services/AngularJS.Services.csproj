@@ -59,6 +59,7 @@
     <Compile Include="CustomerService.cs" />
     <Compile Include="DTO\CheckPointDTO.cs" />
     <Compile Include="DTO\ClaimDTO.cs" />
+    <Compile Include="DTO\DocumentDTO.cs" />
     <Compile Include="DTO\FeedDTO.cs" />
     <Compile Include="DTO\RequirementDTO.cs" />
     <Compile Include="IStoredProcedureService.cs" />

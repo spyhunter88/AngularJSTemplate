@@ -4,8 +4,7 @@ app.controller('claimUpdateController', ['$scope', '$routeParams', '$timeout', '
     function ($scope, $routeParams, $timeout, claimApi, catApi, fileApi, ngToast) {
         $scope.title = "Claim Management";
         $scope.options = {};
-        $scope.uploadFiles = [];
-        $scope.uploadFileInfo = [];
+        $scope.uploadFiles = []; // keep the files while it uploading
 
         var _init = function () {
             catApi.getCategories({ type: 'UNIT' }).then(function (data) {
@@ -25,7 +24,7 @@ app.controller('claimUpdateController', ['$scope', '$routeParams', '$timeout', '
                 $scope.actions = {};
                 $scope.actions.isSave = false;
             }, function(error) {
-                alert('Lỗi');
+                ngToast.create("Error");
             });
         };
 		
@@ -69,32 +68,38 @@ app.controller('claimUpdateController', ['$scope', '$routeParams', '$timeout', '
 
         // Upload File
 		var _fileSelected = function ($files, $event) {
+		    if ($scope.claim.documents == undefined) $scope.claim.documents = [];
+
 		    for (var i = 0; i < $files.length; i++) {
 		        (function (index) {
 		            var file = $files[i];
-		            var newFile = { filename: file.name, fileType: 'blank', progress: 0, status: 'Uploading' };
+		            var newFile = { fileName: file.name, fileType: 'blank', progress: 0, status: 'Uploading' };
 
 		            var claimId = 0;
 		            if ($scope.claim !== undefined && $scope.claim.claimId !== undefined) claimId = $scope.claim.claimId;
 		            newFile.fn = fileApi.uploadClaimFile(claimId, file)
-                    .then(function (data) {
+                    .then(function (res) {
                         newFile.progress = 100;
+                        newFile.tempName = res.data.tempName;
                         newFile.status = 'Completed';
-
+                        console.log(res);
                     }, function (error) {
                         newFile.status = 'Failed';
                         //console.log(error);
                     }, function (evt) {
                         //console.log(evt);
-                        newFile.progress = evt.loaded / evt.total * 100;
-                        console.log(evt);
+                        newFile.progress = Math.round(evt.loaded / evt.total * 100);
                     });
 
-		            $scope.uploadFileInfo.push(newFile);
+		            $scope.claim.documents.push(newFile);
 		        })(i);
 		    }
 		    // console.log($files);
 		    // console.log($event);
+		};
+		var _removeFile = function (file) {
+		    var idx = $scope.claim.documents.indexOf(file);
+		    $scope.claim.documents.splice(idx, 1);
 		};
 
         $scope.init = _init;
@@ -104,6 +109,7 @@ app.controller('claimUpdateController', ['$scope', '$routeParams', '$timeout', '
 		$scope.removeRequirement = _removeReq;
 		$scope.createClaim = _createClaim;
 		$scope.fileSelected = _fileSelected;
+		$scope.removeFile = _removeFile;
         $scope.init();
         $timeout(function () { $scope.$apply(function() { $scope.load($routeParams.claimId) }) }, 500);
 }]);

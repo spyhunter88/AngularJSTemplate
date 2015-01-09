@@ -91,5 +91,6 @@ namespace AngularJS.Services.DTO
 
         public virtual List<CheckPointDTO> CheckPoints { get; set; }
         public virtual List<RequirementDTO> Requirements { get; set; }
+        public virtual List<DocumentDTO> Documents { get; set; }
     }
 }

@@ -56,12 +56,14 @@
     <Compile Include="Models\Claim.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\CustomerDemographic.cs" />
+    <Compile Include="Models\Document.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\Mapping\CategoryMap.cs" />
     <Compile Include="Models\Mapping\CheckPointMap.cs" />
     <Compile Include="Models\Mapping\ClaimMap.cs" />
     <Compile Include="Models\Mapping\CustomerDemographicMap.cs" />
     <Compile Include="Models\Mapping\CustomerMap.cs" />
+    <Compile Include="Models\Mapping\DocumentMap.cs" />
     <Compile Include="Models\Mapping\EmployeeMap.cs" />
     <Compile Include="Models\Mapping\MenuItemMap.cs" />
     <Compile Include="Models\Mapping\OrderDetailMap.cs" />
