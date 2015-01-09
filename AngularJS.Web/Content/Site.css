@@ -113,3 +113,7 @@ table.no-border > thead,
 table.no-border > thead > tr > th > div > input {
     background-color: azure;
 }
+
+.progress-in-table {
+    margin-bottom: 0px;
+}

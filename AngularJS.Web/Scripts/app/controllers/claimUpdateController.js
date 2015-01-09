@@ -5,6 +5,7 @@ app.controller('claimUpdateController', ['$scope', '$routeParams', '$timeout', '
         $scope.title = "Claim Management";
         $scope.options = {};
         $scope.uploadFiles = [];
+        $scope.uploadFileInfo = [];
 
         var _init = function () {
             catApi.getCategories({ type: 'UNIT' }).then(function (data) {
@@ -69,20 +70,31 @@ app.controller('claimUpdateController', ['$scope', '$routeParams', '$timeout', '
         // Upload File
 		var _fileSelected = function ($files, $event) {
 		    for (var i = 0; i < $files.length; i++) {
-		        var file = $files[i];
-		        var claimId = 0;
-		        if ($scope.claim !== undefined && $scope.claim.claimId !== undefined) claimId = $scope.claim.claimId;
-		        fileApi.uploadClaimFile(claimId, file)
-                .then(function (data) {
-                    console.log(data);
-                }, function (error) {
-                    console.log(error);
-                }, function (evt) {
-                    console.log(evt);
-                });
+		        (function (index) {
+		            var file = $files[i];
+		            var newFile = { filename: file.name, fileType: 'blank', progress: 0, status: 'Uploading' };
+
+		            var claimId = 0;
+		            if ($scope.claim !== undefined && $scope.claim.claimId !== undefined) claimId = $scope.claim.claimId;
+		            newFile.fn = fileApi.uploadClaimFile(claimId, file)
+                    .then(function (data) {
+                        newFile.progress = 100;
+                        newFile.status = 'Completed';
+
+                    }, function (error) {
+                        newFile.status = 'Failed';
+                        //console.log(error);
+                    }, function (evt) {
+                        //console.log(evt);
+                        newFile.progress = evt.loaded / evt.total * 100;
+                        console.log(evt);
+                    });
+
+		            $scope.uploadFileInfo.push(newFile);
+		        })(i);
 		    }
-		    console.log($files);
-		    console.log($event);
+		    // console.log($files);
+		    // console.log($event);
 		};
 
         $scope.init = _init;

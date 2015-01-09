@@ -7,13 +7,13 @@ app
 	.factory('file.api', ['file.url', '$upload',
 	function(url, $upload) {
 		var api = {
-			uploadClaimFile: function(claimId, file) {
+		    uploadClaimFile: function (claimId, file) {
 				var up = $upload.upload({
 					url: url.fileUrl,
 					method: 'POST',
-					data: { claimId: claimId },
+					data: { claimId: claimId, fileName: file.name },
 					file: file,
-					fileFormDataName: file
+					fileFormDataName: file.name
 				});
 
 				return up;

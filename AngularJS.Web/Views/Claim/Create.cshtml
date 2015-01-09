@@ -287,9 +287,44 @@
 			</table>
 		</tab>
         <tab heading="Documents">
-            <button class="btn btn-success" ng-file-select ng-model="uploadFiles" ng-file-change="fileSelected($files, $event)">
+            <br />
+            <button class="btn btn-success" ng-file-select ng-model="uploadFiles" ng-file-change="fileSelected($files, $event)" multiple="true">
                 Upload
             </button>
+            <table class="table table-bordered table-hover table-condensed no-border">
+                <thead>
+                    <tr>
+                        <td style="width: 20%">File Name</td>
+                        <td style="width: 25%">File Type</td>
+                        <td style="width: 25%">Status</td>
+                        <td style="width: 150px"></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="file in uploadFileInfo">
+                        <td>
+                            <div class="control-group">
+                                <input type="text" class="form-control input-sm" ng-model="file.filename" required />
+                            </div>
+                        </td>
+                        <td>
+                            <div class="control-group">
+                                <input type="text" class="form-control input-sm" ng-model="file.fileType" />
+                            </div>
+                        </td>
+                        <td style="vertical-align: middle">
+                            <div class="control-group">
+                                <progressbar class="progress-striped progress-in-table" value="file.progress" type="warning">{{file.progress}}%</progressbar>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="control-group">
+                                <button class="btn btn-danger btn-sm" ng-click="removeFile(file)"><i class="glyphicon glyphicon-minus"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </tab>
     </tabset>
     
@@ -297,5 +332,4 @@
     <div class="row">
         <button class="btn btn-primary" ng-click="createClaim()">Create</button>
     </div>
-
 </div>
