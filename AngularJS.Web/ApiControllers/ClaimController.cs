@@ -18,27 +18,21 @@ using Repository.Pattern.UnitOfWork;
 
 namespace AngularJS.Web.Api
 {
-    public class ClaimController : ApiController
+    public class ClaimController : BaseController
     {
         // private AngularJSContext db = new AngularJSContext();
         private readonly IUnitOfWorkAsync _unitOfWorkAsync;
         private readonly IClaimService _claimSerivce;
 
         public ClaimController(IUnitOfWorkAsync unitOfWorkAsync, IClaimService claimSerivce)
+            : base()
         {
             _unitOfWorkAsync = unitOfWorkAsync;
             _claimSerivce = claimSerivce;
         }
-        //// GET api/Claim
-        //[Queryable]
-        //public IQueryable<Claim> GetClaims()
-        //{
-        //    var claims = _unitOfWorkAsync.RepositoryAsync<Claim>().Queryable();
-        //    // List<Claim> _claims = claims;
 
-        //    return claims;
-        //}
-
+        // 
+        // GET api/Claim
         [HttpGet]
         [Authorize]
         [ResponseType(typeof(ClaimListViewModels))]
@@ -64,7 +58,6 @@ namespace AngularJS.Web.Api
         [ResponseType(typeof(ClaimDTO))]
         public async Task<IHttpActionResult> GetClaim(int id)
         {
-            // Claim claim = await _unitOfWorkAsync.RepositoryAsync<Claim>().FindAsync(id);
             ClaimDTO claim = await _claimSerivce.GetClaimAsync(id);
 
             if (claim == null)
@@ -124,8 +117,10 @@ namespace AngularJS.Web.Api
 
             try
             {
+                string uploadPath = GetUploadPath();
+                claim.CreateBy = GetCurrentUserId();
                 claim.CreateTime = DateTime.Now;
-                int newId = await _claimSerivce.PostClaim(claim);
+                int newId = await _claimSerivce.PostClaim(claim, uploadPath);
                 claim.ClaimID = newId;
             }
             catch (Exception e)

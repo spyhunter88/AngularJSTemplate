@@ -10,6 +10,7 @@ using AngularJS.Services.DTO;
 using AutoMapper;
 using Repository.Pattern.Infrastructure;
 using Repository.Pattern.UnitOfWork;
+using System.IO;
 
 namespace AngularJS.Service
 {
@@ -19,7 +20,7 @@ namespace AngularJS.Service
 
         Task<ClaimDTO> GetClaimAsync(int id);
 
-        Task<int> PostClaim(ClaimDTO claim);
+        Task<int> PostClaim(ClaimDTO claim, string uploadPath);
     }
 
     public class ClaimService : IClaimService
@@ -80,7 +81,7 @@ namespace AngularJS.Service
         /// </summary>
         /// <param name="claim"></param>
         /// <returns></returns>
-        public async Task<int> PostClaim(ClaimDTO claim)
+        public async Task<int> PostClaim(ClaimDTO claim, string uploadPath)
         {
             Claim _claim = Mapper.Map<ClaimDTO, Claim>(claim);
             _claim.CheckPoints = Mapper.Map<List<CheckPointDTO>, ICollection<CheckPoint>>(claim.CheckPoints);
@@ -99,11 +100,21 @@ namespace AngularJS.Service
             }
 
             _unitOfWorkAsync.RepositoryAsync<Claim>().Insert(_claim);
-            int newId = await _unitOfWorkAsync.SaveChangesAsync();
+            int newId = _claim.ClaimID;
 
             // TODO: Rename and move documents to Claim's folder
+            string source = uploadPath + "\\Temps", dest = uploadPath + "\\" + newId;
+            foreach (DocumentDTO doc in claim.Documents)
+            {
+                File.Move(source + "\\" + doc.TempName, dest + "\\" + doc.FileName);
+                Document _doc = Mapper.Map<DocumentDTO, Document>(doc);
+                _doc.ReferenceID = (short) newId;
+                _doc.ReferenceName = "Claim";
+                _doc.ObjectState = ObjectState.Added;
+                _unitOfWorkAsync.Repository<Document>().Insert(_doc);
+            }
 
-
+            int record = await _unitOfWorkAsync.SaveChangesAsync();
             return newId;
         }
     }

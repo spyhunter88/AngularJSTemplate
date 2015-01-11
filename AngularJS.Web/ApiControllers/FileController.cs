@@ -11,18 +11,18 @@ using Newtonsoft.Json;
 using AngularJS.Services.DTO;
 using System.Web.Http.Description;
 
-namespace AngularJS.Api
+namespace AngularJS.Web.Api
 {
 	[RoutePrefix("api/File")]
-	public class FileController : ApiController
+	public class FileController : BaseController
 	{
-        private static readonly string ServerUploadFolder = "E:\\Uploads";
-		
+        
 		[HttpPost]
 		[ValidateMimeMultipartContentFilter]
         [ResponseType(typeof(DocumentDTO))]
         public async Task<IHttpActionResult> UploadSingleFile()
 		{
+            string ServerUploadFolder = GetUploadPath() + "\\Temp";
 			var streamProvider = new MultipartFormDataStreamProvider(ServerUploadFolder);
 			await Request.Content.ReadAsMultipartAsync(streamProvider);
 
