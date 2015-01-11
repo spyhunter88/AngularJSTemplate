@@ -15,13 +15,13 @@
                 <a href="#/" class="navbar-brand">AngularJS</a>
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a href="#/">Home</a></li>
-                    <li ng-show="authentication.isAuth"><a href="#/customer">Customers</a></li>
-                    <li><a href="#/claim">Claims</a></li>
-                    <li><a href="#/request">Request</a></li>
+                <ul class="nav navbar-nav" bs-navbar>
+                    <li data-match-route="/"><a href="#/">Home</a></li>
+                    <li data-match-route="/customer" ng-show="authentication.isAuth"><a href="#/customer">Customers</a></li>
+                    <li data-match-route="(/claim)|(/newClaim)"><a href="#/claim">Claims</a></li>
+                    <li data-match-route="/request"><a href="#/request">Request</a></li>
                     <li ng-show="authentication.isAuth"><a href="" ng-click="logout()">{{authentication.userName}} | Sign Out</a></li>
-                    <li ng-hide="authentication.isAuth"><a href="#/login">Sign In</a></li>
+                    <li data-match-route="/login" ng-hide="authentication.isAuth"><a href="#/login">Sign In</a></li>
                 </ul>
             </div>
         </div>
