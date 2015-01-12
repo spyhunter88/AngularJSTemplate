@@ -13,7 +13,6 @@ namespace AngularJS.Web.Security.Models
 {
     public class ApplicationUser : IdentityUser<int, CustomUserLogin, CustomUserRole, CustomUserClaim>
     {
-
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser, int> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -23,7 +22,9 @@ namespace AngularJS.Web.Security.Models
             return userIdentity;
         }
 
-
+        // Extra Properties
+        public int SystemLoginEnabled { get; set; }
+        public int EmailReceiveEnabled { get; set; }
     }
 
     public class CustomUserRole : IdentityUserRole<int> { }
