@@ -107,6 +107,7 @@ namespace AngularJS.Web.Api
 
         //
         // POST api/Claim
+        [Authorize]
         [ResponseType(typeof(Claim))]
         public async Task<IHttpActionResult> PostClaim([FromBody]ClaimDTO claim)
         {

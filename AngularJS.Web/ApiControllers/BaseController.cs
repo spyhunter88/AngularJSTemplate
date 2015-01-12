@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Security.Claims;
 
 namespace AngularJS.Web.Api
 {
@@ -30,7 +31,12 @@ namespace AngularJS.Web.Api
 
         protected short GetCurrentUserId()
         {
-            return Int16.Parse(User.Identity.GetUserId());
+            // return Int16.Parse(User.Identity.GetUserId());
+            var identity = (ClaimsIdentity) User.Identity;
+            IEnumerable<Claim> claims = identity.Claims;
+            string id = identity.FindFirst("id").Value;
+
+            return Int16.Parse(id);
         }
 
         protected string GetCurrentUserName()

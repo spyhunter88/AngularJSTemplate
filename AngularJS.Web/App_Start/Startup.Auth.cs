@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Web.Http;
+using AngularJS.Web.Security;
 using AngularJS.Web.Security.Providers;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin;
@@ -43,6 +44,8 @@ namespace AngularJS.Web
 
         public void ConfigureOAuth(IAppBuilder app)
         {
+            app.CreatePerOwinContext<AuthContext>(AuthContext.Create);
+
             OAuthAuthorizationServerOptions OAuthServerOptions = new OAuthAuthorizationServerOptions()
             {
                 AllowInsecureHttp = true,

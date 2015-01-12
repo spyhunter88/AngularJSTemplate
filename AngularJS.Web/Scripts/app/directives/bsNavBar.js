@@ -18,7 +18,6 @@
                             var pattern = $li.attr('data-match-route');
                             if (pattern == '/') pattern = pattern + '$';
                             var regexp = new RegExp('^' + pattern, ['i']);
-                            console.log(regexp);
 
                             if (regexp.test(newValue)) {
                                 $li.addClass('active');

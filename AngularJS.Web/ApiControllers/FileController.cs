@@ -22,7 +22,7 @@ namespace AngularJS.Web.Api
         [ResponseType(typeof(DocumentDTO))]
         public async Task<IHttpActionResult> UploadSingleFile()
 		{
-            string ServerUploadFolder = GetUploadPath() + "\\Temp";
+            string ServerUploadFolder = GetUploadPath() + "/Temps";
 			var streamProvider = new MultipartFormDataStreamProvider(ServerUploadFolder);
 			await Request.Content.ReadAsMultipartAsync(streamProvider);
 

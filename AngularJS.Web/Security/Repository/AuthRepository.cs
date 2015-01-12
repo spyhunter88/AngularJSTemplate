@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using AngularJS.Web.Models;
+using AngularJS.Web.Security.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -13,17 +14,17 @@ namespace AngularJS.Web.Security.Repository
     {
         private AuthContext _ctx;
 
-        private UserManager<IdentityUser> _userManager;
+        private ApplicationUserManager _userManager;
 
         public AuthRepository()
         {
             _ctx = new AuthContext();
-            _userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(_ctx));
+            _userManager = new ApplicationUserManager(new CustomUserStore(_ctx));
         }
 
         public async Task<IdentityResult> RegisterUser(RegisterViewModel userModel)
         {
-            IdentityUser user = new IdentityUser
+            ApplicationUser user = new ApplicationUser
             {
                 UserName = userModel.UserName
             };
@@ -33,9 +34,9 @@ namespace AngularJS.Web.Security.Repository
             return result;
         }
 
-        public async Task<IdentityUser> FindUser(string userName, string password)
+        public async Task<ApplicationUser> FindUser(string userName, string password)
         {
-            IdentityUser user = await _userManager.FindAsync(userName, password);
+            ApplicationUser user = await _userManager.FindAsync(userName, password);
 
             return user;
         }

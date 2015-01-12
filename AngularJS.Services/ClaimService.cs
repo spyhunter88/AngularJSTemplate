@@ -103,10 +103,11 @@ namespace AngularJS.Service
             int newId = _claim.ClaimID;
 
             // TODO: Rename and move documents to Claim's folder
-            string source = uploadPath + "\\Temps", dest = uploadPath + "\\" + newId;
+            string source = uploadPath + "/Temps", dest = uploadPath + "/" + newId;
             foreach (DocumentDTO doc in claim.Documents)
             {
-                File.Move(source + "\\" + doc.TempName, dest + "\\" + doc.FileName);
+                Directory.CreateDirectory(dest);
+                File.Move(source + "/" + doc.TempName, dest + "/" + doc.FileName);
                 Document _doc = Mapper.Map<DocumentDTO, Document>(doc);
                 _doc.ReferenceID = (short) newId;
                 _doc.ReferenceName = "Claim";

@@ -1,17 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.Data.Entity;
+using AngularJS.Web.Security.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace AngularJS.Web.Security
 {
-    public class AuthContext : IdentityDbContext<IdentityUser>
+    public class AuthContext : IdentityDbContext<ApplicationUser, CustomRole, int, 
+        CustomUserLogin, CustomUserRole, CustomUserClaim>
     {
         public AuthContext()
             : base("AuthContext")
         {
+            Database.SetInitializer(new CreateDatabaseIfNotExists<AuthContext>());
+        }
 
+        public static AuthContext Create()
+        {
+            return new AuthContext();
         }
     }
 }
