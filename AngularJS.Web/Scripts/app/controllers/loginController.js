@@ -27,4 +27,20 @@ app.controller('loginController', ['$scope', '$rootScope', '$location', 'AUTH_EV
 			*/
          });
     };
+
+    $scope.registerData = { userName: '', password: '', confirmPassword: '', message: '' };
+    $scope.register = function () {
+        authService.saveRegistration($scope.registerData).then(
+            function (response) {
+                $scope.registerData.message = 'Register success!';
+            }, function (err) {
+                console.log(err);
+                if (err == null) {
+                    $scope.registerData.message = 'Error: Empty response!';
+                } else {
+                    $scope.registerData.message = 'Error: ' + err.error_description;
+                }
+            }
+        );
+    };
 }]);

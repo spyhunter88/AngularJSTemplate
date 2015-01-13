@@ -52,6 +52,13 @@ namespace AngularJS.Web
                     "~/Scripts/app/directives/*.js"
                 ));
 
+            //bundles.Add(new ScriptBundle("~bundles/Admin/app").Include(
+            //        "~/Areas/Admin/Scripts/app/app.js",
+            //        "~/Areas/Admin/Scripts/app/services/*.js",
+            //        "~/Areas/Admin/Scripts/app/services/models/*.js",
+            //        "~/Areas/Admin/Scripts/app/controllers/*.js"
+            //    ));
+
             bundles.Add(new ScriptBundle("~/bundles/kendo").Include(
                     "~/Scripts/kendo/2014.2.716/kendo.web.min.js",
                     "~/Scripts/kendo/2014.2.716/kendo.data.odata.min.js"
@@ -66,7 +73,7 @@ namespace AngularJS.Web
                       "~/Content/misc/datatables.bootstrap.min.css",
                       "~/Content/kendo/2014.2.716/kendo.common.min.css",
                       "~/Content/kendo/2014.2.716/kendo.silver.min.css"
-                      ));
+                ));
         }
     }
 }

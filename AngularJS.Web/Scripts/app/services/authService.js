@@ -10,43 +10,40 @@ app.factory('authService', ['$http', '$q', 'localStorageService', function ($htt
     };
 
 	// No registration
-	/*
     var _saveRegistration = function (registration) {
         _logOut();
-        return $http.post(serviceBase + 'api/account/register', registration).then(function (response) {
-            return response;
+        var deferred = $q.defer();
+
+        return $http.post(serviceBase + 'api/Account/Register', registration).then(function (response) {
+            deferred.resolve(response);
+        }, function (err, status) {
+            deferred.reject(err);
         });
+
+        return deferred.promise;
     };
-	*/
 
 	// Login and get UserName
     var _login = function (credentials) {
-
         var data = "grant_type=password&username=" + credentials.userName + "&password=" + credentials.password;
-
         var deferred = $q.defer();
 
         $http.post(serviceBase + 'token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).success(function (response) {
-
             localStorageService.set('authorizationData', { token: response.access_token, userName: credentials.userName });
-
             _authentication.isAuth = true;
             _authentication.userName = credentials.userName;
 
             deferred.resolve(response);
-
         }).error(function (err, status) {
             _logOut();
             deferred.reject(err);
         });
 
         return deferred.promise;
-
     };
 
 	// Logout, remove authorization state, userName.
     var _logOut = function () {
-
         localStorageService.remove('authorizationData');
 
         _authentication.isAuth = false;
@@ -56,6 +53,7 @@ app.factory('authService', ['$http', '$q', 'localStorageService', function ($htt
 
 	// Copy authorization state and name that's saved from other session
     var _fillAuthData = function () {
+        // TODO: check login success here
 
         var authData = localStorageService.get('authorizationData');
         if (authData) {
@@ -66,7 +64,7 @@ app.factory('authService', ['$http', '$q', 'localStorageService', function ($htt
     }
 
 	// expose function
-    // authServiceFactory.saveRegistration = _saveRegistration;
+    authServiceFactory.saveRegistration = _saveRegistration;
     authServiceFactory.login = _login;
     authServiceFactory.logOut = _logOut;
     authServiceFactory.fillAuthData = _fillAuthData;

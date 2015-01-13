@@ -14,7 +14,7 @@
 
                         $('li[data-match-route]', element).each(function (k, li) {
                             var $li = angular.element(li);
-                            // data('match-rout') does not work with dynamic attributes
+                            // data('match-route') does not work with dynamic attributes
                             var pattern = $li.attr('data-match-route');
                             if (pattern == '/') pattern = pattern + '$';
                             var regexp = new RegExp('^' + pattern, ['i']);

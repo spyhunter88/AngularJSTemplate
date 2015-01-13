@@ -7,7 +7,8 @@ using System.Web.Http;
 
 namespace AngularJS.Web.Areas.Admin.Controllers
 {
-    [RoutePrefix("api/Admin/Account")]
+    /*
+    [RoutePrefix("Admin/api/Account")]
     public class AccountController : ApiController
     {
         // GET api/<controller>
@@ -37,4 +38,5 @@ namespace AngularJS.Web.Areas.Admin.Controllers
         {
         }
     }
+    */
 }

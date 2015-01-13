@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Threading;
 using System.Web.Http;
 using AngularJS.Web.Security;
+using AngularJS.Web.Security.Models;
 using AngularJS.Web.Security.Providers;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin;
@@ -44,7 +46,8 @@ namespace AngularJS.Web
 
         public void ConfigureOAuth(IAppBuilder app)
         {
-            app.CreatePerOwinContext<AuthContext>(AuthContext.Create);
+            // Must call this if ApplicationUser/IdentityUser have extra properties
+            Database.SetInitializer<AuthContext>(null);
 
             OAuthAuthorizationServerOptions OAuthServerOptions = new OAuthAuthorizationServerOptions()
             {

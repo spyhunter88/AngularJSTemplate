@@ -22,14 +22,16 @@ namespace AngularJS.Web.Security.Repository
             _userManager = new ApplicationUserManager(new CustomUserStore(_ctx));
         }
 
-        public async Task<IdentityResult> RegisterUser(RegisterViewModel userModel)
+        public Task<IdentityResult> RegisterUser(RegisterViewModel userModel)
         {
             ApplicationUser user = new ApplicationUser
             {
-                UserName = userModel.UserName
+                UserName = userModel.UserName,
+                SystemLoginEnabled = true,
+                EmailReceiveEnabled = false
             };
 
-            var result = await _userManager.CreateAsync(user, userModel.Password);
+            var result = _userManager.CreateAsync(user, userModel.Password);
 
             return result;
         }

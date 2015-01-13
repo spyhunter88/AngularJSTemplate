@@ -26,7 +26,7 @@ namespace AngularJS.Web.Controllers
         // POST api/Account/Register
         [AllowAnonymous]
         [Route("Register")]
-        public async Task<IHttpActionResult> Register(RegisterViewModel userModel)
+        public async Task<IHttpActionResult> Register([FromBody]RegisterViewModel userModel)
         {
             if (!ModelState.IsValid)
             {

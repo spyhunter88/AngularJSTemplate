@@ -12,11 +12,6 @@ namespace AngularJS.Web
     {
         public void Configuration(IAppBuilder app)
         {
-            //AreaRegistration.RegisterAllAreas();
-            //FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-            //RouteConfig.RegisterRoutes(RouteTable.Routes);
-            //BundleConfig.RegisterBundles(BundleTable.Bundles);
-
             ConfigureAuth(app);
 
             AutoMapperConfiguration.Configure();

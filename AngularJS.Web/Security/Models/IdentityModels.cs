@@ -23,8 +23,9 @@ namespace AngularJS.Web.Security.Models
         }
 
         // Extra Properties
-        public int SystemLoginEnabled { get; set; }
-        public int EmailReceiveEnabled { get; set; }
+        public Boolean SystemLoginEnabled { get; set; }
+        public Boolean EmailReceiveEnabled { get; set; }
+        // public string NewProp { get; set; }
     }
 
     public class CustomUserRole : IdentityUserRole<int> { }

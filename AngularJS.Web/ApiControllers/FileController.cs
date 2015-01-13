@@ -16,7 +16,8 @@ namespace AngularJS.Web.Api
 	[RoutePrefix("api/File")]
 	public class FileController : BaseController
 	{
-        
+        //
+        // POST api/File
 		[HttpPost]
 		[ValidateMimeMultipartContentFilter]
         [ResponseType(typeof(DocumentDTO))]
@@ -33,16 +34,18 @@ namespace AngularJS.Web.Api
             // uploadFileInfo will give you some addition information
             var uploadFileInfo = new FileInfo(streamProvider.FileData.First().LocalFileName);
 
+            /*
 			foreach (var file in streamProvider.FileData)
 			{
-                // var buffer = await file.Headers;
+                var buffer = await file.Headers;
 			}
+            */
 
-            var _NewDocument = new DocumentDTO {
+            var _newDocument = new DocumentDTO {
                 TempName = uploadFileInfo.Name
             };
 
-            return Ok(_NewDocument);
+            return Ok(_newDocument);
 		}
 
         [HttpPost]

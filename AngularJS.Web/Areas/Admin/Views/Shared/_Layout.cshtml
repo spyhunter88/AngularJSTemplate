@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+
+<html ng-app="AdminApp">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>My ASP.NET Admin</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <toast></toast>
+
+    <div class="cotainer body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - AngularJS Admin</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/angular")
+    @Scripts.Render("~/bundles/misc")
+    @Scripts.Render("~/bundles/Admin/app")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

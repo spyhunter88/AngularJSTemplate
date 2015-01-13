@@ -12,7 +12,7 @@ namespace AngularJS.Web.Security
         public AuthContext()
             : base("AuthContext")
         {
-            Database.SetInitializer(new CreateDatabaseIfNotExists<AuthContext>());
+            // Database.SetInitializer<AuthContext>(null);
         }
 
         public static AuthContext Create()
