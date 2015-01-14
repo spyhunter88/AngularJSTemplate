@@ -6,7 +6,6 @@ app.directive('loginModal', function(AUTH_EVENTS) {
 			var showDialog = function() {
 				// scope.visible = true;
 				element.modal("show");
-				console.log('Receive AUTH_EVENTS, show Login Dialog!');
 			};
 
 			var hideDialog = function() {
@@ -16,6 +15,7 @@ app.directive('loginModal', function(AUTH_EVENTS) {
 
 			// scope.visible = false;
 			scope.$on(AUTH_EVENTS.notAuthenticated, showDialog);
+			scope.$on(AUTH_EVENTS.notAuthorized, showDialog);
 			scope.$on(AUTH_EVENTS.sessionTimeout, showDialog);
 			scope.$on(AUTH_EVENTS.loginSuccess, hideDialog);
 		}

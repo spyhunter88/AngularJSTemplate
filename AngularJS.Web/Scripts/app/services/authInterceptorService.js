@@ -1,6 +1,6 @@
 ﻿'use strict';
-app.factory('authInterceptorService', ['$rootScope', '$q', '$location', 'localStorageService', 'AUTH_EVENTS',
-    function ($rootScope, $q, $location, localStorageService, AUTH_EVENTS) {
+app.factory('authInterceptorService', ['$rootScope','$injector', '$q', '$location', 'localStorageService', 'AUTH_EVENTS',
+    function ($rootScope, $injector, $q, $location, localStorageService, AUTH_EVENTS) {
 
     var authInterceptorServiceFactory = {};
 
@@ -19,12 +19,30 @@ app.factory('authInterceptorService', ['$rootScope', '$q', '$location', 'localSt
     // broadcast
     var _responseError = function (response) {
         console.log('broadcast response Error: ', response.status);
+        
+        if (response.status === 401) {
+            var authService = $injector.get('authService');
+            var authData = localStorageService.get('authorizationData');
+            
+            if (authData) {
+                if (authData.useRefreshTokens) {
+                    $location.path('/refresh');
+                    $rootScope.$broadcast(AUTH_EVENTS.refreshingToken, response);
+                    return $q.reject(response);
+                }
+            }
+
+            authService.logOut();
+            // $location.path('/login');
+        }
+
         $rootScope.$broadcast({
             401: AUTH_EVENTS.notAuthenticated,
             403: AUTH_EVENTS.notAuthorized,
             419: AUTH_EVENTS.sessionTimeout,
             440: AUTH_EVENTS.sessionTimeout
         }[response.status], response);
+
         return $q.reject(response);
     }
 

@@ -8,33 +8,32 @@ using System.Web.Mvc;
 
 namespace AngularJS.Web.Areas.Admin.Controllers
 {
+    /// <summary>
+    /// Contain start-up page (Home/Index) and some static information page
+    /// </summary>
     public class HomeController : Controller
     {
-        // GET api/<controller>
-        public IEnumerable<string> Get()
+        //
+        // GET Admin/Home/Index
+        public ActionResult Index()
         {
-            return new string[] { "value1", "value2" };
+            return View();
         }
 
-        // GET api/<controller>/5
-        public string Get(int id)
+        //
+        // GET Admin/Home/About
+        public ActionResult About()
         {
-            return "value";
+            ViewBag.Message = "All about this Area!";
+            return View();
         }
 
-        // POST api/<controller>
-        public void Post([FromBody]string value)
+        //
+        // GET Admin/Home/Help
+        public ActionResult Contact()
         {
-        }
-
-        // PUT api/<controller>/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/<controller>/5
-        public void Delete(int id)
-        {
+            ViewBag.Message = "Contact information!";
+            return View();
         }
     }
 }

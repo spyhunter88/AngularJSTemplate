@@ -86,6 +86,7 @@ namespace AngularJS.Service
             Claim _claim = Mapper.Map<ClaimDTO, Claim>(claim);
             _claim.CheckPoints = Mapper.Map<List<CheckPointDTO>, ICollection<CheckPoint>>(claim.CheckPoints);
             _claim.Requirements = Mapper.Map<List<RequirementDTO>, ICollection<Requirement>>(claim.Requirements);
+            // _claim.do
 
             _claim.StatusID = 1;
 
@@ -100,10 +101,11 @@ namespace AngularJS.Service
             }
 
             _unitOfWorkAsync.RepositoryAsync<Claim>().Insert(_claim);
+            int record = _unitOfWorkAsync.SaveChanges();
             int newId = _claim.ClaimID;
 
-            // TODO: Rename and move documents to Claim's folder
-            string source = uploadPath + "/Temps", dest = uploadPath + "/" + newId;
+            // Rename and move documents to Claim's folder
+            string source = uploadPath + "/Temps", dest = uploadPath + "/Claim/" + newId;
             foreach (DocumentDTO doc in claim.Documents)
             {
                 Directory.CreateDirectory(dest);
@@ -114,8 +116,8 @@ namespace AngularJS.Service
                 _doc.ObjectState = ObjectState.Added;
                 _unitOfWorkAsync.Repository<Document>().Insert(_doc);
             }
+            record = await _unitOfWorkAsync.SaveChangesAsync();
 
-            int record = await _unitOfWorkAsync.SaveChangesAsync();
             return newId;
         }
     }

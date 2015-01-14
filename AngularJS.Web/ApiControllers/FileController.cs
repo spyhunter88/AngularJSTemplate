@@ -32,7 +32,13 @@ namespace AngularJS.Web.Api
             var fileName = GetDeserializedFileName(streamProvider.FileData.First());
 			
             // uploadFileInfo will give you some addition information
-            var uploadFileInfo = new FileInfo(streamProvider.FileData.First().LocalFileName);
+            var uploadFileName = new FileInfo(streamProvider.FileData.First().LocalFileName).Name;
+            var newFileName = uploadFileName;
+
+            var extension = fileName.Split(new char[] { '.' });
+            if (extension.Length > 1) newFileName += "." + extension.LastOrDefault();
+            // Rename file's extension
+            File.Move(ServerUploadFolder + "/" + uploadFileName, ServerUploadFolder + "/" + newFileName);
 
             /*
 			foreach (var file in streamProvider.FileData)
@@ -42,7 +48,7 @@ namespace AngularJS.Web.Api
             */
 
             var _newDocument = new DocumentDTO {
-                TempName = uploadFileInfo.Name
+                TempName = newFileName
             };
 
             return Ok(_newDocument);

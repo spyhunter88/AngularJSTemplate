@@ -108,7 +108,7 @@ namespace AngularJS.Web.Api
         //
         // POST api/Claim
         [Authorize]
-        [ResponseType(typeof(Claim))]
+        [ResponseType(typeof(ClaimDTO))]
         public async Task<IHttpActionResult> PostClaim([FromBody]ClaimDTO claim)
         {
             if (!ModelState.IsValid)
@@ -121,6 +121,13 @@ namespace AngularJS.Web.Api
                 string uploadPath = GetUploadPath();
                 claim.CreateBy = GetCurrentUserId();
                 claim.CreateTime = DateTime.Now;
+
+                foreach (DocumentDTO _doc in claim.Documents)
+                {
+                    _doc.UploadBy = (int)claim.CreateBy;
+                    _doc.UploadTime = claim.CreateTime;
+                }
+
                 int newId = await _claimSerivce.PostClaim(claim, uploadPath);
                 claim.ClaimID = newId;
             }
@@ -129,7 +136,7 @@ namespace AngularJS.Web.Api
                 Console.Write(e.Message);
             }
 
-            return CreatedAtRoute("DefaultApi", new { controller = "Claim", id = claim.ClaimID }, claim);
+            return Ok(claim);
         }
 
         //

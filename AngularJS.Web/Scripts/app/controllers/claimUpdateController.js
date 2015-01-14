@@ -1,7 +1,7 @@
 ﻿'use strict';
 
-app.controller('claimUpdateController', ['$scope', '$routeParams', '$timeout', 'claim.api', 'category.api', 'file.api', 'ngToast',
-    function ($scope, $routeParams, $timeout, claimApi, catApi, fileApi, ngToast) {
+app.controller('claimUpdateController', ['$scope', '$routeParams', '$location', 'claim.api', 'category.api', 'file.api', 'ngToast',
+    function ($scope, $routeParams, $location, claimApi, catApi, fileApi, ngToast) {
         $scope.title = "Claim Management";
         $scope.options = {};
         $scope.uploadFiles = []; // keep the files while it uploading
@@ -13,6 +13,11 @@ app.controller('claimUpdateController', ['$scope', '$routeParams', '$timeout', '
             }, function (error) {
                 ngToast.create('Error due loading UNIT!');
             });
+
+            var claimId = $routeParams.claimId;
+            if (claimId !== undefined && claimId !== 0) {
+                $scope.load(claimId);
+            }
         };
 
         // Need to load BU, Participant, Unit, Vendor, Program Type, Payment, ProductLine list
@@ -60,8 +65,9 @@ app.controller('claimUpdateController', ['$scope', '$routeParams', '$timeout', '
             // save
             claimApi.saveClaim($scope.claim).then(function (data) {
                 $scope.claim = data;
+                $location.path('/claim/' + $scope.claim.claimId);
             }, function (error) {
-                alert('1123');
+                ngToast.create("Error");
             });
             
 		};
@@ -111,5 +117,5 @@ app.controller('claimUpdateController', ['$scope', '$routeParams', '$timeout', '
 		$scope.fileSelected = _fileSelected;
 		$scope.removeFile = _removeFile;
         $scope.init();
-        $timeout(function () { $scope.$apply(function() { $scope.load($routeParams.claimId) }) }, 500);
+        // $timeout(function () { $scope.$apply(function() { $scope.load($routeParams.claimId) }) }, 500);
 }]);

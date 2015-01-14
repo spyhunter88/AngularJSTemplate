@@ -36,7 +36,7 @@ app.config(function ($routeProvider) {
 	    controller: "claimUpdateController",
         templateUrl: "Claim/Update",
         resolve: {
-        	authenticate: function() {return true;}
+        	authenticate: function() { return true; }
         }
 	});
 	
