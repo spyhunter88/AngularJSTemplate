@@ -4,11 +4,11 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Mvc;
 
 namespace AngularJS.Web.Areas.Admin.Controllers
 {
-    // [RoutePrefix("Admin/api/Account")]
-    public class AccountController : ApiController
+    public class HomeController : Controller
     {
         // GET api/<controller>
         public IEnumerable<string> Get()

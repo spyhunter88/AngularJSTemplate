@@ -17,7 +17,15 @@ namespace AngularJS.Web.Areas.Admin
             context.MapRoute(
                 "Admin_default",
                 "Admin/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }
+                new { controller = "Home", action = "Index", id = UrlParameter.Optional },
+                namespaces: new[] { "AngularJS.Web.Areas.Admin.Controllers" }
+            );
+
+            context.MapRoute(
+                "AdminApi_default",
+                "Admin/api/{controller}/{action}/{id}",
+                new {  id = UrlParameter.Optional },
+                namespaces: new[] { "AngularJS.Web.Areas.Admin.Controllers" }
             );
         }
     }
