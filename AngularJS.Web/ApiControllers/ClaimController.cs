@@ -15,6 +15,7 @@ using AngularJS.Services.DTO;
 using AngularJS.Web.Models;
 using Repository.Pattern.Infrastructure;
 using Repository.Pattern.UnitOfWork;
+using AngularJS.Web.Security.Models;
 
 namespace AngularJS.Web.Api
 {
@@ -118,17 +119,26 @@ namespace AngularJS.Web.Api
 
             try
             {
+                ApplicationUser _user = GetCurrentUser();
+
                 string uploadPath = GetUploadPath();
                 claim.CreateBy = GetCurrentUserId();
                 claim.CreateTime = DateTime.Now;
 
-                foreach (DocumentDTO _doc in claim.Documents)
+                if (claim.Documents != null && claim.Documents.Count > 0)
                 {
-                    _doc.UploadBy = (int)claim.CreateBy;
-                    _doc.UploadTime = claim.CreateTime;
+                    foreach (DocumentDTO _doc in claim.Documents)
+                    {
+                        _doc.UploadBy = (int)claim.CreateBy;
+                        _doc.UploadTime = claim.CreateTime;
+                    }
+                } 
+                else
+                {
+                    claim.Documents = new List<DocumentDTO>();
                 }
 
-                int newId = await _claimSerivce.PostClaim(claim, uploadPath);
+                int newId = await _claimSerivce.PostClaim(claim, uploadPath, new User() { Id = _user.Id, UserName = _user.UserName });
                 claim.ClaimID = newId;
             }
             catch (Exception e)

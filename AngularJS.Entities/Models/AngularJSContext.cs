@@ -2,6 +2,10 @@
 using System.Data.Entity.Infrastructure;
 using AngularJS.Entities.Models.Mapping;
 using Repository.Pattern.Ef6;
+using FrameLog.Contexts;
+using FrameLog;
+using FrameLog.History;
+using FrameLog.Filter;
 
 namespace AngularJS.Entities.Models
 {
@@ -10,11 +14,14 @@ namespace AngularJS.Entities.Models
         static AngularJSContext()
         {
             Database.SetInitializer<AngularJSContext>(null);
+            filterProvider = null;
         }
+        public static ILoggingFilterProvider filterProvider { get; set; }
 
         public AngularJSContext()
             : base("Name=AngularJSContext")
         {
+            Logger = new FrameLogModule<ChangeSet, User>(new ChangeSetFactory(), FrameLogContext, filterProvider);
         }        
 
         public DbSet<Category> Categories { get; set; }
@@ -38,6 +45,27 @@ namespace AngularJS.Entities.Models
         public DbSet<RequirementHistory> RequirementHistories { get; set; }
         public DbSet<Document> Documents { get; set; }
 
+        #region Logging
+        public DbSet<User> Users { get; set; }
+        public DbSet<ChangeSet> ChangeSets { get; set; }
+        public DbSet<ObjectChange> ObjectChanges { get; set; }
+        public DbSet<PropertyChange> PropertyChanges { get; set; }
+
+        public readonly FrameLogModule<ChangeSet, User> Logger;
+        public IFrameLogContext<ChangeSet, User> FrameLogContext
+        {
+            get { return new AngularJSContextAdapter(this); }
+        }
+        public HistoryExplorer<ChangeSet, User> HistoryExplorer
+        {
+            get { return new HistoryExplorer<ChangeSet, User>(FrameLogContext); }
+        }
+        public void Save(User author)
+        {
+            Logger.SaveChanges(author);
+        }
+        #endregion
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new CategoryMap());
@@ -59,6 +87,10 @@ namespace AngularJS.Entities.Models
             modelBuilder.Configurations.Add(new RequirementMap());
             modelBuilder.Configurations.Add(new RequirementHistoryMap());
             modelBuilder.Configurations.Add(new DocumentMap());
+            modelBuilder.Entity<User>().ToTable("AspNetUsers");
+            modelBuilder.Entity<ChangeSet>().ToTable("ChangeSets");
+            modelBuilder.Entity<ObjectChange>().ToTable("ObjectChanges");
+            modelBuilder.Entity<PropertyChange>().ToTable("PropertyChanges");
 
 
             modelBuilder.Entity<CheckPoint>().HasRequired<Claim>(s => s.Claim)

@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Security.Claims;
+using AngularJS.Web.Security.Models;
 
 namespace AngularJS.Web.Api
 {
@@ -15,12 +16,12 @@ namespace AngularJS.Web.Api
     {
         private AuthContext _ctx;
 
-        protected UserManager<IdentityUser> _userManager { get; set; }
+        protected ApplicationUserManager _userManager { get; set; }
 
         public BaseController()
         {
             _ctx = new AuthContext();
-            _userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(_ctx));
+            _userManager = new ApplicationUserManager(new CustomUserStore(_ctx));
         }
 
         protected string GetUploadPath()
@@ -44,9 +45,10 @@ namespace AngularJS.Web.Api
             return User.Identity.Name;
         }
 
-        protected IdentityUser GetCurrentUser()
+        protected ApplicationUser GetCurrentUser()
         {
-            IdentityUser user = _userManager.FindById<IdentityUser, string>(User.Identity.GetUserId());
+
+            ApplicationUser user = _userManager.FindById<ApplicationUser, int>(GetCurrentUserId());
             return user;
         }
     }

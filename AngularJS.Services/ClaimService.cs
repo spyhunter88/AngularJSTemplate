@@ -20,7 +20,7 @@ namespace AngularJS.Service
 
         Task<ClaimDTO> GetClaimAsync(int id);
 
-        Task<int> PostClaim(ClaimDTO claim, string uploadPath);
+        Task<int> PostClaim(ClaimDTO claim, string uploadPath, User author);
     }
 
     public class ClaimService : IClaimService
@@ -81,7 +81,7 @@ namespace AngularJS.Service
         /// </summary>
         /// <param name="claim"></param>
         /// <returns></returns>
-        public async Task<int> PostClaim(ClaimDTO claim, string uploadPath)
+        public async Task<int> PostClaim(ClaimDTO claim, string uploadPath, User author)
         {
             Claim _claim = Mapper.Map<ClaimDTO, Claim>(claim);
             _claim.CheckPoints = Mapper.Map<List<CheckPointDTO>, ICollection<CheckPoint>>(claim.CheckPoints);
@@ -117,6 +117,9 @@ namespace AngularJS.Service
                 _unitOfWorkAsync.Repository<Document>().Insert(_doc);
             }
             record = await _unitOfWorkAsync.SaveChangesAsync();
+
+            AngularJSContext dbContext = (AngularJSContext)_unitOfWorkAsync.GetDataContext();
+            dbContext.Save(author);
 
             return newId;
         }

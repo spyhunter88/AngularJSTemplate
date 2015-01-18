@@ -63,9 +63,11 @@ app.controller('claimUpdateController', ['$scope', '$routeParams', '$location', 
 		    // validate first
 		    console.log($scope.claim);
             // save
-            claimApi.saveClaim($scope.claim).then(function (data) {
-                $scope.claim = data;
-                $location.path('/claim/' + $scope.claim.claimId);
+		    claimApi.saveClaim($scope.claim).then(function (data) {
+		        if (data.claimId !== undefined && data.claimId !== 0) {
+		            $scope.claim = data;
+		            $location.path('/claim/' + $scope.claim.claimId);
+		        }
             }, function (error) {
                 ngToast.create("Error");
             });
