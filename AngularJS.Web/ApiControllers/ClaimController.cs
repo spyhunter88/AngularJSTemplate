@@ -138,7 +138,7 @@ namespace AngularJS.Web.Api
                     claim.Documents = new List<DocumentDTO>();
                 }
 
-                int newId = await _claimSerivce.PostClaim(claim, uploadPath, new User() { Id = _user.Id, UserName = _user.UserName });
+                int newId = await _claimSerivce.PostClaim(claim, uploadPath);
                 claim.ClaimID = newId;
             }
             catch (Exception e)
