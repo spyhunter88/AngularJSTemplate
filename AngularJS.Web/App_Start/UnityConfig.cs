@@ -50,14 +50,18 @@ namespace AngularJS.Web
                     new PerRequestLifetimeManager(),
                     new InjectionConstructor(new object[] { new RepositoryFactories() })
                     )
-                .RegisterType<IUnitOfWorkAsync, AngularJS.Entities.UnitOfWork.UnitOfWork>(new PerRequestLifetimeManager())
+                .RegisterType<IUnitOfWorkAsync, UnitOfWork>(new PerRequestLifetimeManager())
                 .RegisterType<IRepositoryAsync<Customer>, Repository<Customer>>()
                 .RegisterType<IRepositoryAsync<Product>, Repository<Product>>()
                 .RegisterType<IRepositoryAsync<Claim>, Repository<Claim>>()
                 .RegisterType<IRepositoryAsync<Request>, Repository<Request>>()
+                .RegisterType<IRepositoryAsync<ProductLine>, Repository<ProductLine>>()
+                .RegisterType<IRepositoryAsync<Vendor>, Repository<Vendor>>()
+
                 .RegisterType<IProductService, ProductService>()
                 .RegisterType<ICustomerService, CustomerService>()
                 .RegisterType<IClaimService, ClaimService>()
+
                 .RegisterType<IAngularJSStoredProcedures, AngularJSContext>(new PerRequestLifetimeManager())
                 .RegisterType<IStoredProcedureService, StoredProcedureService>();
         }

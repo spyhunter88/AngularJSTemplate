@@ -1,7 +1,7 @@
 ﻿'use strict';
 
-app.controller('claimUpdateController', ['$scope', '$routeParams', '$location', 'claim.api', 'category.api', 'file.api', 'ngToast',
-    function ($scope, $routeParams, $location, claimApi, catApi, fileApi, ngToast) {
+app.controller('claimUpdateController', ['$scope', '$routeParams', '$location', 'claim.api', 'category.api', 'file.api', 'productLine.api', 'vendor.api', 'ngToast',
+    function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, vendorApi, ngToast) {
         $scope.title = "Claim Management";
         $scope.options = {};
         $scope.uploadFiles = []; // keep the files while it uploading
@@ -16,7 +16,31 @@ app.controller('claimUpdateController', ['$scope', '$routeParams', '$location', 
             catApi.getCategories({ type: 'PARTICIPANT' }).then(function (data) {
                 $scope.options.participants = data;
             }, function (error) {
-                ngToast.create('Error due loading UNIT!');
+                ngToast.create('Error due loading PARTICIPANT!');
+            });
+
+            catApi.getCategories({ type: 'PAYMENTMETHOD' }).then(function (data) {
+                $scope.options.paymentMethods = data;
+            }, function (error) {
+                ngToast.create('Error due loading PAYMENTMETHOD!');
+            });
+
+            catApi.getCategories({ type: 'PROGRAMTYPE' }).then(function (data) {
+                $scope.options.programTypes = data;
+            }, function (error) {
+                ngToast.create('Error due loading PROGRAMTYPE!');
+            });
+
+            proApi.getProductLines({ type: '' }).then(function (data) {
+                $scope.options.productLines = data;
+            }, function (error) {
+                ngToast.create('Error due loading Product Line!');
+            });
+
+            vendorApi.getVendors({ type: '' }).then(function (data) {
+                $scope.options.vendors = data;
+            }, function (error) {
+                ngToast.create('Error due loading Vendor!');
             });
 
             var claimId = $routeParams.claimId;

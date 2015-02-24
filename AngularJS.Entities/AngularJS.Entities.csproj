@@ -101,7 +101,6 @@
     <Compile Include="StoredProcedures\IAngularJSStoredProcedures.cs" />
     <Compile Include="StoredProcedures\Models\CustomerOrderDetail.cs" />
     <Compile Include="StoredProcedures\Models\CustomerOrderHistory.cs" />
-    <Compile Include="UnitOfWork\UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
