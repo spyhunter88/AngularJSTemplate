@@ -9,7 +9,12 @@ app.controller('claimUpdateController', ['$scope', '$routeParams', '$location', 
         var _init = function () {
             catApi.getCategories({ type: 'UNIT' }).then(function (data) {
                 $scope.options.units = data;
-				ngToast.create('Load UNIT success!');
+            }, function (error) {
+                ngToast.create('Error due loading UNIT!');
+            });
+
+            catApi.getCategories({ type: 'PARTICIPANT' }).then(function (data) {
+                $scope.options.participants = data;
             }, function (error) {
                 ngToast.create('Error due loading UNIT!');
             });
@@ -71,7 +76,18 @@ app.controller('claimUpdateController', ['$scope', '$routeParams', '$location', 
             }, function (error) {
                 ngToast.create("Error");
             });
-            
+		};
+
+		var _deleteClaim = function () {
+		    console.log('Delete this claim!');
+		};
+
+		var _approveClaim = function () {
+
+		};
+
+		var _denyClaim = function () {
+
 		};
 
         // Upload File
@@ -115,9 +131,13 @@ app.controller('claimUpdateController', ['$scope', '$routeParams', '$location', 
 		$scope.removeCheckPoint = _removeCP;
 		$scope.addRequirement = _addReq;
 		$scope.removeRequirement = _removeReq;
-		$scope.createClaim = _createClaim;
 		$scope.fileSelected = _fileSelected;
 		$scope.removeFile = _removeFile;
+
+		$scope.createClaim = _createClaim;
+		$scope.deleteClaim = _deleteClaim;
+		$scope.approveClaim = _approveClaim;
+		$scope.denyClaim = _denyClaim;
         $scope.init();
         // $timeout(function () { $scope.$apply(function() { $scope.load($routeParams.claimId) }) }, 500);
 }]);

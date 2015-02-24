@@ -29,7 +29,7 @@ app.config(function ($routeProvider) {
 
 	$routeProvider.when("/newClaim", {
 	    controller: "claimUpdateController",
-        templateUrl: "Claim/Create"
+	    templateUrl: "Claim/Update"
 	});
 
 	$routeProvider.when("/claim/:claimId", {
@@ -44,7 +44,7 @@ app.config(function ($routeProvider) {
 	    controller: "requestController",
 	    templateUrl: "Request/Index",
 	    resolve: {
-        	authenticate: function() {return true;}
+        	authenticate: function() { return true; }
         }
 	});
 

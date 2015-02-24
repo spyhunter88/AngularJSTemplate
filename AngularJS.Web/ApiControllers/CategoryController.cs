@@ -1,16 +1,7 @@
-﻿using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Description;
 using AngularJS.Entities.Models;
-using AngularJS.Service;
-using AngularJS.Services.DTO;
-using AngularJS.Web.Models;
-using Repository.Pattern.Infrastructure;
 using Repository.Pattern.UnitOfWork;
 using System.Collections.Generic;
 
