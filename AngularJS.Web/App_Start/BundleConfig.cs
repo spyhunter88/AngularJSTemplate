@@ -9,7 +9,7 @@ namespace AngularJS.Web
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery/jquery-1.10.2.js"));
+                        "~/Scripts/jquery/jquery-2.1.0.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery/jquery.validate*"));
@@ -34,11 +34,15 @@ namespace AngularJS.Web
             bundles.Add(new ScriptBundle("~/bundles/misc").Include(
                     "~/Scripts/misc/loading-bar.min.js",
                     "~/Scripts/misc/angular-local-storage.min.js",
-                    "~/Scripts/misc/ui-bootstrap-tpls-0.12.0.min.js",
+                    "~/Scripts/misc/ui-bootstrap-tpls-0.12.1.min.js",
                     "~/Scripts/misc/ngToast.min.js",
                     "~/Scripts/misc/xeditable.min.js",
-                    "~/Scripts/misc/angular-datatables.min.js",
-					"~/Scripts/misc/angular-file-upload-shim.min.js",
+                    "~/Scripts/datatables/js/jquery.dataTables.min.js",
+                    "~/Scripts/datatables/angular-datatables.min.js",
+                    "~/Scripts/datatables/plugins/bootstrap/angular-datatables.bootstrap.min.js",
+                    "~/Scripts/datatables/extensions/Scroller/js/dataTables.scroller.min.js",
+                    "~/Scripts/datatables/plugins/scroller/angular-datatables.scroller.min.js",
+                    "~/Scripts/misc/angular-file-upload-shim.min.js",
 					"~/Scripts/misc/angular-file-upload.min.js"
                 ));
 
@@ -70,7 +74,9 @@ namespace AngularJS.Web
                       "~/Content/misc/loading-bar.css",
                       "~/Content/misc/ngToast.min.css",
                       "~/Content/misc/xeditable.css",
-                      "~/Content/misc/datatables.bootstrap.min.css",
+                      "~/Scripts/datatables/css/jquery.dataTables.min.css",
+                      "~/Scripts/datatables/extensions/Scroller/css/dataTables.scroller.min.css",
+                      "~/Scripts/datatables/plugins/bootstrap/datatables.bootstrap.min.css",
                       "~/Content/kendo/2014.2.716/kendo.common.min.css",
                       "~/Content/kendo/2014.2.716/kendo.silver.min.css"
                 ));

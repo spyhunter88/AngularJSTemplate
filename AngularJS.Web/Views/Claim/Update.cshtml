@@ -94,7 +94,7 @@
             <div class="control-group">
                 <label class="col-md-2 control-label" ng-class="{ 'has-error': claimForm.startDate.$invalid }">Start Date</label>
                 <div class="col-md-4">
-                    <p class="input-group">
+                    <p class="input-group input-group-sm">
                         <input type="text" class="form-control input-sm" name="startDate" ng-model="claim.startDate" placeholder="Start Date" required datepicker-popup="yyyy-MM-dd" datepicker-localdate>
                     </p>
                 </div>
@@ -102,7 +102,7 @@
             <div class="control-group">
                 <label class="col-md-2 control-label" ng-class="{ 'has-error': claimForm.endDate.$invalid }">End Date</label>
                 <div class="col-md-4">
-                    <p class="input-group">
+                    <p class="input-group input-group-sm">
                         <input type="text" class="form-control input-sm" name="endDate" ng-model="claim.endDate" placeholder="End Date" required datepicker-popup="yyyy-MM-dd" datepicker-localdate>
                     </p>
                 </div>
@@ -113,7 +113,7 @@
             <div class="control-group">
                 <label class="col-md-2 control-label">Deadline Claim</label>
                 <div class="col-md-4">
-                    <p class="input-group">
+                    <p class="input-group input-group-sm">
                         <input type="text" class="form-control input-sm" name="deadlineClaimDate" ng-model="claim.deadlineClaimDate" placeholder="Deadline Claim" datepicker-popup="yyyy-MM-dd" datepicker-localdate>
                     </p>
                 </div>
@@ -155,35 +155,35 @@
     <tabset>
         <tab heading="CheckPoint & Requirement">
             <h5 ng-show="!claim.prePaid">CheckPoints</h5>
-            <table class="table table-bordered table-hover no-border" ng-show="!claim.prePaid">
+            <table class="table table-bordered table-hover" ng-show="!claim.prePaid" datatable="ng" dt-options="dt.options" >
                 <thead>
                     <tr style="font-weight: bold">
-                        <td>Action</td>
-                        <td style="width:150px">Check Date</td>
-                        <td style="width:150px">Report Date</td>
-                        <td style="width:100px"></td>
+                        <th>Action</th>
+                        <th style="width:150px">Check Date</th>
+                        <th style="width:150px">Report Date</th>
+                        <th style="width:100px"></th>
                     </tr>
                     <tr ng-form name="newCP" style="padding-bottom: 10px">
-                        <th>
+                        <td>
                             <div class="control-group" ng-class="{ 'has-error': newCP.action.$invalid }">
                                 <input type="text" class="form-control input-sm" name="action" ng-model="cp2Add.action" required />
                             </div>
-                        </th>
-                        <th>
-                            <div class="control-group input-group" ng-class="{'has-error': newCP.checkDate.$invalid }">
+                        </td>
+                        <td>
+                            <div class="input-group input-group-sm" ng-class="{'has-error': newCP.checkDate.$invalid }">
                                 <input type="text" class="form-control input-sm" name="checkDate" ng-model="cp2Add.checkDate" datepicker-popup="yyyy-MM-dd" ng-required="true" datepicker-localdate />
                             </div>
-                        </th>
-                        <th>
-                            <div class="control-group input-group" ng-class="{'has-error': newCP.reportDate.$invalid }">
+                        </td>
+                        <td>
+                            <div class="input-group input-group-sm" ng-class="{'has-error': newCP.reportDate.$invalid }">
                                 <input type="text" class="form-control input-sm" name="reportDate" ng-model="cp2Add.reportDate" datepicker-popup="yyyy-MM-dd" ng-required="true" datepicker-localdate />
                             </div>
-                        </th>
-                        <th>
+                        </td>
+                        <td>
                             <div class="control-group">
                                 <button type="submit" class="btn btn-success btn-sm" ng-click="addCheckPoint(cp2Add)" ng-disabled="newCP.$invalid"><i class="glyphicon glyphicon-plus"></i></button>
                             </div>
-                        </th>
+                        </td>
                     </tr>
                 </thead>
                 <tbody>
@@ -194,12 +194,12 @@
                             </div>
                         </td>
                         <td>
-                            <div class="control-group input-group">
+                            <div class="input-group input-group-sm">
                                 <input type="text" class="form-control input-sm" datepicker-popup="yyyy-MM-dd" ng-model="cp.checkDate" ng-required="true" datepicker-localdate />
                             </div>
                         </td>
                         <td>
-                            <div class="control-group input-group">
+                            <div class="input-group input-group-sm">
                                 <input type="text" class="form-control input-sm" datepicker-popup="yyyy-MM-dd" ng-model="cp.reportDate" ng-required="true" datepicker-localdate />
                             </div>
                         </td>

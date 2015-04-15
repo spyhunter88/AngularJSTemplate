@@ -1,10 +1,29 @@
 ﻿'use strict';
 
-app.controller('claimUpdateController', ['$scope', '$routeParams', '$location', 'claim.api', 'category.api', 'file.api', 'productLine.api', 'vendor.api', 'ngToast',
-    function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, vendorApi, ngToast) {
+app.controller('claimUpdateController', ['$scope', '$routeParams', '$location', 'claim.api', 'category.api', 'file.api', 
+    'productLine.api', 'vendor.api', 'ngToast', 'DTOptionsBuilder', 'DTColumnDefBuilder',
+function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, vendorApi, ngToast,
+            DTOptionsBuilder, DTColumnDefBuilder) {
         $scope.title = "Claim Management";
+        $scope.claim = {};
         $scope.options = {};
         $scope.uploadFiles = []; // keep the files while it uploading
+
+        var dtCheckPoint = {};
+        dtCheckPoint.options = DTOptionsBuilder.newOptions()
+            // .withDisplayLength(5)
+            .withDOM('trip')
+            .withScroller()
+            // .withOptions('deferRender', true)
+            .withOption('scrollY', 400)
+            .withOption('sort', false)
+            .withBootstrap();
+        dtCheckPoint.columnDefs = [
+            DTColumnDefBuilder.newColumnDef(0).notSortable(),
+            DTColumnDefBuilder.newColumnDef(1).notSortable(),
+            DTColumnDefBuilder.newColumnDef(2).notSortable(),
+            DTColumnDefBuilder.newColumnDef(3).notSortable()
+        ];
 
         var _init = function () {
             catApi.getCategories({ type: 'UNIT' }).then(function (data) {
@@ -162,6 +181,8 @@ app.controller('claimUpdateController', ['$scope', '$routeParams', '$location', 
 		$scope.deleteClaim = _deleteClaim;
 		$scope.approveClaim = _approveClaim;
 		$scope.denyClaim = _denyClaim;
+
+		$scope.dt = dtCheckPoint;
         $scope.init();
         // $timeout(function () { $scope.$apply(function() { $scope.load($routeParams.claimId) }) }, 500);
 }]);
