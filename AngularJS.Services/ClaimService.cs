@@ -121,5 +121,12 @@ namespace AngularJS.Service
 
             return newId;
         }
+
+        public async Task<Claim> PutClaim(ClaimDTO claim, string uploadPath)
+        {
+            Claim _claim = Mapper.Map<ClaimDTO, Claim>(claim);
+            _claim.CheckPoints = Mapper.Map<List<CheckPointDTO>, ICollection<CheckPoint>>(claim.CheckPoints);
+            _claim.Requirements = Mapper.Map<List<RequirementDTO>, ICollection<Requirement>>(claim.Requirements);
+        }
     }
 }

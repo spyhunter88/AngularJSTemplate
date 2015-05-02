@@ -66,14 +66,14 @@ body {
 }
 
 /* TABLE for input without space between input and border */
-table.no-border > thead > tr > th, 
+table.no-border > thead > tr > td, 
 table.no-border > tbody > tr > td,
 table.no-border > tfoot > tr > td {
     margin: 0 !important; 
     padding: 0 !important;
 }
 
-table.no-border > thead > tr > th > div > input,
+table.no-border > thead > tr > td > div > input,
 table.no-border > tbody > tr > td > div > input,
 table.no-border > tfoot > tr > td > div > input
  {
@@ -86,7 +86,7 @@ table.no-border > tfoot > tr > td > div > input
     line-height: 1 !important;
 }
 
-table.no-border > thead > tr > th > div > input:focus,
+table.no-border > thead > tr > td > div > input:focus,
 table.no-border > tbody > tr > td > div > input:focus,
 table.no-border > tfoot > tr > td > div > input:focus
  {
@@ -95,7 +95,7 @@ table.no-border > tfoot > tr > td > div > input:focus
     background-color: #F8FCC2;
 }
 
-table.no-border > thead > tr > th > div > span > button,
+table.no-border > thead > tr > td > div > span > button,
 table.no-border > tbody > tr > td > div > span > button,
 table.no-border > tfoot > tr > td > div > span > button
 {
@@ -110,7 +110,7 @@ table.no-border > thead > tr > th {
 }
 
 table.no-border > thead,
-table.no-border > thead > tr > th > div > input {
+table.no-border > thead > tr > td > div > input {
     background-color: azure;
 }
 

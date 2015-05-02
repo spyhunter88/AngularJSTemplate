@@ -28,7 +28,7 @@ namespace AngularJS.Web
                     "~/Scripts/angular/angular-route.min.js",
                     "~/Scripts/angular/angular-animate.min.js",
                     "~/Scripts/angular/angular-sanitize.min.js",
-                    "~/Scripts/kendo/2014.2.716/kendo.angular.min.js"
+                    "~/Scripts/kendo/2015.1.408/kendo.angular.min.js"
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/misc").Include(
@@ -64,8 +64,8 @@ namespace AngularJS.Web
             //    ));
 
             bundles.Add(new ScriptBundle("~/bundles/kendo").Include(
-                    "~/Scripts/kendo/2014.2.716/kendo.web.min.js",
-                    "~/Scripts/kendo/2014.2.716/kendo.data.odata.min.js"
+                    "~/Scripts/kendo/2015.1.408/kendo.web.min.js",
+                    "~/Scripts/kendo/2015.1.408/kendo.data.odata.min.js"
                 ));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
@@ -77,8 +77,8 @@ namespace AngularJS.Web
                       "~/Scripts/datatables/css/jquery.dataTables.min.css",
                       "~/Scripts/datatables/extensions/Scroller/css/dataTables.scroller.min.css",
                       "~/Scripts/datatables/plugins/bootstrap/datatables.bootstrap.min.css",
-                      "~/Content/kendo/2014.2.716/kendo.common.min.css",
-                      "~/Content/kendo/2014.2.716/kendo.silver.min.css"
+                      "~/Content/kendo/2015.1.408/kendo.common.min.css",
+                      "~/Content/kendo/2015.1.408/kendo.silver.min.css"
                 ));
         }
     }

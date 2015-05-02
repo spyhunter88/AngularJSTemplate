@@ -125,6 +125,12 @@ function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, ve
 		    console.log('Delete this claim!');
 		};
 
+		var _saveClaim = function () {
+		    claimApi.saveClaim($scope.claim).then(function (data) {
+		        ngToast.create('Saved');
+		    });
+		};
+
 		var _approveClaim = function () {
 
 		};
@@ -169,6 +175,10 @@ function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, ve
 		    $scope.claim.documents.splice(idx, 1);
 		};
 
+		var _createCheckpoint = function () {
+
+		};
+
         $scope.init = _init;
 		$scope.addCheckPoint = _addCP;
 		$scope.removeCheckPoint = _removeCP;
@@ -179,8 +189,11 @@ function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, ve
 
 		$scope.createClaim = _createClaim;
 		$scope.deleteClaim = _deleteClaim;
+		$scope.saveClaim = _saveClaim;
 		$scope.approveClaim = _approveClaim;
 		$scope.denyClaim = _denyClaim;
+
+		$scope.createCheckpoint = _createCheckpoint;
 
 		$scope.dt = dtCheckPoint;
         $scope.init();

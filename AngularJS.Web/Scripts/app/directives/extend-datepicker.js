@@ -59,15 +59,21 @@
                     var appendBtn = angular.element('<span class="input-group-btn"><button '
                     + (attr.disabled ? 'disabled' : '')
                     + ' type="button" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-calendar"></i></button></span>');
-                    elem.after(appendBtn);
-                    appendBtn.bind('click', function (event) {
+
+                    var openDialog = function (event) {
                         event.stopPropagation();
                         scope.$apply(function () {
                             scope.isOpen = !attr.disabled && true;
                         });
-                    });
+                    };
 
-                    elem.bind('click', function (event) { });
+                    elem.after(appendBtn);
+                    appendBtn.bind('click', openDialog);
+
+                    elem.bind('click', openDialog);
+                    elem.bind('focus', openDialog);
+                    
+                    
 
                     link.apply(this, arguments);
                 };
