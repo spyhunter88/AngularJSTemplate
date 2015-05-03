@@ -108,13 +108,11 @@ function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, ve
 
         // Create new Claim
 		var _createClaim = function () {
-		    // validate first
-		    console.log($scope.claim);
             // save
 		    claimApi.saveClaim($scope.claim).then(function (data) {
-		        if (data.claimId !== undefined && data.claimId !== 0) {
+		        if (data.claimID !== undefined && data.claimID !== 0) {
 		            $scope.claim = data;
-		            $location.path('/claim/' + $scope.claim.claimId);
+		            $location.path('/claim/' + $scope.claim.claimID);
 		        }
             }, function (error) {
                 ngToast.create("Error");

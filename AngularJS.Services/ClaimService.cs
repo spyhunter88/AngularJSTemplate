@@ -3,14 +3,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using AngularJS.Entities.Models;
-using Repository.Pattern.Repositories;
-using Service.Pattern;
 using AngularJS.Entities;
 using AngularJS.Services.DTO;
 using AutoMapper;
 using Repository.Pattern.Infrastructure;
 using Repository.Pattern.UnitOfWork;
 using System.IO;
+using Omu.ValueInjecter;
 
 namespace AngularJS.Service
 {
@@ -21,6 +20,8 @@ namespace AngularJS.Service
         Task<ClaimDTO> GetClaimAsync(int id);
 
         Task<int> PostClaim(ClaimDTO claim, string uploadPath);
+
+        Task<ClaimDTO> PutClaim(ClaimDTO claim, string uploadPath);
     }
 
     public class ClaimService : IClaimService
@@ -61,8 +62,8 @@ namespace AngularJS.Service
         public async Task<ClaimDTO> GetClaimAsync(int id)
         {
             var claims = await _unitOfWorkAsync.RepositoryAsync<Claim>().Query(x => x.ClaimID == id)
-                // .Include(x => x.CheckPoints)
-                // .Include(x => x.Requirements)
+                .Include(x => x.CheckPoints)
+                .Include(x => x.Requirements)
                 .SelectAsync();
             var _claim = claims.FirstOrDefault();
 
@@ -122,11 +123,29 @@ namespace AngularJS.Service
             return newId;
         }
 
-        public async Task<Claim> PutClaim(ClaimDTO claim, string uploadPath)
+        /// <summary>
+        /// Use to update claim from workflow
+        /// </summary>
+        /// <param name="claim"></param>
+        /// <param name="uploadPath"></param>
+        /// <returns></returns>
+        public async Task<ClaimDTO> PutClaim(ClaimDTO claim, string uploadPath)
         {
             Claim _claim = Mapper.Map<ClaimDTO, Claim>(claim);
             _claim.CheckPoints = Mapper.Map<List<CheckPointDTO>, ICollection<CheckPoint>>(claim.CheckPoints);
             _claim.Requirements = Mapper.Map<List<RequirementDTO>, ICollection<Requirement>>(claim.Requirements);
+
+            Services.InjectConfig.ClaimUpdate cu = new Services.InjectConfig.ClaimUpdate();
+
+            var targets = await _unitOfWorkAsync.RepositoryAsync<Claim>().Query(x => x.ClaimID == _claim.ClaimID).SelectAsync();
+            var target = targets.FirstOrDefault();
+
+            target.InjectFrom<Services.InjectConfig.ClaimUpdate>(_claim);
+
+            _unitOfWorkAsync.RepositoryAsync<Claim>().Update(target);
+            var claimId = _unitOfWorkAsync.SaveChangesAsync();
+
+            return Mapper.Map<Claim, ClaimDTO>(target);
         }
     }
 }

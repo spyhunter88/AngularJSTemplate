@@ -16,7 +16,7 @@ namespace AngularJS.Entities.Models
         public int ClaimID { get; set; }
         public String Name { get; set; }
         public String Operation { get; set; }
-        public Int16? Target { get; set; }
+        public Int32? Target { get; set; }
         public String Unit { get; set; }
         public Int32? ActualAmount { get; set; }
         public Int32? ClaimAmount { get; set; }

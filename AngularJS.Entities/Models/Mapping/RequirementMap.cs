@@ -22,8 +22,8 @@ namespace AngularJS.Entities.Models.Mapping
                 .HasMaxLength(1000);
 
             // Mapping
-            this.ToTable("Requirement");
-            this.Property(t => t.RequirementID).HasColumnName("ID");
+            this.ToTable("Requirements");
+            this.Property(t => t.RequirementID).HasColumnName("RequirementID");
             this.Property(t => t.ClaimID).HasColumnName("ClaimID");
             this.Property(t => t.Name).HasColumnName("Name");
             this.Property(t => t.Operation).HasColumnName("Operation");

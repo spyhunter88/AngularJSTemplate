@@ -63,7 +63,8 @@
                     var openDialog = function (event) {
                         event.stopPropagation();
                         scope.$apply(function () {
-                            scope.isOpen = !attr.disabled && true;
+                            console.log("This cause bug here: " + scope);
+                            scope.isOpen = !attr.disabled;
                         });
                     };
 
@@ -72,8 +73,6 @@
 
                     elem.bind('click', openDialog);
                     elem.bind('focus', openDialog);
-                    
-                    
 
                     link.apply(this, arguments);
                 };

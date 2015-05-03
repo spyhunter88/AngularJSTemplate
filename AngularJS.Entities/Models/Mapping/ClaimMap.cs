@@ -69,7 +69,7 @@ namespace AngularJS.Entities.Models.Mapping
 				.HasMaxLength(255);
 			
 			// Mapping
-			this.ToTable("Claim");
+			this.ToTable("Claims");
 			this.Property(t => t.ClaimID).HasColumnName("ClaimID");
 			this.Property(t => t.RequestID).HasColumnName("RequestID");
 			this.Property(t => t.StatusID).HasColumnName("Status");

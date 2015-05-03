@@ -59,7 +59,16 @@ namespace AngularJS.Web.Api
         [ResponseType(typeof(ClaimDTO))]
         public async Task<IHttpActionResult> GetClaim(int id)
         {
-            ClaimDTO claim = await _claimSerivce.GetClaimAsync(id);
+            ClaimDTO claim = null;
+            try
+            {
+
+                claim = await _claimSerivce.GetClaimAsync(id);
+            }
+            catch (Exception e)
+            {
+                Console.Write(e.Message);
+            }
 
             if (claim == null)
             {
@@ -138,8 +147,14 @@ namespace AngularJS.Web.Api
                     claim.Documents = new List<DocumentDTO>();
                 }
 
-                int newId = await _claimSerivce.PostClaim(claim, uploadPath);
-                claim.ClaimID = newId;
+                if (claim.ClaimID == 0)
+                {
+                    var newID = await _claimSerivce.PostClaim(claim, uploadPath);
+                    claim.ClaimID = newID;
+                }
+                else
+                    claim = await _claimSerivce.PutClaim(claim, uploadPath);
+                // 
             }
             catch (Exception e)
             {

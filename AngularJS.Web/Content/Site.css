@@ -107,6 +107,7 @@ table.no-border > thead > tr > th {
     padding-left: 18px;
     padding-right: 18px;
     padding-bottom: 10px;
+    font-weight: bold;
 }
 
 table.no-border > thead,

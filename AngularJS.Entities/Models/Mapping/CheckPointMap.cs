@@ -19,8 +19,8 @@ namespace AngularJS.Entities.Models.Mapping
 
 
             // Mapping
-            this.ToTable("CheckPoint");
-            this.Property(t => t.CheckPointID).HasColumnName("ID");
+            this.ToTable("CheckPoints");
+            this.Property(t => t.CheckPointID).HasColumnName("CheckPointID");
             this.Property(t => t.ClaimID).HasColumnName("ClaimID");
             this.Property(t => t.CheckDate).HasColumnName("CheckDate");
             this.Property(t => t.WarningDate).HasColumnName("WarningDate");
