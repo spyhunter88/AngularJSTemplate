@@ -20,8 +20,8 @@ namespace AngularJS.Entities.Models
         public DateTime? ReportDate { get; set; }
         public String Action { get; set; }
         public String Note { get; set; }
-        public int SendMailCount { get; set; }
-        public int SendMailMax { get; set; }
+        public Int32? SendMailCount { get; set; }
+        public Int32? SendMailMax { get; set; }
         public int CreateBy { get; set; }
         public DateTime? CreateTime { get; set; }
         public Int16? LastEditBy { get; set; }

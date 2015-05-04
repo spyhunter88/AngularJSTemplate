@@ -7,7 +7,7 @@ using AngularJS.Entities.Models;
 
 namespace AngularJS.Services.DTO
 {
-    public class ClaimLiteDTO
+    public class ClaimLiteDTO : BaseDTO
     {
         public int ClaimID { get; set; }
         public Int16? StatusID { get; set; }
@@ -37,7 +37,7 @@ namespace AngularJS.Services.DTO
         public Int32 RemainAllocation { get; set; }
     }
 
-    public class ClaimDTO
+    public class ClaimDTO : BaseDTO
     {
         public int ClaimID { get; set; }
         public Int32? RequestID { get; set; }

@@ -517,6 +517,7 @@ E:\workspace\LinhNH13\Source\Repos\AngularJSTemplate\AngularJS.Web\bin\System.We
 E:\workspace\LinhNH13\Source\Repos\AngularJSTemplate\AngularJS.Web\bin\System.Web.WebPages.Razor.dll
 E:\workspace\LinhNH13\Source\Repos\AngularJSTemplate\AngularJS.Web\bin\WebActivatorEx.dll
 E:\workspace\LinhNH13\Source\Repos\AngularJSTemplate\AngularJS.Web\bin\WebGrease.dll
+E:\workspace\LinhNH13\Source\Repos\AngularJSTemplate\AngularJS.Web\bin\Omu.ValueInjecter.dll
 E:\workspace\LinhNH13\Source\Repos\AngularJSTemplate\AngularJS.Web\bin\LinqKit.dll
 E:\workspace\LinhNH13\Source\Repos\AngularJSTemplate\AngularJS.Web\bin\AngularJS.Entities.pdb
 E:\workspace\LinhNH13\Source\Repos\AngularJSTemplate\AngularJS.Web\bin\AngularJS.Repository.pdb
@@ -564,6 +565,7 @@ E:\workspace\LinhNH13\Source\Repos\AngularJSTemplate\AngularJS.Web\bin\Microsoft
 E:\workspace\LinhNH13\Source\Repos\AngularJSTemplate\AngularJS.Web\bin\Microsoft.Owin.Security.Google.xml
 E:\workspace\LinhNH13\Source\Repos\AngularJSTemplate\AngularJS.Web\bin\Microsoft.Owin.Security.Twitter.xml
 E:\workspace\LinhNH13\Source\Repos\AngularJSTemplate\AngularJS.Web\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+E:\workspace\LinhNH13\Source\Repos\AngularJSTemplate\AngularJS.Web\bin\Omu.ValueInjecter.xml
 E:\workspace\LinhNH13\Source\Repos\AngularJSTemplate\AngularJS.Web\bin\de\Microsoft.Data.Edm.resources.dll
 E:\workspace\LinhNH13\Source\Repos\AngularJSTemplate\AngularJS.Web\bin\es\Microsoft.Data.Edm.resources.dll
 E:\workspace\LinhNH13\Source\Repos\AngularJSTemplate\AngularJS.Web\bin\fr\Microsoft.Data.Edm.resources.dll

@@ -80,7 +80,8 @@ namespace AngularJS.Web.Api
 
         //
         // PUT api/Claim/5
-        public async Task<IHttpActionResult> PutClaim(int id, Claim claim)
+        [HttpPut]
+        public async Task<IHttpActionResult> PutClaim([FromUri]int id, [FromBody]ClaimDTO claim)
         {
             if (!ModelState.IsValid)
             {
@@ -115,11 +116,11 @@ namespace AngularJS.Web.Api
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        //
+        // Use for both Create New and Update
         // POST api/Claim
         [Authorize]
         [ResponseType(typeof(ClaimDTO))]
-        public async Task<IHttpActionResult> PostClaim([FromBody]ClaimDTO claim)
+        public async Task<IHttpActionResult> PostClaim([FromBody]ClaimDTO claim, [FromUri]String action)
         {
             if (!ModelState.IsValid)
             {

@@ -13,10 +13,16 @@ app
 				return coreSvc.callApi('GET', url.getClaims, filterCriteria, null);
 			},
 			getClaim: function(id) {
-				return coreSvc.callApi('GET', url.getClaim, { id: id}, null);
+				return coreSvc.callApi('GET', url.getClaim, { id: id }, null);
 			},
-			saveClaim: function (claim) {
+			createClaim: function(claim) {
 			    return coreSvc.callApi('POST', url.postClaim, null, claim);
+			},
+			saveClaim: function (claim, action) {
+			    return coreSvc.callApi('POST', url.postClaim, { action: action }, claim);
+			},
+			putClaim: function (claim, action) {
+			    return coreSvc.callApi('PUT', url.postClaim, { action: action }, claim);
 			}
 		};
 

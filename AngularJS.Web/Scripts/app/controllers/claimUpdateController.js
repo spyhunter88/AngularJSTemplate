@@ -74,6 +74,8 @@ function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, ve
         $scope.load = function (claimId) {
             claimApi.getClaim(claimId).then(function (data) {
                 $scope.claim = data;
+                // $scope.objectConfig = data.objectConfig;
+                $scope.objectConfig = '{disable: [ "ftgProgramCode", "programType" ]}';
                 $scope.actions = {};
                 $scope.actions.isSave = false;
             }, function(error) {
@@ -109,7 +111,7 @@ function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, ve
         // Create new Claim
 		var _createClaim = function () {
             // save
-		    claimApi.saveClaim($scope.claim).then(function (data) {
+		    claimApi.createClaim($scope.claim).then(function (data) {
 		        if (data.claimID !== undefined && data.claimID !== 0) {
 		            $scope.claim = data;
 		            $location.path('/claim/' + $scope.claim.claimID);
@@ -124,8 +126,14 @@ function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, ve
 		};
 
 		var _saveClaim = function () {
-		    claimApi.saveClaim($scope.claim).then(function (data) {
+		    claimApi.saveClaim($scope.claim, 'Save').then(function (data) {
 		        ngToast.create('Saved');
+		    });
+		};
+
+		var _submitClaim = function () {
+		    claimApi.saveClaim($scope.claim, 'Submit').then(function (data) {
+		        ngToast.create('Submitted');
 		    });
 		};
 
@@ -188,6 +196,7 @@ function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, ve
 		$scope.createClaim = _createClaim;
 		$scope.deleteClaim = _deleteClaim;
 		$scope.saveClaim = _saveClaim;
+		$scope.submitClaim = _submitClaim;
 		$scope.approveClaim = _approveClaim;
 		$scope.denyClaim = _denyClaim;
 

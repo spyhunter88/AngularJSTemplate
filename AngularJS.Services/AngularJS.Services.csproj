@@ -68,6 +68,7 @@
     <Compile Include="AutoMapperConfiguration.cs" />
     <Compile Include="ClaimService.cs" />
     <Compile Include="CustomerService.cs" />
+    <Compile Include="DTO\BaseDTO.cs" />
     <Compile Include="DTO\CheckPointDTO.cs" />
     <Compile Include="DTO\ClaimDTO.cs" />
     <Compile Include="DTO\DocumentDTO.cs" />

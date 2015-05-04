@@ -2,7 +2,7 @@
 <div>
     <h2 ng-cloak>{{title}}</h2>
 
-    <form name="claimForm" class="form-horizontal" novalidate>
+    <form name="claimForm" class="form-horizontal" novalidate form-config="objectConfig">
 
         <div class="row">
             <div class="control-group">
@@ -61,14 +61,12 @@
                 <label class="col-md-2 control-label" ng-class="{ 'has-error': claimForm.programType.$invalid }">Program Type</label>
                 <div class="col-md-4">
                     <select class="form-control input-sm" ng-model="claim.programType" ng-options="unit.value as unit.value for unit in options.programTypes"></select>
-                    <!-- <input type="text" class="form-control input-sm" name="programType" ng-model="claim.programType" placeholder="Program Type" required> -->
                 </div>
             </div>
             <div class="control-group">
                 <label class="col-md-2 control-label" ng-class="{ 'has-error': claimForm.paymentMethod.$invalid }">Payment Method</label>
                 <div class="col-md-4">
                     <select class="form-control input-sm" ng-model="claim.paymentMethod" ng-options="unit.value as unit.value for unit in options.paymentMethods"></select>
-                    <!-- <input type="text" class="form-control input-sm" name="paymentMethod" ng-model="claim.paymentMethod" placeholder="Payment Method" required> -->
                 </div>
             </div>
         </div> <!-- class="row" -->
@@ -78,14 +76,12 @@
                 <label class="col-md-2 control-label" ng-class="{ 'has-error': claimForm.vendorName.$invalid }">Vendor Name</label>
                 <div class="col-md-4">
                     <select class="form-control input-sm" ng-model="claim.vendorName" ng-options="unit.vendorShortName as unit.vendorShortName for unit in options.vendors"></select>
-                    <!-- <input type="text" class="form-control input-sm" name="vendorName" ng-model="claim.vendorName" placeholder="Vendor Name" required> -->
                 </div>
             </div>
             <div class="control-group">
                 <label class="col-md-2 control-label" ng-class="{ 'has-error': claimForm.productLine.$invalid }">Product Line</label>
                 <div class="col-md-4">
                     <select class="form-control input-sm" ng-model="claim.productLine" ng-options="unit.productLineName as unit.productLineName for unit in options.productLines"></select>
-                    <!-- <input type="text" class="form-control input-sm" name="productLine" ng-model="claim.productLine" placeholder="Product Line" required> -->
                 </div>
             </div>
         </div> <!-- class="row" -->
@@ -337,6 +333,7 @@
     <div class="row">
         <button class="btn btn-primary" ng-click="createClaim()">Create</button>
         <button class="btn btn-primary" ng-click="saveClaim()">Save</button>
+        <button class="btn btn-primary" ng-click="submitClaim()">Submit</button>
         <button class="btn btn-danger" ng-click="deleteClaim()">Delete</button>
         <button class="btn btn-success" ng-click="approveClaim()">Approve</button>
         <button class="btn btn-warning" ng-click="denyClaim()">Deny</button>

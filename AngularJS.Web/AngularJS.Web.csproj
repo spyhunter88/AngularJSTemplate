@@ -606,11 +606,18 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Scripts\app\controllers\claimUpdateController.js" />
     <Content Include="Scripts\app\controllers\requestController.js" />
+    <Content Include="Scripts\app\directives\bsNavBar.js" />
+    <Content Include="Scripts\app\directives\extend-datepicker.js" />
+    <Content Include="Scripts\app\directives\form-config.js" />
+    <Content Include="Scripts\app\directives\form-disabled.js" />
     <Content Include="Scripts\app\directives\login-form.html" />
     <Content Include="Scripts\app\services\categoriesService.js" />
     <Content Include="Scripts\app\services\constants.js" />
     <Content Include="Scripts\app\services\coreService.js" />
+    <Content Include="Scripts\app\services\fileService.js" />
+    <Content Include="Scripts\app\services\productLineService.js" />
     <Content Include="Scripts\app\services\requestService.js" />
+    <Content Include="Scripts\app\services\vendorService.js" />
     <Content Include="Scripts\app\views\claimUpdate.html" />
     <Content Include="Scripts\datatables\angular-datatables.js" />
     <Content Include="Scripts\datatables\angular-datatables.min.js" />
@@ -1582,7 +1589,9 @@
     <Content Include="Scripts\misc\respond.js" />
     <Content Include="Scripts\misc\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
