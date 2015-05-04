@@ -5,6 +5,7 @@ app.controller('claimUpdateController', ['$scope', '$routeParams', '$location', 
 function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, vendorApi, ngToast,
             DTOptionsBuilder, DTColumnDefBuilder) {
         $scope.title = "Claim Management";
+        // $scope.objectConfig = '{"disable": [ "ftgProgramCode", "programType" ]}';
         $scope.claim = {};
         $scope.options = {};
         $scope.uploadFiles = []; // keep the files while it uploading
@@ -75,7 +76,7 @@ function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, ve
             claimApi.getClaim(claimId).then(function (data) {
                 $scope.claim = data;
                 // $scope.objectConfig = data.objectConfig;
-                $scope.objectConfig = '{disable: [ "ftgProgramCode", "programType" ]}';
+                $scope.objectConfig = '{"disable": [ "ftgProgramCode", "programType" ]}';
                 $scope.actions = {};
                 $scope.actions.isSave = false;
             }, function(error) {

@@ -11,21 +11,26 @@
     /**
     * @ngInject
     */
-    function formConfig() {
+    function formConfig($compile) {
         return {
             restrict: 'A',
             scope: {config: '=formConfig' },
             link: function (scope, element, attrs) {
-                var objects = angular.element(element).find('input');
-                console.log(scope.config);
 
-                angular.$watch(scope.config, function () {
+                // watch 'config' to listen to config outside
+                scope.$watch('config', function () {
+                    var objects = angular.element(element).find('input');
+                    // console.log(scope.config);
+                    if (scope.config === undefined) return;
                     var config = angular.fromJson(scope.config);
 
                     angular.forEach(objects, function (obj) {
                         var name = angular.element(obj).attr('name');
-                        if (config.disable.indexOf(name) != -1)
-                            disableElements(obj);
+                        if (config.disable.indexOf(name) != -1) {
+                            angular.element(obj).attr('ng-disabled', true);
+                            var fn = $compile(obj);
+                            fn(scope);
+                        }
                     });
                 });
             }
@@ -34,10 +39,10 @@
 
 
     /**
- * Disables given elements.
- *
- * @param {Array.<HTMLElement>|NodeList} elements List of dom elements that must be disabled
- */
+    * Disables given elements.
+    *
+    * @param {Array.<HTMLElement>|NodeList} elements List of dom elements that must be disabled
+    */
     var disableElements = function (elements) {
         var len = elements.length;
         for (var i = 0; i < len; i++) {
