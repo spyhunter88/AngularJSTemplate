@@ -43,6 +43,8 @@ namespace AngularJS.Entities.Models
 
         public DbSet<ObjectAction> ObjectActions { get; set; }
         public DbSet<ObjectConfig> ObjectConfigs { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -69,6 +71,8 @@ namespace AngularJS.Entities.Models
             modelBuilder.Configurations.Add(new VendorMap());
             modelBuilder.Configurations.Add(new ObjectActionMap());
             modelBuilder.Configurations.Add(new ObjectConfigMap());
+            modelBuilder.Configurations.Add(new UserMap());
+            modelBuilder.Configurations.Add(new RoleMap());
 
             modelBuilder.Entity<CheckPoint>().HasRequired<Claim>(s => s.Claim)
                 .WithMany(s => s.CheckPoints).HasForeignKey(s => s.ClaimID);
@@ -81,6 +85,17 @@ namespace AngularJS.Entities.Models
 
             modelBuilder.Entity<RequirementHistory>().HasRequired<CheckPoint>(s => s.CheckPoint)
                 .WithMany(s => s.RequirementHistories).HasForeignKey(s => s.CheckPointID);
+
+            // Many-to-many between User-Role
+            modelBuilder.Entity<User>()
+                .HasMany<Role>(u => u.Roles)
+                .WithMany(r => r.Users)
+                .Map(ur =>
+                    {
+                        ur.MapLeftKey("UserId");
+                        ur.MapRightKey("RoleId");
+                        ur.ToTable("AspNetUserRoles");
+                    });
         }
     }
 }

@@ -9,14 +9,27 @@ namespace AngularJS.Entities.Models
 {
     public class User : Entity
     {
-        public User() { }
+        public User()
+        {
+            this.Roles = new HashSet<Role>();
+        }
 
         public int Id { get; set; }
         public string UserName { get; set; }
 
-        public string ToString()
+        public ICollection<Role> Roles { get; set; }
+    }
+
+    public class Role : Entity
+    {
+        public Role()
         {
-            return UserName ?? Id.ToString();
+            this.Users = new HashSet<User>();
         }
+
+        public int Id { get; set; }
+        public string Name { get; set; }
+
+        public ICollection<User> Users { get; set; }
     }
 }

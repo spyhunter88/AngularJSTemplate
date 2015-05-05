@@ -82,6 +82,7 @@
     <Compile Include="Models\Mapping\ShipperMap.cs" />
     <Compile Include="Models\Mapping\SupplierMap.cs" />
     <Compile Include="Models\Mapping\TerritoryMap.cs" />
+    <Compile Include="Models\Mapping\UserMap.cs" />
     <Compile Include="Models\Mapping\VendorMap.cs" />
     <Compile Include="Models\MenuItem.cs" />
     <Compile Include="Models\ObjectAction.cs" />
@@ -98,6 +99,7 @@
     <Compile Include="Models\Shipper.cs" />
     <Compile Include="Models\Supplier.cs" />
     <Compile Include="Models\Territory.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Models\Vendor.cs" />
     <Compile Include="OrderHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

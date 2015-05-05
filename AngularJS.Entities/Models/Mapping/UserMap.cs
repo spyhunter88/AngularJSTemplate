@@ -15,9 +15,27 @@ namespace AngularJS.Entities.Models.Mapping
                 .HasMaxLength(255);
 
             // Mapping
-            this.ToTable("AspNetUser");
+            this.ToTable("AspNetUsers");
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.UserName).HasColumnName("UserName");
+        }
+    }
+
+    public class RoleMap : EntityTypeConfiguration<Role>
+    {
+        public RoleMap()
+        {
+            // Primary Key
+            this.HasKey(t => t.Id);
+
+            this.Property(t => t.Name)
+                .IsRequired()
+                .HasMaxLength(255);
+
+            // Mapping
+            this.ToTable("AspNetRoles");
+            this.Property(t => t.Id).HasColumnName("Id");
+            this.Property(t => t.Name).HasColumnName("Name");
         }
     }
 }
