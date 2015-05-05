@@ -42,7 +42,7 @@
             <div class="control-group">
                 <label class="col-md-2 control-label">Vendor Program Code</label>
                 <div class="col-md-4">
-                    <input type="text" class="form-control input-sm" ng-model="claim.vendorProgramCode" placeholder="MKT Code">
+                    <input type="text" class="form-control input-sm" name="vendorProgramCode" ng-model="claim.vendorProgramCode" placeholder="MKT Code">
                 </div>
             </div>
         </div> <!-- class="row" -->
@@ -51,7 +51,7 @@
             <div class="control-group">
                 <label class="col-md-2 control-label">Program Content</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control input-sm" ng-model="claim.programContent" placeholder="Code">
+                    <input type="text" class="form-control input-sm" name="programContent" ng-model="claim.programContent" placeholder="Code">
                 </div>
             </div>
         </div> <!-- class="row" -->
@@ -60,13 +60,13 @@
             <div class="control-group">
                 <label class="col-md-2 control-label" ng-class="{ 'has-error': claimForm.programType.$invalid }">Program Type</label>
                 <div class="col-md-4">
-                    <select class="form-control input-sm" ng-model="claim.programType" ng-options="unit.value as unit.value for unit in options.programTypes"></select>
+                    <select class="form-control input-sm" name="programType" ng-model="claim.programType" ng-options="unit.value as unit.value for unit in options.programTypes"></select>
                 </div>
             </div>
             <div class="control-group">
                 <label class="col-md-2 control-label" ng-class="{ 'has-error': claimForm.paymentMethod.$invalid }">Payment Method</label>
                 <div class="col-md-4">
-                    <select class="form-control input-sm" ng-model="claim.paymentMethod" ng-options="unit.value as unit.value for unit in options.paymentMethods"></select>
+                    <select class="form-control input-sm" name="paymentMethod" ng-model="claim.paymentMethod" ng-options="unit.value as unit.value for unit in options.paymentMethods"></select>
                 </div>
             </div>
         </div> <!-- class="row" -->
@@ -75,7 +75,7 @@
             <div class="control-group">
                 <label class="col-md-2 control-label" ng-class="{ 'has-error': claimForm.vendorName.$invalid }">Vendor Name</label>
                 <div class="col-md-4">
-                    <select class="form-control input-sm" ng-model="claim.vendorName" ng-options="unit.vendorShortName as unit.vendorShortName for unit in options.vendors"></select>
+                    <select class="form-control input-sm" name="vendorName" ng-model="claim.vendorName" ng-options="unit.vendorShortName as unit.vendorShortName for unit in options.vendors"></select>
                 </div>
             </div>
             <div class="control-group">

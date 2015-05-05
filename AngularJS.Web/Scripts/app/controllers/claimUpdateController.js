@@ -76,7 +76,7 @@ function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, ve
             claimApi.getClaim(claimId).then(function (data) {
                 $scope.claim = data;
                 // $scope.objectConfig = data.objectConfig;
-                $scope.objectConfig = '{"disable": [ "ftgProgramCode", "programType" ]}';
+                $scope.objectConfig = '{"disable": [ "ftgProgramCode", "programType", "programContent","vendorName" ]}';
                 $scope.actions = {};
                 $scope.actions.isSave = false;
             }, function(error) {

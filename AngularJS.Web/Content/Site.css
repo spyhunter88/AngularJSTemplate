@@ -118,3 +118,9 @@ table.no-border > thead > tr > td > div > input {
 .progress-in-table {
     margin-bottom: 0px;
 }
+
+/* Modify Template */
+select[bs-select] + button,
+select[bs-select] + button + ul {
+    width: 100%;
+}
