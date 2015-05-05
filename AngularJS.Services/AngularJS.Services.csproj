@@ -76,6 +76,7 @@
     <Compile Include="DTO\RequirementDTO.cs" />
     <Compile Include="InjectConfig\Claim.cs" />
     <Compile Include="IStoredProcedureService.cs" />
+    <Compile Include="ObjectConfigService.cs" />
     <Compile Include="ProductService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StoredProcedureService.cs" />

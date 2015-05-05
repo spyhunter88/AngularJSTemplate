@@ -40,6 +40,10 @@ namespace AngularJS.Entities.Models
         public DbSet<ProductLine> ProductLines { get; set; }
         public DbSet<Vendor> Vendors { get; set; }
 
+
+        public DbSet<ObjectAction> ObjectActions { get; set; }
+        public DbSet<ObjectConfig> ObjectConfigs { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new CategoryMap());
@@ -63,7 +67,8 @@ namespace AngularJS.Entities.Models
             modelBuilder.Configurations.Add(new DocumentMap());
             modelBuilder.Configurations.Add(new ProductLineMap());
             modelBuilder.Configurations.Add(new VendorMap());
-
+            modelBuilder.Configurations.Add(new ObjectActionMap());
+            modelBuilder.Configurations.Add(new ObjectConfigMap());
 
             modelBuilder.Entity<CheckPoint>().HasRequired<Claim>(s => s.Claim)
                 .WithMany(s => s.CheckPoints).HasForeignKey(s => s.ClaimID);

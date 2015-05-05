@@ -68,6 +68,8 @@
     <Compile Include="Models\Mapping\DocumentMap.cs" />
     <Compile Include="Models\Mapping\EmployeeMap.cs" />
     <Compile Include="Models\Mapping\MenuItemMap.cs" />
+    <Compile Include="Models\Mapping\ObjectActionMap.cs" />
+    <Compile Include="Models\Mapping\ObjectConfigMap.cs" />
     <Compile Include="Models\Mapping\OrderDetailMap.cs" />
     <Compile Include="Models\Mapping\OrderDetailsExtendedMap.cs" />
     <Compile Include="Models\Mapping\OrderMap.cs" />
@@ -82,6 +84,8 @@
     <Compile Include="Models\Mapping\TerritoryMap.cs" />
     <Compile Include="Models\Mapping\VendorMap.cs" />
     <Compile Include="Models\MenuItem.cs" />
+    <Compile Include="Models\ObjectAction.cs" />
+    <Compile Include="Models\ObjectConfig.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\OrderDetail.cs" />
     <Compile Include="Models\OrderDetailsExtended.cs" />
