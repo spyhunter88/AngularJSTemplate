@@ -71,8 +71,8 @@ namespace AngularJS.Service
             ClaimDTO claim = Mapper.Map<Claim, ClaimDTO>(_claim);
             claim.CheckPoints = Mapper.Map<ICollection<CheckPoint>, List<CheckPointDTO>>(_claim.CheckPoints);
             claim.Requirements = Mapper.Map<ICollection<Requirement>, List<RequirementDTO>>(_claim.Requirements);
-            // claim.CheckPoints = _claim.CheckPoints.OrderBy(x => x.CheckDate).ToList();
-            // claim.Requirements = _claim.Requirements.ToList();
+            
+
 
             return claim;
         }

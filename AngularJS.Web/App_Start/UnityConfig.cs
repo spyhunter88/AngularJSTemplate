@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using AngularJS.Entities.Models;
 using AngularJS.Service;
+using AngularJS.Services;
 using Microsoft.Practices.Unity;
 using Repository.Pattern.DataContext;
 using Repository.Pattern.Ef6;
@@ -57,10 +58,14 @@ namespace AngularJS.Web
                 .RegisterType<IRepositoryAsync<Request>, Repository<Request>>()
                 .RegisterType<IRepositoryAsync<ProductLine>, Repository<ProductLine>>()
                 .RegisterType<IRepositoryAsync<Vendor>, Repository<Vendor>>()
+                .RegisterType<IRepositoryAsync<ObjectAction>, Repository<ObjectAction>>()
+                .RegisterType<IRepositoryAsync<ObjectConfig>, Repository<ObjectConfig>>()
+                .RegisterType<IRepositoryAsync<User>, Repository<User>>()
 
                 .RegisterType<IProductService, ProductService>()
                 .RegisterType<ICustomerService, CustomerService>()
                 .RegisterType<IClaimService, ClaimService>()
+                .RegisterType<IObjectConfigService, ObjectConfigService>()
 
                 .RegisterType<IAngularJSStoredProcedures, AngularJSContext>(new PerRequestLifetimeManager())
                 .RegisterType<IStoredProcedureService, StoredProcedureService>();

@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -16,6 +13,7 @@ using AngularJS.Web.Models;
 using Repository.Pattern.Infrastructure;
 using Repository.Pattern.UnitOfWork;
 using AngularJS.Web.Security.Models;
+using AngularJS.Services;
 
 namespace AngularJS.Web.Api
 {
@@ -24,12 +22,15 @@ namespace AngularJS.Web.Api
         // private AngularJSContext db = new AngularJSContext();
         private readonly IUnitOfWorkAsync _unitOfWorkAsync;
         private readonly IClaimService _claimSerivce;
+        private readonly IObjectConfigService _objectConfigService;
+        private readonly string objectName = "Claim";
 
-        public ClaimController(IUnitOfWorkAsync unitOfWorkAsync, IClaimService claimSerivce)
+        public ClaimController(IUnitOfWorkAsync unitOfWorkAsync, IClaimService claimSerivce, IObjectConfigService objectConfigService)
             : base()
         {
             _unitOfWorkAsync = unitOfWorkAsync;
             _claimSerivce = claimSerivce;
+            _objectConfigService = objectConfigService;
         }
 
         // 
@@ -74,6 +75,12 @@ namespace AngularJS.Web.Api
             {
                 return NotFound();
             }
+
+            int _userID = GetCurrentUserId();
+            var _objectAction = _objectConfigService.GetObjectAction(_userID, objectName, "Running", claim.CreateBy == _userID);
+            var _objectConfig = _objectConfigService.GetObjectConfig(_userID, objectName, "Running", claim.CreateBy == _userID);
+
+            claim.SetObjectConfig(_objectAction, _objectConfig);
 
             return Ok(claim);
         }
