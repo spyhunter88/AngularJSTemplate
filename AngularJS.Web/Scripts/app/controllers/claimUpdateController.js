@@ -4,6 +4,8 @@ app.controller('claimUpdateController', ['$scope', '$routeParams', '$location', 
     'productLine.api', 'vendor.api', 'ngToast', 'DTOptionsBuilder', 'DTColumnDefBuilder',
 function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, vendorApi, ngToast,
             DTOptionsBuilder, DTColumnDefBuilder) {
+        var dateFormat = "YYYY-MM-DD";
+
         $scope.title = "Claim Management";
         // $scope.objectConfig = '{"disable": [ "ftgProgramCode", "programType" ]}';
         $scope.claim = {};
@@ -63,20 +65,23 @@ function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, ve
                 ngToast.create('Error due loading Vendor!');
             });
 
+            // Need to load BU, Participant, Unit, Vendor, Program Type, Payment, ProductLine list
+            $scope.bus = ['F9', 'F5', 'FAP', 'FHP'];
+
             var claimId = $routeParams.claimId;
             if (claimId !== undefined && claimId !== 0) {
                 $scope.load(claimId);
             }
         };
 
-        // Need to load BU, Participant, Unit, Vendor, Program Type, Payment, ProductLine list
-        $scope.bus = ['F9', 'F5', 'FAP', 'FHP'];
-
         $scope.load = function (claimId) {
             claimApi.getClaim(claimId).then(function (data) {
                 $scope.claim = data;
-                // $scope.objectConfig = data.objectConfig;
-                $scope.objectConfig = '{"disable": [ "ftgProgramCode", "programType", "programContent","vendorName" ]}';
+                $scope.objectConfig = data.objectConfig;
+                $scope.objectAction = data.objectAction;
+                console.log(data.objectConfig);
+                console.log(data.objectAction);
+                // $scope.objectConfig = '{"disable": [ "ftgProgramCode", "programType", "programContent","vendorName" ]}';
                 $scope.actions = {};
                 $scope.actions.isSave = false;
             }, function(error) {
@@ -174,16 +179,45 @@ function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, ve
 		            $scope.claim.documents.push(newFile);
 		        })(i);
 		    }
-		    // console.log($files);
-		    // console.log($event);
 		};
 		var _removeFile = function (file) {
 		    var idx = $scope.claim.documents.indexOf(file);
 		    $scope.claim.documents.splice(idx, 1);
 		};
 
+        // Auto generate checkpoints due customer requirements
 		var _createCheckpoint = function () {
+		    if ($scope.claim.startDate === undefined || $scope.claim.endDate === undefined) {
+		        ngToast.create("Please input Start Date and End Date first (Start Date must before End Date)!");
+		    } else {
+		        $scope.claim.checkPoints = [];
+		        var separate = 4;
+		        var _start = moment($scope.claim.startDate);
+		        var _end = moment($scope.claim.endDate);
+		        var _deadline = moment($scope.claim.deadlineClaimDate);
+		        var days = _end.diff(_start, "days");
 
+		        for (var i = 1; i < separate; i++) {
+		            if (i != separate && (separate - i) / separate * days <= 15) {
+		                continue;
+		            }
+		            var cpDate = moment(_start).add(Math.round(i / separate), "days");
+		            var cp = { action: 'Update định kì!', checkDate: moment(_start).add(i * days / separate, "days").format(dateFormat) };
+		            $scope.claim.checkPoints.push(cp);
+		        }
+
+		        if (days > 15) {
+		            var cp = { action: 'Update định kì (trước khi kết thúc chương trình 15 ngày).', checkDate: moment(_end).add(-15, "days").format(dateFormat) };
+		            $scope.claim.checkPoints.push(cp);
+		        }
+
+		        if (_deadline.diff(_end, "days") > 15) {
+		            var cp = { action: 'Tổng kết chương trình (sau khi kết thúc chương trình 15 ngày).', checkDate: moment(_end).add(15, "days").format(dateFormat) };
+		            $scope.claim.checkPoints.push(cp);
+		        }
+
+		        console.log($scope.claim.checkPoints);
+		    }
 		};
 
         $scope.init = _init;
@@ -205,5 +239,4 @@ function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, ve
 
 		$scope.dt = dtCheckPoint;
         $scope.init();
-        // $timeout(function () { $scope.$apply(function() { $scope.load($routeParams.claimId) }) }, 500);
 }]);

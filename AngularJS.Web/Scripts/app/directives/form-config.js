@@ -19,7 +19,7 @@
                 // watch 'config' to listen to config outside
                 scope.$watch('config', function () {
                     var objects = element[0].querySelectorAll('input, checkbox, select, textarea');
-                    // console.log(scope.config);
+                    console.log(scope.config);
                     if (scope.config === undefined) return;
                     var config = angular.fromJson(scope.config);
 

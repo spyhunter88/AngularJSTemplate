@@ -36,6 +36,7 @@ namespace AngularJS.Web
                     "~/Scripts/misc/angular-local-storage.min.js",
                     "~/Scripts/misc/ui-bootstrap-tpls-0.12.1.min.js",
                     "~/Scripts/misc/ngToast.min.js",
+                    "~/Scripts/misc/moment.js",
                     //"~/Scripts/misc/angular-strap.min.js",
                     //"~/Scripts/misc/angular-strap.tpl.min.js",
                     "~/Scripts/misc/xeditable.min.js",
