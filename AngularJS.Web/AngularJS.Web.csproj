@@ -1390,6 +1390,7 @@
     <Content Include="Scripts\misc\angular-strap.min.js" />
     <Content Include="Scripts\misc\angular-strap.tpl.js" />
     <Content Include="Scripts\misc\angular-strap.tpl.min.js" />
+    <Content Include="Scripts\misc\moment.js" />
     <Content Include="Scripts\misc\ngToast.js" />
     <Content Include="Scripts\misc\ngToast.min.js" />
     <Content Include="Scripts\misc\select.js" />
