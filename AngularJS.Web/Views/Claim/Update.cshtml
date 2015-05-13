@@ -60,7 +60,8 @@
             <div class="control-group">
                 <label class="col-md-2 control-label" ng-class="{ 'has-error': claimForm.programType.$invalid }">Program Type</label>
                 <div class="col-md-4">
-                    <select class="form-control input-sm" name="programType" ng-model="claim.programType" ng-options="unit.value as unit.value for unit in options.programTypes"></select>
+                   @* <select class="form-control input-sm" name="programType" ng-model="claim.programType" ng-options="unit.value as unit.value for unit in options.programTypes"></select>*@
+                    <ui-select ng-model="claim.programType"></ui-select>
                 </div>
             </div>
             <div class="control-group">

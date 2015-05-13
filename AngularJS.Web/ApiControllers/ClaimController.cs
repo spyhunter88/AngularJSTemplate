@@ -63,8 +63,12 @@ namespace AngularJS.Web.Api
             ClaimDTO claim = null;
             try
             {
-
                 claim = await _claimSerivce.GetClaimAsync(id);
+                int _userID = GetCurrentUserId();
+                var _objectAction = _objectConfigService.GetObjectAction(_userID, objectName, "Running", claim.CreateBy == _userID);
+                var _objectConfig = _objectConfigService.GetObjectConfig(_userID, objectName, "Running", claim.CreateBy == _userID);
+
+                claim.SetObjectConfig(_objectAction, _objectConfig);
             }
             catch (Exception e)
             {
@@ -76,11 +80,7 @@ namespace AngularJS.Web.Api
                 return NotFound();
             }
 
-            int _userID = GetCurrentUserId();
-            var _objectAction = _objectConfigService.GetObjectAction(_userID, objectName, "Running", claim.CreateBy == _userID);
-            var _objectConfig = _objectConfigService.GetObjectConfig(_userID, objectName, "Running", claim.CreateBy == _userID);
 
-            claim.SetObjectConfig(_objectAction, _objectConfig);
 
             return Ok(claim);
         }

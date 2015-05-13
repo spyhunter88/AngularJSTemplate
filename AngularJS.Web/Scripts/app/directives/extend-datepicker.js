@@ -54,8 +54,20 @@
                 var link = compile.apply(this, arguments);
 
                 return function (scope, elem, attr) {
-                    if (attr.dateDisabled) attr.disabled = true;
+                    if (attr.disabled || attr.readonly) attr.disabled = true;
 
+                    // Remove previous date button due scope.apply() function (this include ul and span tag)
+                    var prevAppendBtn = elem.next();
+                    // console.log(prevAppendBtn);
+                    if (prevAppendBtn.length != 0) {
+                        if (prevAppendBtn[0].tagName.toLowerCase() == 'ul') prevAppendBtn.remove();
+                    }
+                    prevAppendBtn = elem.next();
+                    if (prevAppendBtn.length != 0) {
+                        if (prevAppendBtn[0].tagName.toLowerCase() == 'span') prevAppendBtn.remove();
+                    }
+
+                    // Append new one
                     var appendBtn = angular.element('<span class="input-group-btn"><button '
                     + (attr.disabled ? 'disabled' : '')
                     + ' type="button" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-calendar"></i></button></span>');

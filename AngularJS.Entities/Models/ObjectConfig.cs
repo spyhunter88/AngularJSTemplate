@@ -16,7 +16,7 @@ namespace AngularJS.Entities.Models
         public Int32? GroupID { get; set; }
         public string ObjectField { get; set; }
         public string FieldProperty { get; set; }
-        public int PublicEnabled { get; set; }
+        public Byte PublicEnabled { get; set; }
 
     }
 }

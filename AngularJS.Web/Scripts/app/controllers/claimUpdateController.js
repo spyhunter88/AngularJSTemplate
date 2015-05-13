@@ -79,8 +79,8 @@ function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, ve
                 $scope.claim = data;
                 $scope.objectConfig = data.objectConfig;
                 $scope.objectAction = data.objectAction;
-                console.log(data.objectConfig);
-                console.log(data.objectAction);
+                // console.log(data.objectConfig);
+                // console.log(data.objectAction);
                 // $scope.objectConfig = '{"disable": [ "ftgProgramCode", "programType", "programContent","vendorName" ]}';
                 $scope.actions = {};
                 $scope.actions.isSave = false;
