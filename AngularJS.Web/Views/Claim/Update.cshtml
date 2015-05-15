@@ -2,19 +2,21 @@
 <div>
     <h2 ng-cloak>{{title}}</h2>
 
-    <form name="claimForm" class="form-horizontal" novalidate form-config="objectConfig">
+    <form name="claimForm" class="form-horizontal" novalidate form-config config="objectConfig" read="read">
 
         <div class="row">
             <div class="control-group">
                 <label class="col-md-2 control-label" ng-class="{ 'has-error': claimForm.buName.$invalid }">BU Name</label>
                 <div class="col-md-4">
-                    <select class="form-control input-sm" name="buName" ng-model="claim.buName" ng-options="bu as bu for bu in bus" required></select>
+                    <label class="control-label" ng-show="read.buName != null">{{claim.buName}}</label>
+                    <select ng-show="read.buName == null" class="form-control input-sm" name="buName" ng-model="claim.buName" ng-options="bu as bu for bu in bus" required></select>
                 </div>
             </div>
             <div class="control-group">
                 <label class="col-md-2 control-label">Participant</label>
                 <div class="col-md-4">
-                    <select class="form-control input-sm" ng-model="claim.participantClaim" ng-options="unit.code as unit.value for unit in options.participants"></select>
+                    <label class="control-label" ng-show="read.participantClaim != null">{{claim.participantClaim}}</label>
+                    <select class="form-control input-sm" ng-show="read.participantClaim == null" ng-model="claim.participantClaim" ng-options="unit.code as unit.value for unit in options.participants"></select>
                 </div>
             </div>
         </div> <!-- class="row" -->
@@ -60,9 +62,9 @@
             <div class="control-group">
                 <label class="col-md-2 control-label" ng-class="{ 'has-error': claimForm.programType.$invalid }">Program Type</label>
                 <div class="col-md-4">
-                   @* <select class="form-control input-sm" name="programType" ng-model="claim.programType" ng-options="unit.value as unit.value for unit in options.programTypes"></select>*@
+                    @* <select class="form-control input-sm" name="programType" ng-model="claim.programType" ng-options="unit.value as unit.value for unit in options.programTypes"></select>*@
                     <ui-select ng-model="claim.programType">
-                        <ui-select-match >{{$select.selected.value}}</ui-select-match>
+                        <ui-select-match>{{$select.selected.value}}</ui-select-match>
                         <ui-select-choices repeat="unit.value as unit in options.programTypes">
                             <small ng-bind-html="unit.value"></small>
                         </ui-select-choices>
@@ -96,7 +98,8 @@
             <div class="control-group">
                 <label class="col-md-2 control-label" ng-class="{ 'has-error': claimForm.startDate.$invalid }">Start Date</label>
                 <div class="col-md-4">
-                    <p class="input-group input-group-sm">
+                    <label class="control-label" ng-show="read.startDate != null">{{claim.startDate | date:'yyyy-MM-dd'}}</label>
+                    <p class="input-group input-group-sm" ng-show="read.startDate == null">
                         <input type="text" class="form-control input-sm" name="startDate" ng-model="claim.startDate" placeholder="Start Date" required datepicker-popup="yyyy-MM-dd" datepicker-localdate>
                     </p>
                 </div>
