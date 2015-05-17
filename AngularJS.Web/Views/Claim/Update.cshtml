@@ -51,9 +51,9 @@
 
         <div class="row">
             <div class="control-group">
-                <label class="col-md-2 control-label">Program Content</label>
+                <label class="col-md-2 control-label">Program Name</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control input-sm" name="programContent" ng-model="claim.programContent" placeholder="Code">
+                    <input type="text" class="form-control input-sm" name="programName" ng-model="claim.programName" placeholder="Program Name">
                 </div>
             </div>
         </div> <!-- class="row" -->
@@ -62,13 +62,13 @@
             <div class="control-group">
                 <label class="col-md-2 control-label" ng-class="{ 'has-error': claimForm.programType.$invalid }">Program Type</label>
                 <div class="col-md-4">
-                    @* <select class="form-control input-sm" name="programType" ng-model="claim.programType" ng-options="unit.value as unit.value for unit in options.programTypes"></select>*@
-                    <ui-select ng-model="claim.programType">
+                    <select class="form-control input-sm" name="programType" ng-model="claim.programType" ng-options="unit.value as unit.value for unit in options.programTypes"></select>
+                    @*<ui-select ng-model="claim.programType">
                         <ui-select-match>{{$select.selected.value}}</ui-select-match>
                         <ui-select-choices repeat="unit.value as unit in options.programTypes">
                             <small ng-bind-html="unit.value"></small>
                         </ui-select-choices>
-                    </ui-select>
+                    </ui-select>*@
                 </div>
             </div>
             <div class="control-group">
@@ -135,7 +135,7 @@
             <div class="control-group">
                 <label class="col-md-2 control-label">Create</label>
                 <div class="col-md-4">
-                    <input type="text" class="form-control input-sm" name="createUser" ng-model="claim.createUser">
+                    <label>{{claim.createUser}}</label>
                 </div>
             </div>
             <div class="control-group">
@@ -148,74 +148,105 @@
 
         <div class="row">
             <div class="control-group">
-                <label class="col-sm-2 control-label">&zwnj;</label>
+                <label class="col-sm-2 control-label">Note</label>
                 <div class="col-sm-10">
-                    <a ng-show="actions.isSave" class="btn btn-default">Save</a>
+                    <textarea style="width: 100%" ng-model="claim.note" />
                 </div>
             </div>
         </div>
     </form>
     <hr />
 
+    <!-- ****************************************************************************************************************** -->
+
     <tabset>
-        <tab heading="CheckPoint & Requirement">
-            <h5 ng-show="!claim.prePaid">CheckPoints</h5>
-            <button class="btn btn-primary" ng-click="createCheckpoint()">Create Checkpoint by Start Date and End Date</button>
-            <table class="table table-bordered no-border" ng-show="!claim.prePaid" >
-                <thead>
-                    <tr style="font-weight: bold">
-                        <th>Action</th>
-                        <th style="width:150px">Check Date</th>
-                        <th style="width:150px">Report Date</th>
-                        <th style="width:100px"></th>
-                    </tr>
-                    <tr ng-form name="newCP" style="padding-bottom: 10px">
-                        <td>
-                            <div class="control-group" ng-class="{ 'has-error': newCP.action.$invalid }">
-                                <input type="text" class="form-control input-sm" name="action" ng-model="cp2Add.action" required />
-                            </div>
-                        </td>
-                        <td>
-                            <div class="control-group input-group" ng-class="{'has-error': newCP.checkDate.$invalid }">
-                                <input type="text" class="form-control input-sm" name="checkDate" ng-model="cp2Add.checkDate" datepicker-popup="yyyy-MM-dd" ng-required="true" datepicker-localdate />
-                            </div>
-                        </td>
-                        <td>
-                            <div class="control-group input-group" ng-class="{'has-error': newCP.reportDate.$invalid }">
-                                <input type="text" class="form-control input-sm" name="reportDate" ng-model="cp2Add.reportDate" datepicker-popup="yyyy-MM-dd" ng-required="true" datepicker-localdate />
-                            </div>
-                        </td>
-                        <td>
-                            <div class="control-group">
-                                <button type="submit" class="btn btn-success btn-sm" ng-click="addCheckPoint(cp2Add)" ng-disabled="newCP.$invalid"><i class="glyphicon glyphicon-plus"></i></button>
-                            </div>
-                        </td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="cp in claim.checkPoints">
-                        <td>
-                            <div class="control-group">
-                                <input type="text" class="form-control input-sm" ng-model="cp.action" ng-required="true" />
-                            </div>
-                        </td>
-                        <td>
-                            <div class="input-group input-group-sm">
-                                <input type="text" class="form-control input-sm" datepicker-popup="yyyy-MM-dd" ng-model="cp.checkDate" ng-required="true" datepicker-localdate />
-                            </div>
-                        </td>
-                        <td>
-                            <div class="input-group input-group-sm">
-                                <input type="text" class="form-control input-sm" datepicker-popup="yyyy-MM-dd" ng-model="cp.reportDate" ng-required="true" datepicker-localdate />
-                            </div>
-                        </td>
-                        <td>
-                            <button class="btn btn-danger btn-sm" ng-click="removeCheckPoint(cp)"><i class="glyphicon glyphicon-minus"></i></button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <hr ng-show="!claim.prePaid" />
+        <tab heading="Details">
+            <div class="row">
+                <div class="control-group">
+                    <label class="col-sm-2 control-label">Program Content</label>
+                    <div class="col-sm-10">
+                        <textarea style="width: 100%" ng-model="claim.programContent" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="control-group">
+                    <label class="col-md-2 control-label">Currency Unit</label>
+                    <div class="col-md-4">
+                        <label>{{claim.currencyUnit}}</label>
+                        <input type="text" class="form-control input-sm" ng-model="claim.currencyUnit" name="currencyUnit" />
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="col-md-2 control-label">Exchange Rate</label>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control input-sm" name="exchangeRate" ng-model="claim.exchangeRate" />
+                    </div>
+                </div>
+            </div> <!-- class="row" -->
+
+            <div class="row">
+                <div class="control-group">
+                    <label class="col-md-2 control-label">Promise Amount</label>
+                    <div class="col-md-4">
+                        <label>{{claim.promiseAmount}}</label>
+                        <input type="text" class="form-control input-sm" name="promiseAmount" ng-model="claim.promiseAmount" />
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="col-md-2 control-label">Promise Amount</label>
+                    <div class="col-md-4">
+                        <label>{{claim.promiseAmount * claim.exchangeRate}}</label>
+                        @*<input type="text" class="form-control input-sm" name="promiseAmount" ng-model="claim.promiseAmount" />*@
+                    </div>
+                </div>
+            </div> <!-- class="row" -->
+
+            <div class="row">
+                <div class="control-group">
+                    <label class="col-md-2 control-label">Promise Date</label>
+                    <div class="col-md-4">
+                        <label>{{claim.promiseDate | date: 'yyyy-MM-dd'}}</label>
+                        <input type="text" class="form-control input-sm" name="promiseDate" ng-model="claim.promiseDate" />
+                    </div>
+                </div>
+            </div> <!-- class="row" -->
+
+            <div class="row">
+                <div class="control-group">
+                    <label class="col-md-2 control-label">Curent Claim Available Amount</label>
+                    <div class="col-md-4">
+                        <label>{{claim.currentAvailableAmount}}</label>
+                        <input type="text" class="form-control input-sm" name="currentAvailableAmount" ng-model="claim.currentAvailableAmount" />
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="col-md-2 control-label">Curent Claim Available Amount (VND)</label>
+                    <div class="col-md-4">
+                        <label>{{claim.currentAvailableAmount * claim.exchangeRate}}</label>
+                        @*<input type="text" class="form-control input-sm" name="promiseAmount" ng-model="claim.promiseAmount" />*@
+                    </div>
+                </div>
+            </div> <!-- class="row" -->
+
+            <div class="row">
+                <div class="control-group">
+                    <label class="col-md-2 control-label">Claim Amount</label>
+                    <div class="col-md-4">
+                        <label>{{claim.claimAmount}}</label>
+                        <input type="text" class="form-control input-sm" name="claimAmount" ng-model="claim.claimAmount" />
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="col-md-2 control-label">Claim Amount (VND)</label>
+                    <div class="col-md-4">
+                        <label>{{claim.claimAmount * claim.exchangeRate}}</label>
+                        @*<input type="text" class="form-control input-sm" name="promiseAmount" ng-model="claim.promiseAmount" />*@
+                    </div>
+                </div>
+            </div> <!-- class="row" -->
+
             <h5>Requirements</h5>
             <table class="table table-bordered table-hover no-border">
                 <thead>
@@ -295,6 +326,69 @@
                     </tr>
                 </tbody>
             </table>
+        
+            <!-- ****************************************************************************************************************** -->
+
+            <h5 ng-show="!claim.prePaid">CheckPoints</h5>
+            <button class="btn btn-primary" ng-click="createCheckpoint()">Create Checkpoint by Start Date and End Date</button>
+            <table class="table table-bordered no-border" ng-show="!claim.prePaid">
+                <thead>
+                    <tr style="font-weight: bold">
+                        <th>Action</th>
+                        <th style="width:150px">Check Date</th>
+                        <th style="width:150px">Report Date</th>
+                        <th style="width:100px"></th>
+                    </tr>
+                    <tr ng-form name="newCP" style="padding-bottom: 10px" ng-show="read.checkpoints == null">
+                        <td>
+                            <div class="control-group" ng-class="{ 'has-error': newCP.action.$invalid }">
+                                <input type="text" class="form-control input-sm" name="action" ng-model="cp2Add.action" required />
+                            </div>
+                        </td>
+                        <td>
+                            <div class="control-group input-group" ng-class="{'has-error': newCP.checkDate.$invalid }">
+                                <input type="text" class="form-control input-sm" name="checkDate" ng-model="cp2Add.checkDate" datepicker-popup="yyyy-MM-dd" ng-required="true" datepicker-localdate />
+                            </div>
+                        </td>
+                        <td>
+                            <div class="control-group input-group" ng-class="{'has-error': newCP.reportDate.$invalid }">
+                                <input type="text" class="form-control input-sm" name="reportDate" ng-model="cp2Add.reportDate" datepicker-popup="yyyy-MM-dd" ng-required="true" datepicker-localdate />
+                            </div>
+                        </td>
+                        <td>
+                            <div class="control-group">
+                                <button type="submit" class="btn btn-success btn-sm" ng-click="addCheckPoint(cp2Add)" ng-disabled="newCP.$invalid"><i class="glyphicon glyphicon-plus"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="cp in claim.checkPoints">
+                        <td>
+                            <div class="control-group">
+                                <label ng-show="read.checkpoints != null">{{cp.action}}</label>
+                                <input ng-show="read.checkpoints == null" type="text" class="form-control input-sm" ng-model="cp.action" ng-required="true" />
+                            </div>
+                        </td>
+                        <td>
+                            <div class="input-group input-group-sm">
+                                <label ng-show="read.checkpoints != null">{{cp.checkDate | date: 'yyyy-MM-dd'}}</label>
+                                <input ng-show="read.checkpoints == null" type="text" class="form-control input-sm" datepicker-popup="yyyy-MM-dd" ng-model="cp.checkDate" ng-required="true" datepicker-localdate />
+                            </div>
+                        </td>
+                        <td>
+                            <div class="input-group input-group-sm">
+                                <label ng-show="read.checkpoints != null">{{cp.reportDate | date: 'yyyy-MM-dd'}}</label>
+                                <input ng-show="read.checkpoints == null" type="text" class="form-control input-sm" datepicker-popup="yyyy-MM-dd" ng-model="cp.reportDate" ng-required="true" datepicker-localdate />
+                            </div>
+                        </td>
+                        <td>
+                            <button class="btn btn-danger btn-sm" ng-click="removeCheckPoint(cp)"><i class="glyphicon glyphicon-minus"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <hr ng-show="!claim.prePaid" />
         </tab>
         <tab heading="Documents">
             <br />
@@ -329,22 +423,27 @@
                         </td>
                         <td>
                             <div class="control-group">
-                                <button class="btn btn-danger btn-sm" ng-click="removeFile(file)"><i class="glyphicon glyphicon-minus"></i></button>
+                                <button class="btn btn-danger btn-sm" ng-show="file.id != null" ng-click="removeFile(file)"><i class="glyphicon glyphicon-minus"></i></button>
                             </div>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </tab>
+
+        <tab heading="Comments" ng-show="claim.claimId != null && claim.claimId != 0">
+            <br />
+
+        </tab>
     </tabset>
 
     <hr />
     <div class="row">
-        <button class="btn btn-primary" ng-click="createClaim()">Create</button>
-        <button class="btn btn-primary" ng-click="saveClaim()">Save</button>
-        <button class="btn btn-primary" ng-click="submitClaim()">Submit</button>
-        <button class="btn btn-danger" ng-click="deleteClaim()">Delete</button>
-        <button class="btn btn-success" ng-click="approveClaim()">Approve</button>
-        <button class="btn btn-warning" ng-click="denyClaim()">Deny</button>
+        <button class="btn btn-primary" ng-show="actions.create" ng-click="createClaim()">Create</button>
+        <button class="btn btn-primary" ng-show="actions.save" ng-click="saveClaim()">Save</button>
+        <button class="btn btn-primary" ng-show="actions.submit" ng-click="submitClaim()">Submit</button>
+        <button class="btn btn-danger" ng-show="actions.delete" ng-click="deleteClaim()">Delete</button>
+        <button class="btn btn-success" ng-show="actions.approve" ng-click="approveClaim()">Approve</button>
+        <button class="btn btn-warning" ng-show="actions.deny" ng-click="denyClaim()">Deny</button>
     </div>
 </div>

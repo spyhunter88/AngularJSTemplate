@@ -7,7 +7,6 @@ function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, ve
         var dateFormat = "YYYY-MM-DD";
 
         $scope.title = "Claim Management";
-        // $scope.objectConfig = '{"disable": [ "ftgProgramCode", "programType" ]}';
         $scope.claim = {};
         $scope.options = {};
         $scope.uploadFiles = []; // keep the files while it uploading
@@ -71,6 +70,9 @@ function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, ve
             var claimId = $routeParams.claimId;
             if (claimId !== undefined && claimId !== 0) {
                 $scope.load(claimId);
+            } else {
+                $scope.actions = {};
+                $scope.actions.create = true;
             }
         };
 
@@ -79,11 +81,8 @@ function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, ve
                 $scope.claim = data;
                 $scope.objectConfig = data.objectConfig;
                 $scope.objectAction = data.objectAction;
-                // console.log(data.objectConfig);
-                // console.log(data.objectAction);
-                // $scope.objectConfig = '{"disable": [ "ftgProgramCode", "programType", "programContent","vendorName" ]}';
                 $scope.actions = {};
-                $scope.actions.isSave = false;
+                $scope.actions.save = true;
             }, function(error) {
                 ngToast.create("Error");
             });
@@ -116,7 +115,7 @@ function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, ve
 
         // Create new Claim
 		var _createClaim = function () {
-            // save
+            // Create new and redirect to this
 		    claimApi.createClaim($scope.claim).then(function (data) {
 		        if (data.claimID !== undefined && data.claimID !== 0) {
 		            $scope.claim = data;
@@ -144,11 +143,15 @@ function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, ve
 		};
 
 		var _approveClaim = function () {
-
+		    claimApi.saveClaim($scope.claim, 'Approve').then(function (data) {
+		        ngToast.create('Approved');
+		    });
 		};
 
 		var _denyClaim = function () {
-
+		    claimApi.saveClaim($scope.claim, 'Deny').then(function (data) {
+		        ngToast.create('Denied');
+		    });
 		};
 
         // Upload File
@@ -158,7 +161,7 @@ function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, ve
 		    for (var i = 0; i < $files.length; i++) {
 		        (function (index) {
 		            var file = $files[i];
-		            var newFile = { fileName: file.name, fileType: 'blank', progress: 0, status: 'Uploading' };
+		            var newFile = { fileName: file.name, fileType: '', progress: 0, status: 'Uploading' };
 
 		            var claimId = 0;
 		            if ($scope.claim !== undefined && $scope.claim.claimId !== undefined) claimId = $scope.claim.claimId;
@@ -220,6 +223,7 @@ function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, ve
 		    }
 		};
 
+        // Mapping functions, run init
         $scope.init = _init;
 		$scope.addCheckPoint = _addCP;
 		$scope.removeCheckPoint = _removeCP;

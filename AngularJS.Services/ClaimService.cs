@@ -10,6 +10,7 @@ using Repository.Pattern.Infrastructure;
 using Repository.Pattern.UnitOfWork;
 using System.IO;
 using Omu.ValueInjecter;
+using AngularJS.Services.InjectConfig;
 
 namespace AngularJS.Service
 {
@@ -45,7 +46,7 @@ namespace AngularJS.Service
 
             Random rand = new Random(100);
 
-            List<ClaimLiteDTO> result = Mapper.Map<List<Claim>, List<ClaimLiteDTO>>(_claims);
+            List<ClaimLiteDTO> result = AutoMapper.Mapper.Map<List<Claim>, List<ClaimLiteDTO>>(_claims);
 
             // Add Extra information
             foreach (ClaimLiteDTO claim in result)
@@ -68,9 +69,9 @@ namespace AngularJS.Service
             var _claim = claims.FirstOrDefault();
 
             // Transform Claim to ClaimDTO and copy other list
-            ClaimDTO claim = Mapper.Map<Claim, ClaimDTO>(_claim);
-            claim.CheckPoints = Mapper.Map<ICollection<CheckPoint>, List<CheckPointDTO>>(_claim.CheckPoints);
-            claim.Requirements = Mapper.Map<ICollection<Requirement>, List<RequirementDTO>>(_claim.Requirements);
+            ClaimDTO claim = AutoMapper.Mapper.Map<Claim, ClaimDTO>(_claim);
+            claim.CheckPoints = AutoMapper.Mapper.Map<ICollection<CheckPoint>, List<CheckPointDTO>>(_claim.CheckPoints);
+            claim.Requirements = AutoMapper.Mapper.Map<ICollection<Requirement>, List<RequirementDTO>>(_claim.Requirements);
             
 
 
@@ -84,9 +85,9 @@ namespace AngularJS.Service
         /// <returns></returns>
         public async Task<int> PostClaim(ClaimDTO claim, string uploadPath)
         {
-            Claim _claim = Mapper.Map<ClaimDTO, Claim>(claim);
-            _claim.CheckPoints = Mapper.Map<List<CheckPointDTO>, ICollection<CheckPoint>>(claim.CheckPoints);
-            _claim.Requirements = Mapper.Map<List<RequirementDTO>, ICollection<Requirement>>(claim.Requirements);
+            Claim _claim = AutoMapper.Mapper.Map<ClaimDTO, Claim>(claim);
+            _claim.CheckPoints = AutoMapper.Mapper.Map<List<CheckPointDTO>, ICollection<CheckPoint>>(claim.CheckPoints);
+            _claim.Requirements = AutoMapper.Mapper.Map<List<RequirementDTO>, ICollection<Requirement>>(claim.Requirements);
             // _claim.do
 
             _claim.StatusID = 1;
@@ -111,7 +112,7 @@ namespace AngularJS.Service
             {
                 Directory.CreateDirectory(dest);
                 File.Move(source + "/" + doc.TempName, dest + "/" + doc.FileName);
-                Document _doc = Mapper.Map<DocumentDTO, Document>(doc);
+                Document _doc = AutoMapper.Mapper.Map<DocumentDTO, Document>(doc);
                 _doc.ReferenceID = (short) newId;
                 _doc.ReferenceName = "Claim";
                 _doc.ObjectState = ObjectState.Added;
@@ -131,21 +132,21 @@ namespace AngularJS.Service
         /// <returns></returns>
         public async Task<ClaimDTO> PutClaim(ClaimDTO claim, string uploadPath)
         {
-            Claim _claim = Mapper.Map<ClaimDTO, Claim>(claim);
-            _claim.CheckPoints = Mapper.Map<List<CheckPointDTO>, ICollection<CheckPoint>>(claim.CheckPoints);
-            _claim.Requirements = Mapper.Map<List<RequirementDTO>, ICollection<Requirement>>(claim.Requirements);
+            Claim _claim = AutoMapper.Mapper.Map<ClaimDTO, Claim>(claim);
+            _claim.CheckPoints = AutoMapper.Mapper.Map<List<CheckPointDTO>, ICollection<CheckPoint>>(claim.CheckPoints);
+            _claim.Requirements = AutoMapper.Mapper.Map<List<RequirementDTO>, ICollection<Requirement>>(claim.Requirements);
 
-            Services.InjectConfig.ClaimUpdate cu = new Services.InjectConfig.ClaimUpdate();
+            ClaimInjection cu = new ClaimInjection(new string[] { "ProgramContent", "EndDate" });
 
             var targets = await _unitOfWorkAsync.RepositoryAsync<Claim>().Query(x => x.ClaimID == _claim.ClaimID).SelectAsync();
             var target = targets.FirstOrDefault();
 
-            target.InjectFrom<Services.InjectConfig.ClaimUpdate>(_claim);
+            target.InjectFrom(cu, _claim);
 
             _unitOfWorkAsync.RepositoryAsync<Claim>().Update(target);
             var claimId = _unitOfWorkAsync.SaveChangesAsync();
 
-            return Mapper.Map<Claim, ClaimDTO>(target);
+            return AutoMapper.Mapper.Map<Claim, ClaimDTO>(target);
         }
     }
 }
