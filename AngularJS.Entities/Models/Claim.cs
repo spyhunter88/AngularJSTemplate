@@ -11,6 +11,8 @@ namespace AngularJS.Entities.Models
         {
             this.CheckPoints = new List<CheckPoint>();
             this.Requirements = new List<Requirement>();
+            this.Payments = new List<Payment>();
+            this.Allocations = new List<Allocation>();
         }
 
         public int ClaimID { get; set; }
@@ -59,5 +61,7 @@ namespace AngularJS.Entities.Models
         // public virtual Request Request { get; set; }
         public virtual ICollection<CheckPoint> CheckPoints { get; set; }
         public virtual ICollection<Requirement> Requirements { get; set; }
+        public virtual ICollection<Payment> Payments { get; set; }
+        public virtual ICollection<Allocation> Allocations { get; set; }
     }
 }

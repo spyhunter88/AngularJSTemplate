@@ -37,6 +37,8 @@ namespace AngularJS.Entities.Models
         public DbSet<Requirement> Requirements { get; set; }
         public DbSet<RequirementHistory> RequirementHistories { get; set; }
         public DbSet<Document> Documents { get; set; }
+        public DbSet<Payment> Payments { get; set; }
+        public DbSet<Allocation> Allocations { get; set; }
         public DbSet<ProductLine> ProductLines { get; set; }
         public DbSet<Vendor> Vendors { get; set; }
 
@@ -68,6 +70,8 @@ namespace AngularJS.Entities.Models
             modelBuilder.Configurations.Add(new RequirementHistoryMap());
             modelBuilder.Configurations.Add(new DocumentMap());
             modelBuilder.Configurations.Add(new ProductLineMap());
+            modelBuilder.Configurations.Add(new PaymentMap());
+            modelBuilder.Configurations.Add(new AllocationMap());
             modelBuilder.Configurations.Add(new VendorMap());
             modelBuilder.Configurations.Add(new ObjectActionMap());
             modelBuilder.Configurations.Add(new ObjectConfigMap());
@@ -79,6 +83,23 @@ namespace AngularJS.Entities.Models
 
             modelBuilder.Entity<Requirement>().HasRequired<Claim>(s => s.Claim)
                 .WithMany(s => s.Requirements).HasForeignKey(s => s.ClaimID);
+
+            modelBuilder.Entity<Payment>().HasRequired<Claim>(s => s.Claim)
+                .WithMany(s => s.Payments).HasForeignKey(s => s.ClaimID);
+
+            modelBuilder.Entity<Allocation>().HasRequired<Claim>(s => s.Claim)
+                .WithMany(s => s.Allocations).HasForeignKey(s => s.ClaimID);
+
+            //modelBuilder.Entity<Payment>()
+            //    .HasMany<Allocation>(p => p.Allocations)
+            //    .WithOptional(s => s.Payment)
+            //    .HasForeignKey(a => a.PaymentID);
+
+            modelBuilder.Entity<Allocation>()
+                .HasOptional<Payment>(a => a.Payment)
+                .WithMany(s => s.Allocations)
+                // .HasForeignKey(s => s.PaymentID)
+                ;
 
             modelBuilder.Entity<RequirementHistory>().HasRequired<Requirement>(s => s.Requirement)
                 .WithMany(s => s.RequirementHistories).HasForeignKey(s => s.RequirementID);

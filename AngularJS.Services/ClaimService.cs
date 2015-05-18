@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using AngularJS.Entities.Models;
 using AngularJS.Entities;
 using AngularJS.Services.DTO;
-using AutoMapper;
 using Repository.Pattern.Infrastructure;
 using Repository.Pattern.UnitOfWork;
 using System.IO;
@@ -22,7 +21,7 @@ namespace AngularJS.Service
 
         Task<int> PostClaim(ClaimDTO claim, string uploadPath);
 
-        Task<ClaimDTO> PutClaim(ClaimDTO claim, string uploadPath);
+        Task<ClaimDTO> PutClaim(ClaimDTO claim, string uploadPath, string action);
     }
 
     public class ClaimService : IClaimService
@@ -65,6 +64,8 @@ namespace AngularJS.Service
             var claims = await _unitOfWorkAsync.RepositoryAsync<Claim>().Query(x => x.ClaimID == id)
                 .Include(x => x.CheckPoints)
                 .Include(x => x.Requirements)
+                .Include(x => x.Payments)
+                .Include(x => x.Allocations)
                 .SelectAsync();
             var _claim = claims.FirstOrDefault();
 
@@ -125,23 +126,48 @@ namespace AngularJS.Service
         }
 
         /// <summary>
-        /// Use to update claim from workflow
+        /// Use to update/submit/approve/deny/failure/done ... claim from workflow
         /// </summary>
         /// <param name="claim"></param>
         /// <param name="uploadPath"></param>
+        /// <param name="action">action for this claim</param>
         /// <returns></returns>
-        public async Task<ClaimDTO> PutClaim(ClaimDTO claim, string uploadPath)
+        public async Task<ClaimDTO> PutClaim(ClaimDTO claim, string uploadPath, string action)
         {
             Claim _claim = AutoMapper.Mapper.Map<ClaimDTO, Claim>(claim);
             _claim.CheckPoints = AutoMapper.Mapper.Map<List<CheckPointDTO>, ICollection<CheckPoint>>(claim.CheckPoints);
             _claim.Requirements = AutoMapper.Mapper.Map<List<RequirementDTO>, ICollection<Requirement>>(claim.Requirements);
 
-            ClaimInjection cu = new ClaimInjection(new string[] { "ProgramContent", "EndDate" });
+            // Load new string[] from objectConfig
+            string[] objectConfig = new string[] { "ProgramContent", "EndDate" };
+            ClaimInjection cu = new ClaimInjection(objectConfig);
 
+            // Load current claim and inject
             var targets = await _unitOfWorkAsync.RepositoryAsync<Claim>().Query(x => x.ClaimID == _claim.ClaimID).SelectAsync();
             var target = targets.FirstOrDefault();
-
             target.InjectFrom(cu, _claim);
+
+            // manual copy list
+            if (objectConfig.Contains("checkpoints"))
+            {
+                target.CheckPoints = _claim.CheckPoints;
+            }
+            if (objectConfig.Contains("requirements"))
+            {
+                target.Requirements = _claim.Requirements;
+            }
+            if (objectConfig.Contains("payments"))
+            {
+                target.Payments = _claim.Payments;
+            }
+            if (objectConfig.Contains("allocations"))
+            {
+                target.Allocations = _claim.Allocations;
+            }
+
+
+            // Check for other value, change status
+            
 
             _unitOfWorkAsync.RepositoryAsync<Claim>().Update(target);
             var claimId = _unitOfWorkAsync.SaveChangesAsync();

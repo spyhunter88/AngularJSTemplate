@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Allocation.cs" />
     <Compile Include="Models\AngularJSContext.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\CheckPoint.cs" />
@@ -60,6 +61,7 @@
     <Compile Include="Models\CustomerDemographic.cs" />
     <Compile Include="Models\Document.cs" />
     <Compile Include="Models\Employee.cs" />
+    <Compile Include="Models\Mapping\AllocationMap.cs" />
     <Compile Include="Models\Mapping\CategoryMap.cs" />
     <Compile Include="Models\Mapping\CheckPointMap.cs" />
     <Compile Include="Models\Mapping\ClaimMap.cs" />
@@ -73,6 +75,7 @@
     <Compile Include="Models\Mapping\OrderDetailMap.cs" />
     <Compile Include="Models\Mapping\OrderDetailsExtendedMap.cs" />
     <Compile Include="Models\Mapping\OrderMap.cs" />
+    <Compile Include="Models\Mapping\PaymentMap.cs" />
     <Compile Include="Models\Mapping\ProductLineMap.cs" />
     <Compile Include="Models\Mapping\ProductMap.cs" />
     <Compile Include="Models\Mapping\RegionMap.cs" />
@@ -90,6 +93,7 @@
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\OrderDetail.cs" />
     <Compile Include="Models\OrderDetailsExtended.cs" />
+    <Compile Include="Models\Payment.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductLine.cs" />
     <Compile Include="Models\Region.cs" />

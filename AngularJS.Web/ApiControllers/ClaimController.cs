@@ -161,7 +161,7 @@ namespace AngularJS.Web.Api
                     claim.ClaimID = newID;
                 }
                 else
-                    claim = await _claimSerivce.PutClaim(claim, uploadPath);
+                    claim = await _claimSerivce.PutClaim(claim, uploadPath, action);
                 // 
             }
             catch (Exception e)
