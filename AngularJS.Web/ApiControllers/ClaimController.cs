@@ -63,10 +63,17 @@ namespace AngularJS.Web.Api
             ClaimDTO claim = null;
             try
             {
-                claim = await _claimSerivce.GetClaimAsync(id);
+                // Get ClaimLiteDTO with policy
+                var _claimLite = _claimSerivce.GetClaimLite(id);
+
+                // 2. Get policy
                 int _userID = GetCurrentUserId();
-                var _objectAction = _objectConfigService.GetObjectAction(_userID, objectName, "Running", claim.CreateBy == _userID);
-                var _objectConfig = _objectConfigService.GetObjectConfig(_userID, objectName, "Running", claim.CreateBy == _userID);
+                var _objectAction = _objectConfigService.GetObjectAction(_userID, objectName, _claimLite.Phase, _claimLite.CreateBy == _userID);
+                var _objectConfig = _objectConfigService.GetObjectConfig(_userID, objectName, _claimLite.Phase, _claimLite.CreateBy == _userID);
+
+                // 3. Get claim with policy inside
+                claim = await _claimSerivce.GetClaimAsync(id, _objectConfig);
+                
 
                 claim.SetObjectConfig(_objectAction, _objectConfig);
             }
@@ -161,7 +168,7 @@ namespace AngularJS.Web.Api
                     claim.ClaimID = newID;
                 }
                 else
-                    claim = await _claimSerivce.PutClaim(claim, uploadPath, action);
+                    claim = await _claimSerivce.PutClaim(claim, uploadPath, _user.Id, action);
                 // 
             }
             catch (Exception e)

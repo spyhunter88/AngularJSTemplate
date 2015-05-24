@@ -41,6 +41,7 @@ namespace AngularJS.Entities.Models
         public DbSet<Allocation> Allocations { get; set; }
         public DbSet<ProductLine> ProductLines { get; set; }
         public DbSet<Vendor> Vendors { get; set; }
+        public DbSet<ClaimStatus> ClaimStatuses { get; set; }
 
 
         public DbSet<ObjectAction> ObjectActions { get; set; }
@@ -77,6 +78,10 @@ namespace AngularJS.Entities.Models
             modelBuilder.Configurations.Add(new ObjectConfigMap());
             modelBuilder.Configurations.Add(new UserMap());
             modelBuilder.Configurations.Add(new RoleMap());
+            modelBuilder.Configurations.Add(new ClaimStatusMap());
+
+            //modelBuilder.Entity<Claim>().HasRequired<ClaimStatus>(c => c.ClaimStatus)
+            //    .WithMany();
 
             modelBuilder.Entity<CheckPoint>().HasRequired<Claim>(s => s.Claim)
                 .WithMany(s => s.CheckPoints).HasForeignKey(s => s.ClaimID);
@@ -90,15 +95,11 @@ namespace AngularJS.Entities.Models
             modelBuilder.Entity<Allocation>().HasRequired<Claim>(s => s.Claim)
                 .WithMany(s => s.Allocations).HasForeignKey(s => s.ClaimID);
 
-            //modelBuilder.Entity<Payment>()
-            //    .HasMany<Allocation>(p => p.Allocations)
-            //    .WithOptional(s => s.Payment)
-            //    .HasForeignKey(a => a.PaymentID);
-
+            // Relationship Payment 0-n Allocation
             modelBuilder.Entity<Allocation>()
                 .HasOptional<Payment>(a => a.Payment)
                 .WithMany(s => s.Allocations)
-                // .HasForeignKey(s => s.PaymentID)
+                .HasForeignKey(s => s.PaymentID)
                 ;
 
             modelBuilder.Entity<RequirementHistory>().HasRequired<Requirement>(s => s.Requirement)

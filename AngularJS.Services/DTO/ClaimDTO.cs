@@ -30,9 +30,10 @@ namespace AngularJS.Services.DTO
         public DateTime? LastEditTime { get; set; }
 
         // Extra
-        public String Status { get; set; }
-        public String CreateUser { get; set; }
-        public String LastEditUser { get; set; }
+        public string Status { get; set; }
+        public string Phase { get; set; }
+        public string CreateUser { get; set; }
+        public string LastEditUser { get; set; }
         public Int32 RemainPayment { get; set; }
         public Int32 RemainAllocation { get; set; }
     }
@@ -91,6 +92,9 @@ namespace AngularJS.Services.DTO
 
         public virtual List<CheckPointDTO> CheckPoints { get; set; }
         public virtual List<RequirementDTO> Requirements { get; set; }
+        public virtual List<PaymentDTO> Payments { get; set; }
+        public virtual List<AllocationDTO> Allocations { get; set; }
+
         public virtual List<DocumentDTO> Documents { get; set; }
     }
 }

@@ -12,7 +12,7 @@ namespace AngularJS.Entities.Models.Mapping
         public AllocationMap()
         {
             // Primary Key
-            this.HasKey(t => t.PaymentID);
+            this.HasKey(t => t.AllocationID);
 
             // Properties
             this.Property(t => t.AreaAllocate)

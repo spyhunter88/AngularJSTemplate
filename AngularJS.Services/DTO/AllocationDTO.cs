@@ -1,14 +1,9 @@
 ﻿using System;
-using Repository.Pattern.Ef6;
 
-namespace AngularJS.Entities.Models
+namespace AngularJS.Services.DTO
 {
-    public partial class Allocation : Entity
+    public class AllocationDTO
     {
-        public Allocation()
-        {
-        }
-
         public int AllocationID { get; set; }
         public int ClaimID { get; set; }
         public int? PaymentID { get; set; }
@@ -25,10 +20,5 @@ namespace AngularJS.Entities.Models
         public string Note { get; set; }
         public string Participant { get; set; }
         public string Part { get; set; }
-
-
-        // Mapping
-        public virtual Claim Claim { internal get; set; }
-        public virtual Payment Payment { internal get; set; }
     }
 }

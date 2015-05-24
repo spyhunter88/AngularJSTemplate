@@ -10,6 +10,7 @@ using Repository.Pattern.UnitOfWork;
 using System.IO;
 using Omu.ValueInjecter;
 using AngularJS.Services.InjectConfig;
+using AngularJS.Services.Utility;
 
 namespace AngularJS.Service
 {
@@ -17,11 +18,13 @@ namespace AngularJS.Service
     {
         List<ClaimLiteDTO> SearchClaim(String searchText, string orderBy, bool descending, int pageSize, int page, out int totalCount);
 
-        Task<ClaimDTO> GetClaimAsync(int id);
+        ClaimLiteDTO GetClaimLite(int id);
+
+        Task<ClaimDTO> GetClaimAsync(int id, List<ObjectConfig> excList);
 
         Task<int> PostClaim(ClaimDTO claim, string uploadPath);
 
-        Task<ClaimDTO> PutClaim(ClaimDTO claim, string uploadPath, string action);
+        Task<ClaimDTO> PutClaim(ClaimDTO claim, string uploadPath, int userID, string action);
     }
 
     public class ClaimService : IClaimService
@@ -59,22 +62,64 @@ namespace AngularJS.Service
             return result;
         }
 
-        public async Task<ClaimDTO> GetClaimAsync(int id)
+        public ClaimLiteDTO GetClaimLite(int id)
         {
-            var claims = await _unitOfWorkAsync.RepositoryAsync<Claim>().Query(x => x.ClaimID == id)
-                .Include(x => x.CheckPoints)
-                .Include(x => x.Requirements)
-                .Include(x => x.Payments)
-                .Include(x => x.Allocations)
-                .SelectAsync();
-            var _claim = claims.FirstOrDefault();
+            var claimLite = new ClaimLiteDTO();
+
+            var _claim = _unitOfWorkAsync.Repository<Claim>().Query(c => c.ClaimID == id)
+                .Select()
+                .FirstOrDefault();
+
+            if (_claim != null)
+            {
+                claimLite = AutoMapper.Mapper.Map<Claim, ClaimLiteDTO>(_claim);
+
+                var _status = _unitOfWorkAsync.Repository<ClaimStatus>().Query(x => x.Code == _claim.StatusID)
+                    .Select(s => new { s.StatusName, s.Phase })
+                    .FirstOrDefault();
+
+                claimLite.Status = _status.StatusName;
+                claimLite.Phase = _status.Phase;
+            }
+
+            return claimLite;
+        }
+
+        public async Task<ClaimDTO> GetClaimAsync(int id, List<ObjectConfig> excList)
+        {
+            //var phase = _unitOfWorkAsync.Repository<Claim>().Query(x => x.ClaimID == id)
+            //    .Include(x => x.ClaimStatus)
+            //    .Select(x => x.ClaimStatus.Phase)
+            //    .FirstOrDefault();
+
+            // Get "Status"
+            //var statusCode = _unitOfWorkAsync.Repository<Claim>().Query(x => x.ClaimID == id)
+            //    .Select(x => new { x.CreateBy, x.StatusID })
+            //    .FirstOrDefault();
+
+            //var phase = _unitOfWorkAsync.Repository<ClaimStatus>().Query(x => x.Code == statusCode.StatusID)
+            //    .Select(x => x.Phase)
+            //    .FirstOrDefault();
+
+            // Get Claim values and properties base on objectconfig above
+            var query = _unitOfWorkAsync.RepositoryAsync<Claim>().Query(x => x.ClaimID == id);
+            if (excList.Where(x => String.Equals(x.ObjectField, "CheckPoints", StringComparison.OrdinalIgnoreCase)).Count() == 0) query.Include(x => x.CheckPoints);
+            if (excList.Where(x => String.Equals(x.ObjectField, "Requirements", StringComparison.OrdinalIgnoreCase)).Count() == 0) query.Include(x => x.Requirements);
+            if (excList.Where(x => String.Equals(x.ObjectField, "Payments", StringComparison.OrdinalIgnoreCase)).Count() == 0) query.Include(x => x.Payments);
+            if (excList.Where(x => String.Equals(x.ObjectField, "Allocations", StringComparison.OrdinalIgnoreCase)).Count() == 0) query.Include(x => x.Allocations);
+            //    .Include(x => x.CheckPoints)
+            //    .Include(x => x.Requirements)
+            //    .Include(x => x.Payments)
+            //    .Include(x => x.Allocations)
+            //    .SelectAsync();
+            var _claim = (await query.SelectAsync()).FirstOrDefault();
 
             // Transform Claim to ClaimDTO and copy other list
             ClaimDTO claim = AutoMapper.Mapper.Map<Claim, ClaimDTO>(_claim);
             claim.CheckPoints = AutoMapper.Mapper.Map<ICollection<CheckPoint>, List<CheckPointDTO>>(_claim.CheckPoints);
             claim.Requirements = AutoMapper.Mapper.Map<ICollection<Requirement>, List<RequirementDTO>>(_claim.Requirements);
-            
-
+            claim.Payments = AutoMapper.Mapper.Map<ICollection<Payment>, List<PaymentDTO>>(_claim.Payments);
+            claim.Allocations = AutoMapper.Mapper.Map<ICollection<Allocation>, List<AllocationDTO>>(_claim.Allocations);
 
             return claim;
         }
@@ -132,20 +177,27 @@ namespace AngularJS.Service
         /// <param name="uploadPath"></param>
         /// <param name="action">action for this claim</param>
         /// <returns></returns>
-        public async Task<ClaimDTO> PutClaim(ClaimDTO claim, string uploadPath, string action)
+        public async Task<ClaimDTO> PutClaim(ClaimDTO claim, string uploadPath, int userID, string action)
         {
             Claim _claim = AutoMapper.Mapper.Map<ClaimDTO, Claim>(claim);
             _claim.CheckPoints = AutoMapper.Mapper.Map<List<CheckPointDTO>, ICollection<CheckPoint>>(claim.CheckPoints);
             _claim.Requirements = AutoMapper.Mapper.Map<List<RequirementDTO>, ICollection<Requirement>>(claim.Requirements);
+            _claim.Payments = AutoMapper.Mapper.Map<List<PaymentDTO>, ICollection<Payment>>(claim.Payments);
+            _claim.Allocations = AutoMapper.Mapper.Map<List<AllocationDTO>, ICollection<Allocation>>(claim.Allocations);
 
             // Load new string[] from objectConfig
-            string[] objectConfig = new string[] { "ProgramContent", "EndDate" };
-            ClaimInjection cu = new ClaimInjection(objectConfig);
+            var phase = _unitOfWorkAsync.Repository<ClaimStatus>().Query(cs => cs.Code == claim.StatusID).Select(s => s.Phase).FirstOrDefault();
+            string[] objectConfig = PolicyUtil.GetObjectConfig(_unitOfWorkAsync, userID, "Claim", phase, userID == claim.CreateBy)
+                                    .AsQueryable()
+                                    .Where(x => x.FieldProperty == "disabled")
+                                    .Select(x => x.ObjectField)
+                                    .ToArray();
+            ClaimExcInjection _cei = new ClaimExcInjection(objectConfig);
 
             // Load current claim and inject
             var targets = await _unitOfWorkAsync.RepositoryAsync<Claim>().Query(x => x.ClaimID == _claim.ClaimID).SelectAsync();
             var target = targets.FirstOrDefault();
-            target.InjectFrom(cu, _claim);
+            target.InjectFrom(_cei, _claim);
 
             // manual copy list
             if (objectConfig.Contains("checkpoints"))

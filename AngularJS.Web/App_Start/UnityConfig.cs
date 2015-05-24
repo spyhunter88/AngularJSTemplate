@@ -61,6 +61,7 @@ namespace AngularJS.Web
                 .RegisterType<IRepositoryAsync<ObjectAction>, Repository<ObjectAction>>()
                 .RegisterType<IRepositoryAsync<ObjectConfig>, Repository<ObjectConfig>>()
                 .RegisterType<IRepositoryAsync<User>, Repository<User>>()
+                .RegisterType<IRepositoryAsync<ClaimStatus>, Repository<ClaimStatus>>()
 
                 .RegisterType<IProductService, ProductService>()
                 .RegisterType<ICustomerService, CustomerService>()

@@ -80,9 +80,11 @@ function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, ve
             claimApi.getClaim(claimId).then(function (data) {
                 $scope.claim = data;
                 $scope.objectConfig = data.objectConfig;
-                $scope.objectAction = data.objectAction;
+                $scope.objectAction = angular.fromJson(data.objectAction);
                 $scope.actions = {};
-                $scope.actions.save = true;
+                angular.forEach($scope.objectAction, function (obj) {
+                    $scope.actions[obj.toLowerCase()] = true;
+                });
             }, function(error) {
                 ngToast.create("Error");
             });
