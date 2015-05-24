@@ -57,6 +57,7 @@
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\CheckPoint.cs" />
     <Compile Include="Models\Claim.cs" />
+    <Compile Include="Models\ClaimStatus.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\CustomerDemographic.cs" />
     <Compile Include="Models\Document.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="Models\Mapping\CategoryMap.cs" />
     <Compile Include="Models\Mapping\CheckPointMap.cs" />
     <Compile Include="Models\Mapping\ClaimMap.cs" />
+    <Compile Include="Models\Mapping\ClaimStatusMap.cs" />
     <Compile Include="Models\Mapping\CustomerDemographicMap.cs" />
     <Compile Include="Models\Mapping\CustomerMap.cs" />
     <Compile Include="Models\Mapping\DocumentMap.cs" />

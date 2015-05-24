@@ -219,7 +219,15 @@ namespace AngularJS.Service
 
 
             // Check for other value, change status
-            
+            switch (action)
+            {
+                case "Save": break;
+                case "Submit":
+                    if (target.StatusID == 1) target.StatusID = 10;
+                    break;
+                case "Approve": break;
+                case "Deny": break;
+            }
 
             _unitOfWorkAsync.RepositoryAsync<Claim>().Update(target);
             var claimId = _unitOfWorkAsync.SaveChangesAsync();
