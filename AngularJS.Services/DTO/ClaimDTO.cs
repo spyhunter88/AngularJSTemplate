@@ -86,6 +86,7 @@ namespace AngularJS.Services.DTO
 
         // Extra
         public String Status { get; set; }
+        public String Phase { get; set; }
         public String CreateUser { get; set; }
         public String LastEditUser { get; set; }
 		public String LastApproveUser { get; set; }

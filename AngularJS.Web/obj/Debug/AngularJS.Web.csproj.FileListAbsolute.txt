@@ -596,3 +596,4 @@ E:\workspace\LinhNH13\Source\Repos\AngularJSTemplate\AngularJS.Web\bin\zh-Hant\S
 E:\workspace\LinhNH13\Source\Repos\AngularJSTemplate\AngularJS.Web\obj\Debug\AngularJS.Web.csprojResolveAssemblyReference.cache
 E:\workspace\LinhNH13\Source\Repos\AngularJSTemplate\AngularJS.Web\obj\Debug\AngularJS.Web.dll
 E:\workspace\LinhNH13\Source\Repos\AngularJSTemplate\AngularJS.Web\obj\Debug\AngularJS.Web.pdb
+E:\workspace\LinhNH13\Source\Repos\AngularJSTemplate\AngularJS.Web\bin\Omu.ValueInjecter.pdb

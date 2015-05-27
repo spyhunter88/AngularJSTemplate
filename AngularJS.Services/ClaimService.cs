@@ -41,7 +41,8 @@ namespace AngularJS.Service
             if (orderBy == "") orderBy = "CreateTime";
 
             // Load
-            List<Claim> _claims = new List<Claim>(_unitOfWorkAsync.RepositoryAsync<Claim>().Query(x => x.FtgProgramCode.Contains(searchText) || x.ProgramName.Contains(searchText))
+            List<Claim> _claims = new List<Claim>(_unitOfWorkAsync.RepositoryAsync<Claim>()
+                                    .Query(x => x.FtgProgramCode.Contains(searchText) || x.ProgramName.Contains(searchText))
                                     .OrderBy(q => q.OrderBy(orderBy, descending))
                                     .SelectPage(page, pageSize, out totalCount)
             );
@@ -49,6 +50,16 @@ namespace AngularJS.Service
             Random rand = new Random(100);
 
             List<ClaimLiteDTO> result = AutoMapper.Mapper.Map<List<Claim>, List<ClaimLiteDTO>>(_claims);
+
+            foreach(ClaimLiteDTO _claim in result)
+            {
+                var _status = _unitOfWorkAsync.Repository<ClaimStatus>().Query(x => x.Code == _claim.StatusID)
+                    .Select(s => new { s.StatusName, s.Phase })
+                    .FirstOrDefault();
+
+                _claim.Status = _status.StatusName;
+                _claim.Phase = _status.Phase;
+            }
 
             // Add Extra information
             foreach (ClaimLiteDTO claim in result)
@@ -87,31 +98,12 @@ namespace AngularJS.Service
 
         public async Task<ClaimDTO> GetClaimAsync(int id, List<ObjectConfig> excList)
         {
-            //var phase = _unitOfWorkAsync.Repository<Claim>().Query(x => x.ClaimID == id)
-            //    .Include(x => x.ClaimStatus)
-            //    .Select(x => x.ClaimStatus.Phase)
-            //    .FirstOrDefault();
-
-            // Get "Status"
-            //var statusCode = _unitOfWorkAsync.Repository<Claim>().Query(x => x.ClaimID == id)
-            //    .Select(x => new { x.CreateBy, x.StatusID })
-            //    .FirstOrDefault();
-
-            //var phase = _unitOfWorkAsync.Repository<ClaimStatus>().Query(x => x.Code == statusCode.StatusID)
-            //    .Select(x => x.Phase)
-            //    .FirstOrDefault();
-
             // Get Claim values and properties base on objectconfig above
             var query = _unitOfWorkAsync.RepositoryAsync<Claim>().Query(x => x.ClaimID == id);
             if (excList.Where(x => String.Equals(x.ObjectField, "CheckPoints", StringComparison.OrdinalIgnoreCase)).Count() == 0) query.Include(x => x.CheckPoints);
             if (excList.Where(x => String.Equals(x.ObjectField, "Requirements", StringComparison.OrdinalIgnoreCase)).Count() == 0) query.Include(x => x.Requirements);
             if (excList.Where(x => String.Equals(x.ObjectField, "Payments", StringComparison.OrdinalIgnoreCase)).Count() == 0) query.Include(x => x.Payments);
             if (excList.Where(x => String.Equals(x.ObjectField, "Allocations", StringComparison.OrdinalIgnoreCase)).Count() == 0) query.Include(x => x.Allocations);
-            //    .Include(x => x.CheckPoints)
-            //    .Include(x => x.Requirements)
-            //    .Include(x => x.Payments)
-            //    .Include(x => x.Allocations)
-            //    .SelectAsync();
             var _claim = (await query.SelectAsync()).FirstOrDefault();
 
             // Transform Claim to ClaimDTO and copy other list
@@ -120,6 +112,13 @@ namespace AngularJS.Service
             claim.Requirements = AutoMapper.Mapper.Map<ICollection<Requirement>, List<RequirementDTO>>(_claim.Requirements);
             claim.Payments = AutoMapper.Mapper.Map<ICollection<Payment>, List<PaymentDTO>>(_claim.Payments);
             claim.Allocations = AutoMapper.Mapper.Map<ICollection<Allocation>, List<AllocationDTO>>(_claim.Allocations);
+
+            var _status = _unitOfWorkAsync.Repository<ClaimStatus>().Query(x => x.Code == claim.StatusID)
+             .Select(s => new { s.StatusName, s.Phase })
+             .FirstOrDefault();
+
+            claim.Status = _status.StatusName;
+            claim.Phase = _status.Phase;
 
             return claim;
         }
@@ -225,21 +224,38 @@ namespace AngularJS.Service
                     // Dont change anything, just SAVE depend on status
                     break;
                 case "Submit":
-                    // Case: DRAFT -> PREPARE, RUNNING or ENDING
-                    if (target.StatusID == 1) target.StatusID = 10;
+                    {
+                        // Case: DRAFT -> PREPARE, RUNNING or ENDING
+                        if (target.StatusID == 1) 
+                        {
+                            DateTime now = new DateTime();
+                            if (target.StartDate > now) target.StatusID = 10;       // PREPARE RUNNING
+                            else if (target.EndDate > now) target.StatusID = 11;    // RUNNING
+                            else target.StatusID = 12;                              // ENDING
+                        }
 
-                    // Case: ENDING -> WAITING APPROVE
-                    if (target.StatusID == 12) target.StatusID = 13;
+                        // Case: ENDING -> WAITING APPROVE or SUBMITTED CLAIM
+                        if (target.StatusID == 12) target.StatusID = ((int)target.PrePaid == 1) ? (short)16 : (short)13;
 
-                    // Case: PREPARE CLAIM -> SUBMITTED CLAIM, SUBMITTED CLAIM -> SUBMITED CLAIM or DONE!
-                    if (target.StatusID == 15) target.StatusID = 16;
-                    if (target.StatusID == 16) target.StatusID = 17;
-                    break;
+                        // Case: PREPARE CLAIM -> SUBMITTED CLAIM, SUBMITTED CLAIM -> SUBMITED CLAIM or DONE!
+                        if (target.StatusID == 15)
+                        {
+                            if (target.VendorConfirmDate != null && (target.VendorConfirmAmount != 0)
+                                && target.SubmitClaimDate != null)
+                                target.StatusID = 15;
+                            else
+                                target.StatusID = 14;
+                        }
+                        if (target.StatusID == 16) target.StatusID = 17;
+                        break;
+                    }
                 case "Approve":
                     // Case: WAITING APPROVE -> PREPARE CLAIM
+                    if (target.StatusID == 13) target.StatusID = 14;
                     break;
                 case "Deny":
                     // Case: WAITING APPROVE -> ENDING
+                    if (target.StatusID == 13) target.StatusID = 12;
                     break;
             }
 
