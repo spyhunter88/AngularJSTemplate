@@ -221,13 +221,28 @@ namespace AngularJS.Service
             // Check for other value, change status
             switch (action)
             {
-                case "Save": break;
-                case "Submit":
-                    if (target.StatusID == 1) target.StatusID = 10;
+                case "Save":
+                    // Dont change anything, just SAVE depend on status
                     break;
-                case "Approve": break;
-                case "Deny": break;
+                case "Submit":
+                    // Case: DRAFT -> PREPARE, RUNNING or ENDING
+                    if (target.StatusID == 1) target.StatusID = 10;
+
+                    // Case: ENDING -> WAITING APPROVE
+                    if (target.StatusID == 12) target.StatusID = 13;
+
+                    // Case: PREPARE CLAIM -> SUBMITTED CLAIM, SUBMITTED CLAIM -> SUBMITED CLAIM or DONE!
+                    if (target.StatusID == 15) target.StatusID = 16;
+                    if (target.StatusID == 16) target.StatusID = 17;
+                    break;
+                case "Approve":
+                    // Case: WAITING APPROVE -> PREPARE CLAIM
+                    break;
+                case "Deny":
+                    // Case: WAITING APPROVE -> ENDING
+                    break;
             }
+
 
             _unitOfWorkAsync.RepositoryAsync<Claim>().Update(target);
             var claimId = _unitOfWorkAsync.SaveChangesAsync();
