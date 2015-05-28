@@ -23,6 +23,8 @@ namespace AngularJS.Services.DTO
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public DateTime? ClaimDeadlineDate { get; set; }
+        public Decimal? VendorConfirmAmount { get; set; }
+        public Decimal? ExchangeRate { get; set; }
 
         public Int16? CreateBy { get; set; }
         public DateTime CreateTime { get; set; }
@@ -34,8 +36,8 @@ namespace AngularJS.Services.DTO
         public string Phase { get; set; }
         public string CreateUser { get; set; }
         public string LastEditUser { get; set; }
-        public Int32 RemainPayment { get; set; }
-        public Int32 RemainAllocation { get; set; }
+        public decimal RemainPayment { get; set; }
+        public decimal RemainAllocation { get; set; }
     }
 
     public class ClaimDTO : BaseDTO

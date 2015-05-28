@@ -59,15 +59,28 @@ namespace AngularJS.Service
 
                 _claim.Status = _status.StatusName;
                 _claim.Phase = _status.Phase;
-            }
 
-            // Add Extra information
-            foreach (ClaimLiteDTO claim in result)
-            {
-                claim.CreateUser = "LinhNH";
-                claim.LastEditUser = "LinhNH13";
-                claim.RemainPayment = rand.Next(0, 1000000);
-                claim.RemainAllocation = rand.Next(0, 10000000);
+                var _userInfo = _unitOfWorkAsync.Repository<User>().Query(x => x.Id == _claim.CreateBy)
+                    .Select(u => u.UserName)
+                    .FirstOrDefault();
+                _claim.CreateUser = _userInfo;
+
+                var _editInfo = _unitOfWorkAsync.Repository<User>().Query(x => x.Id == _claim.LastEditBy)
+                    .Select(u => u.UserName)
+                    .FirstOrDefault();
+                _claim.LastEditUser = _editInfo;
+
+                var _totalPayment = _unitOfWorkAsync.Repository<Payment>().Queryable()
+                    .Sum(x => x.VendorPayment);
+                _claim.RemainPayment = (_claim.VendorConfirmAmount ?? 0) - (_totalPayment ?? 0);
+
+                var _totalPaymentVND = _unitOfWorkAsync.Repository<Payment>().Queryable()
+                    .Sum(x => x.VendorPayment * x.ExchangeRate);
+                var _totalAllocation = _unitOfWorkAsync.Repository<Allocation>().Queryable()
+                    .Sum(x => x.AllocateAmount);
+
+                _claim.RemainAllocation = (_claim.RemainPayment * (_claim.ExchangeRate ?? 0)) + 
+                                (_totalPaymentVND ?? 0) - (_totalAllocation ?? 0);
             }
 
             return result;
@@ -199,19 +212,19 @@ namespace AngularJS.Service
             target.InjectFrom(_cei, _claim);
 
             // manual copy list
-            if (objectConfig.Contains("checkpoints"))
+            if (!objectConfig.Contains("checkpoints"))
             {
                 target.CheckPoints = _claim.CheckPoints;
             }
-            if (objectConfig.Contains("requirements"))
+            if (!objectConfig.Contains("requirements"))
             {
                 target.Requirements = _claim.Requirements;
             }
-            if (objectConfig.Contains("payments"))
+            if (!objectConfig.Contains("payments"))
             {
                 target.Payments = _claim.Payments;
             }
-            if (objectConfig.Contains("allocations"))
+            if (!objectConfig.Contains("allocations"))
             {
                 target.Allocations = _claim.Allocations;
             }
