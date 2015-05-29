@@ -348,7 +348,7 @@
                         <th>Action</th>
                         <th style="width:150px">Check Date</th>
                         <th style="width:150px">Report Date</th>
-                        <th style="width:100px"></th>
+                        <th style="max-width:100px"></th>
                     </tr>
                     <tr ng-form name="newCP" style="padding-bottom: 10px" ng-show="read.checkpoints == null">
                         <td>
@@ -401,6 +401,84 @@
             </table>
             <hr ng-show="!claim.prePaid" />
         </tab>
+
+        <tab heading="Payment & Allocation">
+            <h4>Payment</h4>
+            <button class="btn btn-primary" ng-click="addPayment()"><i class="glyphicon-plus"></i></button>
+            <table class="table table-bordered no-border">
+                <thead>
+                    <tr>
+                        <th>Invoice Code</th>
+                        <th>Payment Date</th>
+                        <th>Exchange Rate</th>
+                        <th>Payment Amount</th>
+                        <th>Payment (VND)</th>
+                        <th>Note</th>
+                        <th style="max-width: 100px;">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="pm in claim.payments">
+                        <td>{{pm.invoiceCode}}</td>
+                        <td>{{pm.paymentDate | date:'yyyy-MM-dd'}}</td>
+                        <td>{{pm.exchangeRate | number}}</td>
+                        <td>{{pm.vendorPayment | number}}</td>
+                        <td>{{pm.vendorPayment * pm.pm.exchangeRate | number}}</td>
+                        <td>{{pm.note}}</td>
+                        <td>
+                            <button class="btn btn-primary btn-sm" ng-click="editPayment(pm)"><i class="glyphicon glyphicon-list"></i></button>
+                            <button class="btn btn-danger btn-sm" ng-click="removePayment(pm)"><i class="glyphicon glyphicon-minus"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- ****************************************************************************************************************** -->
+
+            <h4>Allocation</h4>
+            
+            <table class="table table-bordered no-border">
+                <thead>
+                    <tr>
+                        <th>Area Allocate</th>
+                        <th>Invoice Code</th>
+                        <th>Participant</th>
+                        <th>Criteria</th>
+                        <th>Note Calculate</th>
+                        <th>Program Code</th>
+                        <th>FAF Date</th>
+                        <th>Actual Date</th>
+                        <th>Allocate Amount (VND)</th>
+                        <th>Caculate Amount (VND)</th>
+                        <th>Actual Amount (VND)</th>
+                        <th>Remain Amount (VND)</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="a in claim.allocations">
+                        <td>{{a.areaAllocate}}</td>
+                        <td>{{a.invoiceCode}}</td>
+                        <td>{{a.participant}}</td>
+                        <td>{{a.criteria}}</td>
+                        <td>{{a.noteCalculate}}</td>
+                        <td>{{a.programCode}}</td>
+                        <td>{{a.fafDate | date:'yyyy-MM-dd'}}</td>
+                        <td>{{a.actualDate | date:'yyyy-MM-dd'}}</td>
+                        <td>{{a.allocateAmount | number}}</td>
+                        <td>{{a.calculateAmount | number}}</td>
+                        <td>{{a.actualAmount | number}}</td>
+                        <td>{{a.allocateAmount - a.calculateAmount - a.actualAmount | number}}</td>
+                        <td>
+                            <button class="btn btn-primary btn-sm" ng-click="editAllocation(a)"><i class="glyphicon glyphicon-list"></i></button>
+                            <button class="btn btn-danger btn-sm" ng-click="removeAllocation(a)"><i class="glyphicon glyphicon-minus"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </tab>
+
         <tab heading="Documents">
             <br />
             <button class="btn btn-success" ng-file-select ng-model="uploadFiles" ng-file-change="fileSelected($files, $event)" multiple="true">

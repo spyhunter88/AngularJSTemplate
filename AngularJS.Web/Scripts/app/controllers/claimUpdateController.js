@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 app.controller('claimUpdateController', ['$scope', '$routeParams', '$location', 'claim.api', 'category.api', 'file.api', 
-    'productLine.api', 'vendor.api', 'ngToast', 'DTOptionsBuilder', 'DTColumnDefBuilder',
-function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, vendorApi, ngToast,
+    'productLine.api', 'vendor.api', 'ngToast', 'ngDialog', 'DTOptionsBuilder', 'DTColumnDefBuilder',
+function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, vendorApi, ngToast, ngDialog,
             DTOptionsBuilder, DTColumnDefBuilder) {
         var dateFormat = "YYYY-MM-DD";
 
@@ -113,6 +113,26 @@ function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, ve
 		var _removeReq = function (rq) {
 			var idx = $scope.claim.requirements.indexOf(rq);
 			$scope.claim.requirements.splice(idx, 1);
+		};
+
+        // Add/Remove Payment
+		var _addPayment = function (pm) {
+		    ngDialog.open({
+		        template: 'dialogs/payment.html',
+		        // className: 'ngdialog-theme-plain',
+		        scope: $scope,
+		        controller: function () {
+		            $scope.pm = {};
+		            $scope.addPayment_2 = function () {
+		                $scope.claim.payments.push($scope.pm);
+
+		                scope.closeThisDialog();
+		            };
+		        }
+		    });
+		};
+		var _removePayment = function (pm) {
+
 		};
 
         // Create new Claim
@@ -231,6 +251,8 @@ function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, ve
 		$scope.removeCheckPoint = _removeCP;
 		$scope.addRequirement = _addReq;
 		$scope.removeRequirement = _removeReq;
+		$scope.addPayment = _addPayment;
+		$scope.removePayment = _removePayment;
 		$scope.fileSelected = _fileSelected;
 		$scope.removeFile = _removeFile;
 

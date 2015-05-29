@@ -20,5 +20,8 @@ namespace AngularJS.Services.DTO
         public string Note { get; set; }
         public string Participant { get; set; }
         public string Part { get; set; }
+
+        // Extra
+        public string InvoiceCode { get; set; }
     }
 }

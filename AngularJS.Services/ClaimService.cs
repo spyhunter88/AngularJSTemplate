@@ -117,6 +117,7 @@ namespace AngularJS.Service
             if (excList.Where(x => String.Equals(x.ObjectField, "Requirements", StringComparison.OrdinalIgnoreCase)).Count() == 0) query.Include(x => x.Requirements);
             if (excList.Where(x => String.Equals(x.ObjectField, "Payments", StringComparison.OrdinalIgnoreCase)).Count() == 0) query.Include(x => x.Payments);
             if (excList.Where(x => String.Equals(x.ObjectField, "Allocations", StringComparison.OrdinalIgnoreCase)).Count() == 0) query.Include(x => x.Allocations);
+
             var _claim = (await query.SelectAsync()).FirstOrDefault();
 
             // Transform Claim to ClaimDTO and copy other list
@@ -126,12 +127,26 @@ namespace AngularJS.Service
             claim.Payments = AutoMapper.Mapper.Map<ICollection<Payment>, List<PaymentDTO>>(_claim.Payments);
             claim.Allocations = AutoMapper.Mapper.Map<ICollection<Allocation>, List<AllocationDTO>>(_claim.Allocations);
 
+            // Load status
             var _status = _unitOfWorkAsync.Repository<ClaimStatus>().Query(x => x.Code == claim.StatusID)
              .Select(s => new { s.StatusName, s.Phase })
              .FirstOrDefault();
-
             claim.Status = _status.StatusName;
             claim.Phase = _status.Phase;
+
+            // Get UserName
+            var _user = _unitOfWorkAsync.Repository<User>().Query(x => x.Id == _claim.CreateBy)
+                .Select(x => x.UserName)
+                .FirstOrDefault();
+            claim.CreateUser = _user;
+
+            // Load Allocation info
+            foreach (AllocationDTO aloc in claim.Allocations)
+            {
+                aloc.InvoiceCode = claim.Payments.Where(x => x.PaymentID == aloc.PaymentID)
+                    .Select(x => x.InvoiceCode)
+                    .FirstOrDefault();
+            }
 
             return claim;
         }
