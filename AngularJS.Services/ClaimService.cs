@@ -235,10 +235,15 @@ namespace AngularJS.Service
             // Inject from DTO to current
             target.InjectFrom(_cei, _claim);
 
+            // Create Value injecter for inner class
+            List<string> cpObjCfg = objectConfig.Where(x => x.Contains("claim.")).Select(x => x.RemovePrefix("claim.")).ToList().ToList();
+            cpObjCfg.Add("claim");
+            ClaimExcInjection _innerei = new ClaimExcInjection(cpObjCfg.ToArray());
+
             // manual copy list
             if (!objectConfig.Contains("checkpoints"))
             {
-                target.CheckPoints.InjectFrom(_cei, _claim.CheckPoints, "CheckPointID", true);
+                target.CheckPoints.InjectFrom(_innerei, _claim.CheckPoints, "CheckPointID", true);
                 var ids = _claim.CheckPoints.Select(x => x.CheckPointID);
                 foreach (CheckPoint cp in target.CheckPoints)
                 {
@@ -251,7 +256,7 @@ namespace AngularJS.Service
             }
             if (!objectConfig.Contains("requirements"))
             {
-                target.Requirements.InjectFrom(_cei, _claim.Requirements, "RequirementID", true);
+                target.Requirements.InjectFrom(_innerei, _claim.Requirements, "RequirementID", true);
                 var ids = _claim.Requirements.Select(x => x.RequirementID);
                 foreach (Requirement rq in target.Requirements)
                 {
@@ -264,11 +269,29 @@ namespace AngularJS.Service
             }
             if (!objectConfig.Contains("payments"))
             {
-                target.Payments = _claim.Payments;
+                target.Payments.InjectFrom(_innerei, _claim.Payments, "PaymentID", true);
+                var ids = _claim.Payments.Select(x => x.PaymentID);
+                foreach (Payment pm in target.Payments)
+                {
+                    // Check for remove
+                    if (!ids.Contains(pm.PaymentID)) { pm.ObjectState = ObjectState.Deleted; continue; }
+
+                    // Add new of Update
+                    pm.ObjectState = pm.PaymentID == 0 ? ObjectState.Added : ObjectState.Modified;
+                }
             }
             if (!objectConfig.Contains("allocations"))
             {
-                target.Allocations = _claim.Allocations;
+                target.Allocations.InjectFrom(_innerei, _claim.Allocations, "AllocationID", true);
+                var ids = _claim.Payments.Select(x => x.PaymentID);
+                foreach (Allocation aloc in target.Allocations)
+                {
+                    // Check for remove
+                    if (!ids.Contains(aloc.AllocationID)) { aloc.ObjectState = ObjectState.Deleted; continue; }
+
+                    // Add new of Update
+                    aloc.ObjectState = aloc.AllocationID == 0 ? ObjectState.Added : ObjectState.Modified;
+                }
             }
 
 

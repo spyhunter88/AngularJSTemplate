@@ -10,7 +10,7 @@ namespace AngularJS.Services.InjectConfig
     {
         // We take it to search for ID and inject one-to-one, the key is string of ID property,
         // we also add new member to the result list 
-        public static void InjectFrom<TDest, TSource>(this IEnumerable<TDest> dests, IValueInjection injection, IEnumerable<TSource> sources, string key, bool addRemain = false)
+        public static void InjectFrom<TDest, TSource>(this ICollection<TDest> dests, IValueInjection injection, ICollection<TSource> sources, string key, bool addRemain = false)
         {
             List<object> ids = new List<object>();
             List<TSource> srcs = sources.ToList();
@@ -30,14 +30,12 @@ namespace AngularJS.Services.InjectConfig
             // We loop through others
             if (addRemain)
             {
-                // List<TDest> add = dests.ToList();
-                // foreach (TSource source in srcs)
-                // {
-                //    var newD = Activator.CreateInstance<TDest>();
-                //    newD.InjectFrom(injection, source);
-                    // dests.Add(newD);
-                // }
-                // dests = add;
+                foreach (TSource source in srcs)
+                {
+                    var newD = Activator.CreateInstance<TDest>();
+                    newD.InjectFrom(injection, source);
+                    dests.Add(newD);
+                }
             }
         }
 

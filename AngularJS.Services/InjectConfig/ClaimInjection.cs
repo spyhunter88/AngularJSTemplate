@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Omu.ValueInjecter;
@@ -87,6 +86,8 @@ namespace AngularJS.Services.InjectConfig
         {
             if (excludeProps == null || !excludeProps.Contains(sp.Name, StringComparer.OrdinalIgnoreCase))
             {
+                // Trace.WriteLine(sp.Name + "-" + sp.PropertyType.Name);
+
                 // For some reason, String is determine as IEnumerable
                 if (typeof(IEnumerable).IsAssignableFrom(sp.PropertyType)
                     && sp.PropertyType.Name != "String") return;
