@@ -87,9 +87,9 @@ namespace AngularJS.Services.InjectConfig
         {
             if (excludeProps == null || !excludeProps.Contains(sp.Name, StringComparer.OrdinalIgnoreCase))
             {
-                // if (sp.PropertyType == typeof(ICollection<>)) return;
-                if (sp.PropertyType != typeof(string))
-                 if (typeof(IEnumerable).IsAssignableFrom(sp.PropertyType)) return;
+                // For some reason, String is determine as IEnumerable
+                if (typeof(IEnumerable).IsAssignableFrom(sp.PropertyType)
+                    && sp.PropertyType.Name != "String") return;
 
                 var targetProp = target.GetType().GetProperty(sp.Name);
                 if (targetProp != null && targetProp.PropertyType == sp.PropertyType)

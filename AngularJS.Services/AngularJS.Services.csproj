@@ -81,6 +81,7 @@
     <Compile Include="DTO\PaymentDTO.cs" />
     <Compile Include="DTO\RequirementDTO.cs" />
     <Compile Include="InjectConfig\ClaimInjection.cs" />
+    <Compile Include="InjectConfig\InjectUtils.cs" />
     <Compile Include="IStoredProcedureService.cs" />
     <Compile Include="ObjectConfigService.cs" />
     <Compile Include="ProductService.cs" />

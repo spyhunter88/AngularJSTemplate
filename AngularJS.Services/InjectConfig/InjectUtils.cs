@@ -13,10 +13,12 @@ namespace AngularJS.Services.InjectConfig
         public static void InjectFrom<TDest, TSource>(this IEnumerable<TDest> dests, IValueInjection injection, IEnumerable<TSource> sources, string key, bool addRemain = false)
         {
             List<object> ids = new List<object>();
+            List<TSource> srcs = sources.ToList();
             foreach (TDest dest in dests)
             {
-                var idVal = GetPropValue(dest, key);
-                var source = sources.Where(x => GetPropValue(x, key) == idVal).Select(x => x).FirstOrDefault();
+                object idVal = GetPropValue(dest, key);
+                var source = srcs.Where(x => idVal.Equals(GetPropValue(x, key))).Select(x => x).FirstOrDefault();
+                srcs.Remove(source);
 
                 // back up for later use
                 ids.Add(idVal);
@@ -25,15 +27,17 @@ namespace AngularJS.Services.InjectConfig
                 dest.InjectFrom(injection, source);
             }
 
-            // We loop through others and 
+            // We loop through others
             if (addRemain)
             {
-                foreach (TSource source in sources.Where(x => ids.Contains(GetPropValue(x, key))).Select(x => x))
-                {
-                    var newD = Activator.CreateInstance<TDest>();
-                    newD.InjectFrom(injection, source);
-                    dests = dests.Concat(new[] { newD });
-                }
+                // List<TDest> add = dests.ToList();
+                // foreach (TSource source in srcs)
+                // {
+                //    var newD = Activator.CreateInstance<TDest>();
+                //    newD.InjectFrom(injection, source);
+                    // dests.Add(newD);
+                // }
+                // dests = add;
             }
         }
 
