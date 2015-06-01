@@ -597,3 +597,6 @@ E:\workspace\LinhNH13\Source\Repos\AngularJSTemplate\AngularJS.Web\obj\Debug\Ang
 E:\workspace\LinhNH13\Source\Repos\AngularJSTemplate\AngularJS.Web\obj\Debug\AngularJS.Web.dll
 E:\workspace\LinhNH13\Source\Repos\AngularJSTemplate\AngularJS.Web\obj\Debug\AngularJS.Web.pdb
 E:\workspace\LinhNH13\Source\Repos\AngularJSTemplate\AngularJS.Web\bin\Omu.ValueInjecter.pdb
+D:\Workspace\UnitOfWork\AngularJSAuthentication\AngularJSTemplate\AngularJS.Web\bin\Omu.ValueInjecter.dll
+D:\Workspace\UnitOfWork\AngularJSAuthentication\AngularJSTemplate\AngularJS.Web\bin\Omu.ValueInjecter.pdb
+D:\Workspace\UnitOfWork\AngularJSAuthentication\AngularJSTemplate\AngularJS.Web\bin\Omu.ValueInjecter.xml

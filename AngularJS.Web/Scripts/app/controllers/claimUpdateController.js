@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 app.controller('claimUpdateController', ['$scope', '$routeParams', '$location', 'claim.api', 'category.api', 'file.api', 
-    'productLine.api', 'vendor.api', 'ngToast', 'ngDialog', 'DTOptionsBuilder', 'DTColumnDefBuilder',
-function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, vendorApi, ngToast, ngDialog,
+    'productLine.api', 'vendor.api', 'ngToast', 'dialogs', 'DTOptionsBuilder', 'DTColumnDefBuilder',
+function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, vendorApi, ngToast, dialogs,
             DTOptionsBuilder, DTColumnDefBuilder) {
         var dateFormat = "YYYY-MM-DD";
 
@@ -116,22 +116,45 @@ function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, ve
 		};
 
         // Add/Remove Payment
-		var _addPayment = function (pm) {
-		    ngDialog.open({
-		        template: 'dialogs/payment.html',
-		        // className: 'ngdialog-theme-plain',
-		        scope: $scope,
-		        controller: function () {
-		            $scope.pm = {};
-		            $scope.addPayment_2 = function () {
-		                $scope.claim.payments.push($scope.pm);
-
-		                scope.closeThisDialog();
-		            };
+		var _editPayment = function (pm) {
+		    var modal = dialogs.create('dialogs/payment.html?bust=' + Math.random().toString(36).slice(2), 'paymentCtrl', pm);
+		    modal.result.then(function (data) {
+		        if (data.paymentID == 0) $scope.claim.payments.push(data);
+		        else {
+		            for (var i = 0; i < $scope.claim.payments.length; i++) {
+		                console.log($scope.claim.payments[i]);
+		                if ($scope.claim.payments[i].paymentID = data.paymentID) {
+		                    console.log('hehe');
+		                    $scope.claim.payments[i] = data;
+		                    break;
+		                }
+		            }
 		        }
+		    }, function (err) {
 		    });
 		};
 		var _removePayment = function (pm) {
+
+		};
+
+        // Add/Remove Allocation
+		var _editAllocation = function (aloc) {
+		    var modal = dialogs.create('dialogs/allocation.html?bust=' + Math.random().toString(36).slice(2), 'allocationCtrl', aloc);
+		    modal.result.then(function(data) {
+		        if (data.allocationID == 0) $scope.claim.allocations.push(data);
+		        else {
+		            for (var i = 0; i < $scope.claim.allocations.length; i++) {
+		                if ($scope.claim.allocations[i].allocationID == data.allocationID) {
+		                    $scope.claim.allocations[i] = data;
+		                    break;
+		                }
+		            }
+		        }
+		    }, function(err) {
+
+		    });
+		};
+		var _removeAllocation = function (aloc) {
 
 		};
 
@@ -251,8 +274,10 @@ function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, ve
 		$scope.removeCheckPoint = _removeCP;
 		$scope.addRequirement = _addReq;
 		$scope.removeRequirement = _removeReq;
-		$scope.addPayment = _addPayment;
+		$scope.editPayment = _editPayment;
 		$scope.removePayment = _removePayment;
+		$scope.editAllocation = _editAllocation;
+		$scope.removeAllocation = _removeAllocation;
 		$scope.fileSelected = _fileSelected;
 		$scope.removeFile = _removeFile;
 
@@ -267,4 +292,41 @@ function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, ve
 
 		$scope.dt = dtCheckPoint;
         $scope.init();
-}]);
+}])
+.controller('paymentCtrl', function ($scope, $modalInstance, data) {
+    if (data === undefined) $scope.pm = { paymentID: 0 };
+    else $scope.pm = data;
+
+    $scope.cancel = function () {
+        $modalInstance.dismiss('canceled');
+    }; // end cancel
+
+    $scope.save = function () {
+        // TODO: take a check from server/client with remain payment
+        $modalInstance.close($scope.pm);
+    }; // end save
+
+    $scope.hitEnter = function (evt) {
+        if (angular.equals(evt.keyCode, 13) && !(angular.equals($scope.name, null) || angular.equals($scope.name, '')))
+            $scope.save();
+    }; // end hitEnter
+})
+.controller('allocationCtrl', function ($scope, $modalInstance, data) {
+    if (data === undefined) $scope.aloc = { allocationId: 0 };
+    else $scope.aloc = data;
+
+    $scope.cancel = function () {
+        $modalInstance.dismiss('canceled');
+    }; // end cancel
+
+    $scope.save = function () {
+        // TODO: take a check from server/client with remain payment
+        $modalInstance.close($scope.aloc);
+    }; // end save
+
+    $scope.hitEnter = function (evt) {
+        if (angular.equals(evt.keyCode, 13) && !(angular.equals($scope.name, null) || angular.equals($scope.name, '')))
+            $scope.save();
+    }; // end hitEnter
+})
+;

@@ -212,28 +212,55 @@ namespace AngularJS.Service
             _claim.Payments = AutoMapper.Mapper.Map<List<PaymentDTO>, ICollection<Payment>>(claim.Payments);
             _claim.Allocations = AutoMapper.Mapper.Map<List<AllocationDTO>, ICollection<Allocation>>(claim.Allocations);
 
+            // Load current claim
+            var target = _unitOfWorkAsync.Repository<Claim>().Query(x => x.ClaimID == _claim.ClaimID).Select().FirstOrDefault();
+
             // Load new string[] from objectConfig
-            var phase = _unitOfWorkAsync.Repository<ClaimStatus>().Query(cs => cs.Code == claim.StatusID).Select(s => s.Phase).FirstOrDefault();
-            string[] objectConfig = PolicyUtil.GetObjectConfig(_unitOfWorkAsync, userID, "Claim", phase, userID == claim.CreateBy)
+            var phase = _unitOfWorkAsync.Repository<ClaimStatus>().Query(cs => cs.Code == target.StatusID).Select(s => s.Phase).FirstOrDefault();
+            string[] objectConfig = PolicyUtil.GetObjectConfig(_unitOfWorkAsync, userID, "Claim", phase, userID == target.CreateBy)
                                     .AsQueryable()
                                     .Where(x => x.FieldProperty == "disabled")
                                     .Select(x => x.ObjectField)
                                     .ToArray();
             ClaimExcInjection _cei = new ClaimExcInjection(objectConfig);
 
-            // Load current claim and inject
-            var targets = await _unitOfWorkAsync.RepositoryAsync<Claim>().Query(x => x.ClaimID == _claim.ClaimID).SelectAsync();
-            var target = targets.FirstOrDefault();
+            // Reload Claim with full required information to inject/update
+            var query = _unitOfWorkAsync.Repository<Claim>().Query(x => x.ClaimID == _claim.ClaimID);
+            if (!objectConfig.Contains("checkpoints")) query.Include(x => x.CheckPoints);
+            if (!objectConfig.Contains("requirements")) query.Include(x => x.Requirements);
+            if (!objectConfig.Contains("payments")) query.Include(x => x.Payments);
+            if (!objectConfig.Contains("allocations")) query.Include(x => x.Allocations);
+            target = query.Select().FirstOrDefault();
+
+            // Inject from DTO to current
             target.InjectFrom(_cei, _claim);
 
             // manual copy list
             if (!objectConfig.Contains("checkpoints"))
             {
-                target.CheckPoints = _claim.CheckPoints;
+                target.CheckPoints.InjectFrom(_cei, _claim.CheckPoints, "CheckPointID", true);
+                var ids = _claim.CheckPoints.Select(x => x.CheckPointID);
+                foreach (CheckPoint cp in target.CheckPoints)
+                {
+                    // Check for remove
+                    if (!ids.Contains(cp.CheckPointID)) { cp.ObjectState = ObjectState.Deleted; continue; }
+
+                    // Add new of Update
+                    cp.ObjectState = cp.CheckPointID == 0 ? ObjectState.Added : ObjectState.Modified;
+                }
             }
             if (!objectConfig.Contains("requirements"))
             {
-                target.Requirements = _claim.Requirements;
+                target.Requirements.InjectFrom(_cei, _claim.Requirements, "RequirementID", true);
+                var ids = _claim.Requirements.Select(x => x.RequirementID);
+                foreach (Requirement rq in target.Requirements)
+                {
+                    // Check for remove
+                    if (!ids.Contains(rq.RequirementID)) { rq.ObjectState = ObjectState.Deleted; continue; }
+
+                    // Add new of Update
+                    rq.ObjectState = rq.RequirementID == 0 ? ObjectState.Added : ObjectState.Modified;
+                }
             }
             if (!objectConfig.Contains("payments"))
             {
@@ -256,14 +283,19 @@ namespace AngularJS.Service
                         // Case: DRAFT -> PREPARE, RUNNING or ENDING
                         if (target.StatusID == 1) 
                         {
-                            DateTime now = new DateTime();
+                            DateTime now = DateTime.Now;
                             if (target.StartDate > now) target.StatusID = 10;       // PREPARE RUNNING
                             else if (target.EndDate > now) target.StatusID = 11;    // RUNNING
                             else target.StatusID = 12;                              // ENDING
+                            break;
                         }
 
                         // Case: ENDING -> WAITING APPROVE or SUBMITTED CLAIM
-                        if (target.StatusID == 12) target.StatusID = ((int)target.PrePaid == 1) ? (short)16 : (short)13;
+                        if (target.StatusID == 12)
+                        {
+                            target.StatusID = ((int)target.PrePaid == 1) ? (short)16 : (short)13;
+                            break;
+                        }
 
                         // Case: PREPARE CLAIM -> SUBMITTED CLAIM, SUBMITTED CLAIM -> SUBMITED CLAIM or DONE!
                         if (target.StatusID == 15)
@@ -273,8 +305,13 @@ namespace AngularJS.Service
                                 target.StatusID = 15;
                             else
                                 target.StatusID = 14;
+                            break;
                         }
-                        if (target.StatusID == 16) target.StatusID = 17;
+                        if (target.StatusID == 16)
+                        {
+                            target.StatusID = 17;
+                            break;
+                        }
                         break;
                     }
                 case "Approve":
@@ -287,9 +324,9 @@ namespace AngularJS.Service
                     break;
             }
 
-
+            target.ObjectState = ObjectState.Modified;
             _unitOfWorkAsync.RepositoryAsync<Claim>().Update(target);
-            var claimId = _unitOfWorkAsync.SaveChangesAsync();
+            var claimId = await _unitOfWorkAsync.SaveChangesAsync();
 
             return AutoMapper.Mapper.Map<Claim, ClaimDTO>(target);
         }

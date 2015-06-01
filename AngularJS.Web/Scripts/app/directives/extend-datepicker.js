@@ -50,11 +50,18 @@
             var directive = $delegate[0];
 
             var compile = directive.compile;
+            var link = directive.link;
             directive.compile = function (tElement, tAttr) {
-                var link = compile.apply(this, arguments);
-
+                
                 return function (scope, elem, attr) {
+                    // define focus from
+                    if (scope.focusSource === undefined) scope.focusSource = '';
+
+                    // run inner directive
+                    link.apply(this, arguments);
+
                     if (attr.disabled || attr.readonly) attr.disabled = true;
+                    // scope.isOpen = false;
 
                     // Remove previous date button due scope.apply() function (this include ul and span tag)
                     var prevAppendBtn = elem.next();
@@ -74,19 +81,32 @@
 
                     var openDialog = function (event) {
                         event.stopPropagation();
-                        scope.$apply(function () {
-                            console.log("This cause bug here: " + scope);
-                            scope.isOpen = !attr.disabled;
-                        });
+                        // console.log(event);
+                        // console.log(scope);
+                        // Check if dialog is not open, but event fire after isOpen change from true -> false
+                        // So we check false or not exist for first firing
+                        if ((scope.focusSource != 'inner') && !attr.disabled) {
+                            scope.$apply(function () {
+                                // console.log("This cause bug here: " + scope);
+                                scope.isOpen = !attr.disabled;
+                            });
+                        } else {
+                            // reset the focus source for later on
+                            scope.focusSource = '';
+                        }
                     };
 
+                    // We should deny focus bind that come when close the date-picker dialog
+                    scope.$on('datepicker.focus', function () {
+                        scope.focusSource = 'inner';
+                        // console.log('Hehe', scope);
+                    });
+
                     elem.after(appendBtn);
-                    appendBtn.bind('click', openDialog);
+                    appendBtn.on('click', openDialog);
 
-                    elem.bind('click', openDialog);
-                    elem.bind('focus', openDialog);
-
-                    link.apply(this, arguments);
+                    elem.on('click', openDialog);
+                    elem.on('focus', openDialog);
                 };
             };
 

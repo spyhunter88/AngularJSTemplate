@@ -1,0 +1,89 @@
+﻿
+<div class="modal-header">
+    <h4 class="modal-title">Allocation</h4>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <label class="control-label">Area Allocate</label>
+            <input type="text" class="form-control input-sm" ng-model="aloc.areaAllocate" />
+        </div>
+
+        <div class="col-md-6 form-group">
+            <label class="control-label">Invoice Code</label>
+            <input type="text" class="form-control input-sm" ng-model="aloc.invoiceCode" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <label class="control-label">Participant</label>
+            <input type="text" class="form-control input-sm" ng-model="aloc.participant" />
+        </div>
+
+        <div class="col-md-6">
+            <label class="control-label">Criteria</label>
+            <input type="text" class="form-control input-sm" ng-model="aloc.criteria" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <label class="control-label">Note Calculate</label>
+            <input type="text" class="form-control input-sm" ng-model="aloc.noteCalculate" />
+        </div>
+        <div class="col-md-6">
+            <label class="control-label">Program Code</label>
+            <input type="text" class="form-control input-sm" ng-model="aloc.programCode" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <label class="control-label">FAF Date</label>
+            <p class="input-group input-group-sm">
+                <input type="text" class="form-control input-sm" ng-model="aloc.fafDate" datepicker-popup="yyyy-MM-dd" datepicker-localdate />
+            </p>
+        </div>
+
+        <div class="col-md-6">
+            <label class="control-label">Actual Date</label>
+            <p class="input-group input-group-sm">
+                <input type="text" class="form-control input-sm" ng-model="aloc.actualDate" datepicker-popup="yyyy-MM-dd" datepicker-localdate />
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <label class="control-label">Allocate Amount</label>
+            <input type="text" class="form-control input-sm" ng-model="aloc.allocateAmount" />
+        </div>
+        <div class="col-md-6">
+            <label class="control-label">Calculate Amount</label>
+            <input type="text" class="form-control input-sm" ng-model="aloc.calculateAmount" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <label class="control-label">Actual Amount</label>
+            <input type="text" class="form-control input-sm" ng-model="aloc.actualAmount" />
+        </div>
+        <div class="col-md-6">
+            <label class="control-label">Remain Amount</label>
+            <input type="text" class="form-control input-sm" ng-model="aloc.allocateAmount - aloc.calculateAmount - aloc.actualAmount" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <label class="control-label">Note</label>
+            <input type="text" class="form-control input-sm" ng-model="aloc.note" />
+        </div>
+    </div>
+
+    <hr />
+    <button class="btn btn-primary" ng-click="save()"><i class="glyphicon glyphicon-plus"></i> Save</button>
+    <button class="btn" ng-click="cancel()"><i class="glyphicon glyphicon-arrow-right"></i> Cancel</button>
+</div>

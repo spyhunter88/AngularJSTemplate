@@ -1,14 +1,43 @@
-﻿<h1>Template heading</h1>
+﻿
+<div class="modal-header">
+    <h4 class="modal-title">Payment</h4>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <label class="control-label">Invoice Code</label>
+            <input type="text" class="form-control input-sm" ng-model="pm.invoiceCode" />
+        </div>
 
-<div class="dialog-contents">
-    <div class="container">
-        <input type="text" class="input input-sm" ng-model="pm.invoiceCode" />
-        <input type="text" class="input input-sm input-group-sm" ng-model="pm.paymentDate" />
-        <input type="text" class="input input-sm" ng-model="pm.exchangeRate" />
-        <input type="text" class="input input-sm" ng-model="pm.vendorPayment" />
-        <input type="text" class="input input-sm" ng--model="Note" />
-        <hr />
-        <button class="btn btn-primary" ng-click="addPayment_2()"><i class="glyphicon-plus">Add</i></button>
-        <button class="btn" ng-click="scope.closeThisDialog()"><i class="glyphicon-plus">Cancel</i></button>
+        <div class="col-md-6 form-group">
+            <label class="control-label">Payment Date</label>
+            <p class="input-group input-group-sm">
+                <input type="text" class="form-control input-sm" ng-model="pm.paymentDate" datepicker-popup="yyyy-MM-dd" datepicker-localdate />
+            </p>
+        </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <label class="control-label">Exchange Rate</label>
+            <input type="text" class="form-control input-sm" ng-model="pm.exchangeRate" />
+        </div>
+
+        <div class="col-md-6">
+            <label class="control-label">Vendor Payment</label>
+            <input type="text" class="form-control input-sm" ng-model="pm.vendorPayment" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <label class="control-label">Note</label>
+            <input type="text" class="form-control input-sm" ng-model="pm.note" />
+        </div>
+    </div>
+
+
+    <hr />
+    <button class="btn btn-primary" ng-click="save()"><i class="glyphicon glyphicon-plus"></i> Save</button>
+    <button class="btn" ng-click="cancel()"><i class="glyphicon glyphicon-arrow-right"></i> Cancel</button>
 </div>

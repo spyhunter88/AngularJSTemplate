@@ -14,7 +14,8 @@ namespace AngularJS.Services.Utility
 
             // 2. Query list
             var list = unitOfWorkAsync.Repository<ObjectConfig>().Query(
-                x => x.Object == objectName && x.Status == objectStatus &&
+                x => x.Object == objectName && 
+                (x.Status == objectStatus || x.Status == "") &&
                 (x.UserID == userID || roles.Contains(x.GroupID ?? -1)) &&
                 (x.PublicEnabled == 1 || incNonPublic)
                 ).Select().ToList();
