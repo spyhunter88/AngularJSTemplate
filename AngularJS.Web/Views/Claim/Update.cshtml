@@ -45,13 +45,15 @@
             <div class="control-group" ng-class="{ 'has-error': claimForm.ftgProgramCode.$invalid }">
                 <label class="col-md-2 control-label">FTG Program Code</label>
                 <div class="col-md-4">
-                    <input type="text" class="form-control input-sm" name="ftgProgramCode" ng-model="claim.ftgProgramCode" placeholder="Program Code" required>
+                    <label class="control-label" ng-show="read.ftgProgramCode != null">{{claim.ftgProgramCode}}</label>
+                    <input type="text" class="form-control input-sm" ng-show="read.ftgProgramCode == null" name="ftgProgramCode" ng-model="claim.ftgProgramCode" placeholder="Program Code" required>
                 </div>
             </div>
             <div class="control-group">
                 <label class="col-md-2 control-label">Vendor Program Code</label>
                 <div class="col-md-4">
-                    <input type="text" class="form-control input-sm" name="vendorProgramCode" ng-model="claim.vendorProgramCode" placeholder="MKT Code">
+                    <label class="control-label" ng-show="read.vendorProgramCode != null">{{claim.vendorProgramCode}}</label>
+                    <input type="text" class="form-control input-sm" ng-show="read.vendorProgramCode == null" name="vendorProgramCode" ng-model="claim.vendorProgramCode" placeholder="MKT Code">
                 </div>
             </div>
         </div> <!-- class="row" -->
@@ -60,7 +62,8 @@
             <div class="control-group">
                 <label class="col-md-2 control-label">Program Name</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control input-sm" name="programName" ng-model="claim.programName" placeholder="Program Name">
+                    <label class="control-label" ng-show="read.programName != null">{{claim.programName}}</label>
+                    <input type="text" class="form-control input-sm" ng-show="read.programName == null" name="programName" ng-model="claim.programName" placeholder="Program Name">
                 </div>
             </div>
         </div> <!-- class="row" -->
@@ -69,19 +72,15 @@
             <div class="control-group">
                 <label class="col-md-2 control-label" ng-class="{ 'has-error': claimForm.programType.$invalid }">Program Type</label>
                 <div class="col-md-4">
-                    <select class="form-control input-sm" name="programType" ng-model="claim.programType" ng-options="unit.value as unit.value for unit in options.programTypes"></select>
-                    @*<ui-select ng-model="claim.programType">
-                        <ui-select-match>{{$select.selected.value}}</ui-select-match>
-                        <ui-select-choices repeat="unit.value as unit in options.programTypes">
-                            <small ng-bind-html="unit.value"></small>
-                        </ui-select-choices>
-                    </ui-select>*@
+                    <label class="control-label" ng-show="read.programType != null">{{claim.programType}}</label>
+                    <select class="form-control input-sm" ng-show="read.programType == null" name="programType" ng-model="claim.programType" ng-options="unit.value as unit.value for unit in options.programTypes"></select>
                 </div>
             </div>
             <div class="control-group">
                 <label class="col-md-2 control-label" ng-class="{ 'has-error': claimForm.paymentMethod.$invalid }">Payment Method</label>
                 <div class="col-md-4">
-                    <select class="form-control input-sm" name="paymentMethod" ng-model="claim.paymentMethod" ng-options="unit.value as unit.value for unit in options.paymentMethods"></select>
+                    <label class="control-label" ng-show="read.paymentMethod != null">{{claim.paymentMethod}}</label>
+                    <select class="form-control input-sm" ng-show="read.paymentMethod == null" name="paymentMethod" ng-model="claim.paymentMethod" ng-options="unit.value as unit.value for unit in options.paymentMethods"></select>
                 </div>
             </div>
         </div> <!-- class="row" -->
@@ -90,13 +89,15 @@
             <div class="control-group">
                 <label class="col-md-2 control-label" ng-class="{ 'has-error': claimForm.vendorName.$invalid }">Vendor Name</label>
                 <div class="col-md-4">
-                    <select class="form-control input-sm" name="vendorName" ng-model="claim.vendorName" ng-options="unit.vendorShortName as unit.vendorShortName for unit in options.vendors"></select>
+                    <label class="control-label" ng-show="read.vendorName != null">{{claim.vendorName}}</label>
+                    <select class="form-control input-sm" ng-show="read.vendorName == null" name="vendorName" ng-model="claim.vendorName" ng-options="unit.vendorShortName as unit.vendorShortName for unit in options.vendors"></select>
                 </div>
             </div>
             <div class="control-group">
                 <label class="col-md-2 control-label" ng-class="{ 'has-error': claimForm.productLine.$invalid }">Product Line</label>
                 <div class="col-md-4">
-                    <select class="form-control input-sm" ng-model="claim.productLine" ng-options="unit.productLineName as unit.productLineName for unit in options.productLines"></select>
+                    <label class="control-label" ng-show="read.productLine != null">{{claim.productLine}}</label>
+                    <select class="form-control input-sm" ng-show="read.productLine == null" ng-model="claim.productLine" ng-options="unit.productLineName as unit.productLineName for unit in options.productLines"></select>
                 </div>
             </div>
         </div> <!-- class="row" -->
@@ -176,7 +177,7 @@
     <!-- ****************************************************************************************************************** -->
 
     <tabset>
-        <tab heading="Details">
+        <tab heading="Details" ng-show="read.checkPoints == null || read.requirements == null">
             <div class="row">
                 <div class="control-group">
                     <label class="col-sm-2 control-label">Program Content</label>
@@ -190,7 +191,7 @@
                 <div class="control-group">
                     <label class="col-md-2 control-label">Currency Unit</label>
                     <div class="col-md-4">
-                        <label ng-show="read.currencyUnit != null">{{claim.currencyUnit | number}}</label>
+                        <label class="control-label" ng-show="read.currencyUnit != null">{{claim.currencyUnit}}</label>
                         <input type="text" class="form-control input-sm" ng-show="read.currencyUnit == null" ng-model="claim.currencyUnit" name="currencyUnit" />
                     </div>
                 </div>
@@ -264,7 +265,6 @@
                     </div>
                 </div>
             </div> <!-- class="row" -->
-
             <!-- ****************************************************************************************************************** -->
 
             <h5 ng-show="!claim.prePaid">CheckPoints</h5>
@@ -413,7 +413,60 @@
 
         <!-- ****************************************************************************************************************** -->
 
-        <tab heading="Payment & Allocation" ng-show="read.payments != null || read.allocations != null">
+        <tab heading="Payment & Allocation" active="read.checkPoints != null && read.requirements != null" ng-show="read.payments == null || read.allocations == null">
+            <div class="row">
+                <div class="control-group">
+                    <label class="col-sm-2 control-label">Program Content</label>
+                    <div class="col-sm-10">
+                        <textarea style="width: 100%" ng-model="claim.programContent" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="control-group">
+                    <label class="col-md-2 control-label">Currency Unit</label>
+                    <div class="col-md-4">
+                        <label class="control-label" ng-show="read.currencyUnit != null">{{claim.currencyUnit}}</label>
+                        <input type="text" class="form-control input-sm" ng-show="read.currencyUnit == null" ng-model="claim.currencyUnit" name="currencyUnit" />
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="col-md-2 control-label">Exchange Rate</label>
+                    <div class="col-md-4">
+                        <label class="control-label" ng-show="read.exchangeRate != null">{{claim.exchangeRate}}</label>
+                        <input type="text" class="form-control input-sm" ng-show="read.exchangeRate == null" name="exchangeRate" ng-model="claim.exchangeRate" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="control-group">
+                    <label class="col-md-2 control-label">Vendor Confirm Amount</label>
+                    <div class="col-md-4">
+                        <label class="control-label" ng-show="read.vendorConfirmAmount != null">{{claim.vendorConfirmAmount}}</label>
+                        <input type="text" class="form-control input-sm" ng-show="read.vendorConfirmAmount == null" ng-model="claim.vendorConfirmAmount" name="vendorConfirmAmount" />
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="col-md-2 control-label">Vendor Confirm Amount (VND)</label>
+                    <div class="col-md-4">
+                        <label class="control-label">{{claim.vendorConfirmAmount * claim.exchangeRate | number}}</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="control-group">
+                    <label class="col-md-2 control-label">Promise Date</label>
+                    <div class="col-md-4">
+                        <label class="control-label" ng-show="read.promiseDate != null">{{claim.promiseDate | date:'yyyy-MM-dd'}}</label>
+                        <input type="text" class="form-control input-sm" ng-show="read.promiseDate == null" ng-model="claim.promiseDate" name="promiseDate" />
+                    </div>
+                </div>
+
+            </div>
+            
             <h4>Payment</h4>
             <button class="btn btn-primary" ng-click="editPayment()"><i class="glyphicon glyphicon-plus"></i></button>
             <table class="table table-bordered no-border">
