@@ -10,6 +10,7 @@ function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, ve
         $scope.claim = {};
         $scope.options = {};
         $scope.uploadFiles = []; // keep the files while it uploading
+        $scope.tab = { active: 0 };
 
         var dtCheckPoint = {};
         dtCheckPoint.options = DTOptionsBuilder.newOptions()
@@ -79,6 +80,7 @@ function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, ve
         $scope.load = function (claimId) {
             claimApi.getClaim(claimId).then(function (data) {
                 $scope.claim = data;
+                $scope.tab.active = $scope.claim.statusID < 13 ? 0 : 1;
                 $scope.objectConfig = data.objectConfig;
                 $scope.objectAction = angular.fromJson(data.objectAction);
                 $scope.actions = {};

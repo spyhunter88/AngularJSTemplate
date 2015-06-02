@@ -174,6 +174,87 @@
     </form>
     <hr />
 
+    <div ng-show="claim.statusID > 13">
+        <h4>Claim Information</h4>
+
+        <div class="row">
+            <div class="control-group">
+                <label class="col-md-2 control-label">Currency Unit</label>
+                <div class="col-md-4">
+                    <label class="control-label">{{claim.currencyUnit | number}}</label>
+                    @*<input class="form-control input-sm" ng-show="read.currencyUnit == null" name="currencyUnit" ng-model="claim.currencyUnit" />*@
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="col-md-2 control-label">Exchange Rate</label>
+                <div class="col-md-4">
+                    <label class="control-label" ng-show="read.exchangeRate != null">{{claim.exchangeRate | number}}</label>
+                    <input class="form-control input-sm" ng-show="read.exchangeRate == null" name="exchangeRate" ng-model="claim.exchangeRate" />
+                </div>
+            </div>
+        </div> <!-- class="row" -->
+
+        <div class="row">
+            <div class="control-group">
+                <label class="col-md-2 control-label">Submit Claim Amount</label>
+                <div class="col-md-4">
+                    <label class="control-label">{{claim.submitClaimAmount | number}}</label>
+                    @*<input class="form-control input-sm" ng-show="read.currencyUnit == null" name="currencyUnit" ng-model="claim.currencyUnit" />*@
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="col-md-2 control-label">Submit Claim Date</label>
+                <div class="col-md-4">
+                    <label class="control-label" ng-show="read.submitClaimDate != null">{{claim.submitClaimDate | date:'yyyy-MM-dd'}}</label>
+                    <p class="input-group input-group-sm">
+                        <input class="form-control input-sm" ng-show="read.submitClaimDate == null" name="submitClaimDate" ng-model="claim.submitClaimDate" datepicker-popup="yyyy-MM-dd" datepicker-localdate />
+                    </p>
+                </div>
+            </div>
+        </div> <!-- class="row" -->
+
+        <div class="row">
+            <div class="control-group">
+                <label class="col-md-2 control-label">Submit Claim Amount (VND)</label>
+                <div class="col-md-4">
+                    <label class="control-label">{{claim.submitClaimAmount * claim.exchangeRate | number}}</label>
+                    @*<input class="form-control input-sm" ng-show="read.currencyUnit == null" name="currencyUnit" ng-model="claim.currencyUnit" />*@
+                </div>
+            </div>
+        </div> <!-- class="row" -->
+
+        <div class="row">
+            <div class="control-group">
+                <label class="col-md-2 control-label">Vendor Confirm Amount</label>
+                <div class="col-md-4">
+                    <label class="control-label" ng-show="read.vendorConfirmAmount != null">{{claim.vendorConfirmAmount | number}}</label>
+                    <input class="form-control input-sm" ng-show="read.vendorConfirmAmount == null" name="vendorConfirmAmount" ng-model="claim.vendorConfirmAmount" />
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="col-md-2 control-label">Vendor Confirm Date</label>
+                <div class="col-md-4">
+                    <label class="control-label" ng-show="read.vendorConfirmDate != null">{{claim.vendorConfirmDate | date:'yyyy-MM-dd'}}</label>
+                    <p class="input-group input-group-sm">
+                        <input class="form-control input-sm" ng-show="read.vendorConfirmDate == null" name="vendorConfirmDate" ng-model="claim.vendorConfirmDate" datepicker-popup="yyyy-MM-dd" datepicker-localdate />
+                    </p>
+                </div>
+            </div>
+        </div> <!-- class="row" -->
+
+        <div class="row">
+            <div class="control-group">
+                <label class="col-md-2 control-label">Vendor Confirm Amount (VND)</label>
+                <div class="col-md-4">
+                    <label class="control-label">{{claim.vendorConfirmAmount * claim.exchangeRate | number}}</label>
+                    @*<input class="form-control input-sm" ng-show="read.currencyUnit == null" name="currencyUnit" ng-model="claim.currencyUnit" />*@
+                </div>
+            </div>
+        </div> <!-- class="row" -->
+
+        <hr />
+    </div>
+
     <!-- ****************************************************************************************************************** -->
 
     <tabset>
@@ -251,16 +332,16 @@
 
             <div class="row">
                 <div class="control-group">
-                    <label class="col-md-2 control-label">Claim Amount</label>
+                    <label class="col-md-2 control-label">Submit Claim Amount</label>
                     <div class="col-md-4">
-                        <label ng-show="read.claimAmount != null">{{claim.claimAmount}}</label>
-                        <input type="text" class="form-control input-sm" ng-show="read.claimAmount == null" name="claimAmount" ng-model="claim.claimAmount" />
+                        <label ng-show="read.claimAmount != null">{{claim.submitClaimAmount}}</label>
+                        <input type="text" class="form-control input-sm" ng-show="read.submitClaimAmount == null" name="submitClaimAmount" ng-model="claim.submitClaimAmount" />
                     </div>
                 </div>
                 <div class="control-group">
-                    <label class="col-md-2 control-label">Claim Amount (VND)</label>
+                    <label class="col-md-2 control-label">Submit Claim Amount (VND)</label>
                     <div class="col-md-4">
-                        <label>{{claim.claimAmount * claim.exchangeRate | number}}</label>
+                        <label>{{claim.submitClaimAmount * claim.exchangeRate | number}}</label>
                         @*<input type="text" class="form-control input-sm" name="promiseAmount" ng-model="claim.promiseAmount" />*@
                     </div>
                 </div>
@@ -413,7 +494,7 @@
 
         <!-- ****************************************************************************************************************** -->
 
-        <tab heading="Payment & Allocation" active="read.checkPoints != null && read.requirements != null" ng-show="read.payments == null || read.allocations == null">
+        <tab heading="Payment & Allocation" active="tab.active" ng-show="read.payments == null || read.allocations == null">
             <div class="row">
                 <div class="control-group">
                     <label class="col-sm-2 control-label">Program Content</label>
@@ -442,16 +523,16 @@
 
             <div class="row">
                 <div class="control-group">
-                    <label class="col-md-2 control-label">Vendor Confirm Amount</label>
+                    <label class="col-md-2 control-label">Promise Amount</label>
                     <div class="col-md-4">
-                        <label class="control-label" ng-show="read.vendorConfirmAmount != null">{{claim.vendorConfirmAmount}}</label>
-                        <input type="text" class="form-control input-sm" ng-show="read.vendorConfirmAmount == null" ng-model="claim.vendorConfirmAmount" name="vendorConfirmAmount" />
+                        <label class="control-label" ng-show="read.promiseAmount != null">{{claim.promiseAmount}}</label>
+                        <input type="text" class="form-control input-sm" ng-show="read.promiseAmount == null" ng-model="claim.promiseAmount" name="promiseAmount" />
                     </div>
                 </div>
                 <div class="control-group">
-                    <label class="col-md-2 control-label">Vendor Confirm Amount (VND)</label>
+                    <label class="col-md-2 control-label">Promise Amount (VND)</label>
                     <div class="col-md-4">
-                        <label class="control-label">{{claim.vendorConfirmAmount * claim.exchangeRate | number}}</label>
+                        <label class="control-label">{{claim.promiseAmount * claim.exchangeRate | number}}</label>
                     </div>
                 </div>
             </div>
@@ -466,7 +547,7 @@
                 </div>
 
             </div>
-            
+
             <h4>Payment</h4>
             <button class="btn btn-primary" ng-click="editPayment()"><i class="glyphicon glyphicon-plus"></i></button>
             <table class="table table-bordered no-border">
