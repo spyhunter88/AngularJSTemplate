@@ -332,7 +332,38 @@ namespace AngularJS.Service
                         }
                         if (target.StatusID == 16)
                         {
-                            target.StatusID = 17;
+                            if (target.Payments.Count() != 0)
+                            {
+                                target.StatusID = 25; 
+
+                                // Check remain payment
+                                var remainPayment = target.VendorConfirmAmount -
+                                    target.Payments.Sum(x => x.VendorPayment);
+
+                                // Check for complete 
+                                if (remainPayment == 0)
+                                {
+                                    // Check total first
+                                    var inCompleteAloc = target.Allocations.Where(
+                                        x => x.AllocateAmount - x.CalculateAmount - x.ActualAmount > 0).Select(x => x);
+
+                                    // Check for each Payment relate with Allocations
+                                    if (inCompleteAloc.Count() == 0)
+                                    {
+                                        bool isAllocated = true;
+                                        foreach (Payment pm in target.Payments)
+                                        {
+                                            var remainPm = pm.VendorPayment * pm.ExchangeRate
+                                                - target.Allocations.Where(x => x.PaymentID == pm.PaymentID)
+                                                .Sum(x => x.AllocateAmount);
+
+                                            isAllocated = isAllocated && (Math.Abs(remainPm??0) <= 1);
+                                        }
+
+                                        if (isAllocated) target.StatusID = 100;
+                                    }
+                                }
+                            }
                             break;
                         }
                         break;
@@ -344,6 +375,21 @@ namespace AngularJS.Service
                 case "Deny":
                     // Case: WAITING APPROVE -> ENDING
                     if (target.StatusID == 13) target.StatusID = 12;
+                    break;
+
+                case "RequestFail":
+                    if (target.StatusID != 100)
+                    {
+                        // Save the previous status for restore when deny
+                        target.PreviousStatus = target.StatusID;
+                        target.StatusID = 20;
+                    }
+                    break;
+                case "ApproveFail":
+                    if (target.StatusID == 20) target.StatusID = 99;
+                    break;
+                case "DenyFail":
+                    if (target.StatusID == 20) target.StatusID = target.PreviousStatus;
                     break;
             }
 
