@@ -80,7 +80,7 @@ function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, ve
         $scope.load = function (claimId) {
             claimApi.getClaim(claimId).then(function (data) {
                 $scope.claim = data;
-                $scope.tab.active = $scope.claim.statusID < 13 ? 0 : 1;
+                $scope.tab.active = $scope.claim.statusID < 15 ? 0 : 1; // Prepare Claim toward
                 $scope.objectConfig = data.objectConfig;
                 $scope.objectAction = angular.fromJson(data.objectAction);
                 $scope.actions = {};

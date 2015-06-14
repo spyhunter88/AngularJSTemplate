@@ -295,7 +295,7 @@ namespace AngularJS.Service
             }
 
 
-            // Check for other value, change status
+            // Check for other value to change status
             switch (action)
             {
                 case "Save":

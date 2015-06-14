@@ -181,8 +181,7 @@
             <div class="control-group">
                 <label class="col-md-2 control-label">Currency Unit</label>
                 <div class="col-md-4">
-                    <label class="control-label">{{claim.currencyUnit | number}}</label>
-                    @*<input class="form-control input-sm" ng-show="read.currencyUnit == null" name="currencyUnit" ng-model="claim.currencyUnit" />*@
+                    <label class="control-label">{{claim.currencyUnit}}</label>
                 </div>
             </div>
             <div class="control-group">
@@ -199,7 +198,6 @@
                 <label class="col-md-2 control-label">Submit Claim Amount</label>
                 <div class="col-md-4">
                     <label class="control-label">{{claim.submitClaimAmount | number}}</label>
-                    @*<input class="form-control input-sm" ng-show="read.currencyUnit == null" name="currencyUnit" ng-model="claim.currencyUnit" />*@
                 </div>
             </div>
             <div class="control-group">
@@ -218,7 +216,6 @@
                 <label class="col-md-2 control-label">Submit Claim Amount (VND)</label>
                 <div class="col-md-4">
                     <label class="control-label">{{claim.submitClaimAmount * claim.exchangeRate | number}}</label>
-                    @*<input class="form-control input-sm" ng-show="read.currencyUnit == null" name="currencyUnit" ng-model="claim.currencyUnit" />*@
                 </div>
             </div>
         </div> <!-- class="row" -->
@@ -247,7 +244,6 @@
                 <label class="col-md-2 control-label">Vendor Confirm Amount (VND)</label>
                 <div class="col-md-4">
                     <label class="control-label">{{claim.vendorConfirmAmount * claim.exchangeRate | number}}</label>
-                    @*<input class="form-control input-sm" ng-show="read.currencyUnit == null" name="currencyUnit" ng-model="claim.currencyUnit" />*@
                 </div>
             </div>
         </div> <!-- class="row" -->
@@ -348,9 +344,9 @@
             </div> <!-- class="row" -->
             <!-- ****************************************************************************************************************** -->
 
-            <h5 ng-show="!claim.prePaid">CheckPoints</h5>
+            <h5 ng-show="!claim.prePaid && claim.status < 13">CheckPoints</h5>
             <button class="btn btn-primary" ng-click="createCheckpoint()" ng-show="claim.statusID == 1">Create Checkpoint by Start Date and End Date</button>
-            <table class="table table-bordered no-border" ng-show="!claim.prePaid">
+            <table class="table table-bordered no-border" ng-show="!claim.prePaid && claim.status < 13">
                 <thead>
                     <tr style="font-weight: bold">
                         <th>Action</th>
