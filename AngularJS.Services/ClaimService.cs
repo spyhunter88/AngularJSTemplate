@@ -159,23 +159,29 @@ namespace AngularJS.Service
         public async Task<int> PostClaim(ClaimDTO claim, string uploadPath)
         {
             Claim _claim = AutoMapper.Mapper.Map<ClaimDTO, Claim>(claim);
-            _claim.CheckPoints = AutoMapper.Mapper.Map<List<CheckPointDTO>, ICollection<CheckPoint>>(claim.CheckPoints);
-            _claim.Requirements = AutoMapper.Mapper.Map<List<RequirementDTO>, ICollection<Requirement>>(claim.Requirements);
+            //_claim.CheckPoints = AutoMapper.Mapper.Map<List<CheckPointDTO>, ICollection<CheckPoint>>(claim.CheckPoints);
+            //_claim.Requirements = AutoMapper.Mapper.Map<List<RequirementDTO>, ICollection<Requirement>>(claim.Requirements);
             // _claim.do
 
             _claim.StatusID = 1;
 
             _claim.ObjectState = ObjectState.Added;
+            // _claim.CheckPoints.Clear();
             foreach (CheckPoint cp in _claim.CheckPoints)
             {
+                // CheckPoint _cp = AutoMapper.Mapper.Map<CheckPointDTO, CheckPoint>(cp);
                 cp.ObjectState = ObjectState.Added;
+                // _claim.CheckPoints.Add(_cp);
             }
+            // _claim.Requirements.Clear();
             foreach (Requirement req in _claim.Requirements)
             {
+                // Requirement _req = AutoMapper.Mapper.Map<RequirementDTO, Requirement>(req);
                 req.ObjectState = ObjectState.Added;
+                // _claim.Requirements.Add(_req);
             }
 
-            _unitOfWorkAsync.RepositoryAsync<Claim>().Insert(_claim);
+            _unitOfWorkAsync.RepositoryAsync<Claim>().InsertOrUpdateGraph(_claim);
             int record = _unitOfWorkAsync.SaveChanges();
             int newId = _claim.ClaimID;
 
@@ -207,10 +213,10 @@ namespace AngularJS.Service
         public async Task<ClaimDTO> PutClaim(ClaimDTO claim, string uploadPath, int userID, string action)
         {
             Claim _claim = AutoMapper.Mapper.Map<ClaimDTO, Claim>(claim);
-            _claim.CheckPoints = AutoMapper.Mapper.Map<List<CheckPointDTO>, ICollection<CheckPoint>>(claim.CheckPoints);
-            _claim.Requirements = AutoMapper.Mapper.Map<List<RequirementDTO>, ICollection<Requirement>>(claim.Requirements);
-            _claim.Payments = AutoMapper.Mapper.Map<List<PaymentDTO>, ICollection<Payment>>(claim.Payments);
-            _claim.Allocations = AutoMapper.Mapper.Map<List<AllocationDTO>, ICollection<Allocation>>(claim.Allocations);
+            //_claim.CheckPoints = AutoMapper.Mapper.Map<List<CheckPointDTO>, ICollection<CheckPoint>>(claim.CheckPoints);
+            //_claim.Requirements = AutoMapper.Mapper.Map<List<RequirementDTO>, ICollection<Requirement>>(claim.Requirements);
+            //_claim.Payments = AutoMapper.Mapper.Map<List<PaymentDTO>, ICollection<Payment>>(claim.Payments);
+            //_claim.Allocations = AutoMapper.Mapper.Map<List<AllocationDTO>, ICollection<Allocation>>(claim.Allocations);
 
             // Load current claim
             var target = _unitOfWorkAsync.Repository<Claim>().Query(x => x.ClaimID == _claim.ClaimID).Select().FirstOrDefault();
@@ -299,7 +305,14 @@ namespace AngularJS.Service
             switch (action)
             {
                 case "Save":
-                    // Dont change anything, just SAVE depend on status
+                    // Dont change anything, just SAVE depend on status, keep tracking in UPDATE Phase
+                    if (target.StatusID >= 10 && target.StatusID <= 12)
+                    {
+                        DateTime now = DateTime.Now;
+                        if (target.StartDate > now) target.StatusID = 10;       // PREPARE RUNNING
+                        else if (target.EndDate > now) target.StatusID = 11;    // RUNNING
+                        else target.StatusID = 12;                              // ENDING
+                    }
                     break;
                 case "Submit":
                     {
@@ -316,12 +329,12 @@ namespace AngularJS.Service
                         // Case: ENDING -> WAITING APPROVE or SUBMITTED CLAIM
                         if (target.StatusID == 12)
                         {
-                            target.StatusID = ((int)target.PrePaid == 1) ? (short)16 : (short)13;
+                            target.StatusID = ((int)(target.PrePaid??0) == 1) ? (short)16 : (short)13;
                             break;
                         }
 
                         // Case: PREPARE CLAIM -> SUBMITTED CLAIM, SUBMITTED CLAIM -> SUBMITED CLAIM or DONE!
-                        if (target.StatusID == 15)
+                        if (target.StatusID == 14)
                         {
                             if (target.VendorConfirmDate != null && (target.VendorConfirmAmount != 0)
                                 && target.SubmitClaimDate != null)
@@ -330,7 +343,7 @@ namespace AngularJS.Service
                                 target.StatusID = 14;
                             break;
                         }
-                        if (target.StatusID == 16)
+                        if (target.StatusID == 15)
                         {
                             if (target.Payments.Count() != 0)
                             {

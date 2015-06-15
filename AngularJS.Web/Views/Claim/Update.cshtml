@@ -344,9 +344,9 @@
             </div> <!-- class="row" -->
             <!-- ****************************************************************************************************************** -->
 
-            <h5 ng-show="!claim.prePaid && claim.status < 13">CheckPoints</h5>
-            <button class="btn btn-primary" ng-click="createCheckpoint()" ng-show="claim.statusID == 1">Create Checkpoint by Start Date and End Date</button>
-            <table class="table table-bordered no-border" ng-show="!claim.prePaid && claim.status < 13">
+            <h5 ng-show="!claim.prePaid && claim.statusID < 13">CheckPoints</h5>
+            <button class="btn btn-primary" ng-click="createCheckpoint()" ng-show="!claim.prePaid && claim.statusID == 0">Create Checkpoint by Start Date and End Date</button>
+            <table class="table table-bordered no-border" ng-show="!claim.prePaid && claim.statusID < 13">
                 <thead>
                     <tr style="font-weight: bold">
                         <th>Action</th>
@@ -490,7 +490,7 @@
 
         <!-- ****************************************************************************************************************** -->
 
-        <tab heading="Payment & Allocation" active="tab.active" ng-show="read.payments == null || read.allocations == null">
+        <tab heading="Payment & Allocation" active="tab.active" ng-show="claim.statusID > 14">
             <div class="row">
                 <div class="control-group">
                     <label class="col-sm-2 control-label">Program Content</label>
@@ -538,7 +538,9 @@
                     <label class="col-md-2 control-label">Promise Date</label>
                     <div class="col-md-4">
                         <label class="control-label" ng-show="read.promiseDate != null">{{claim.promiseDate | date:'yyyy-MM-dd'}}</label>
-                        <input type="text" class="form-control input-sm" ng-show="read.promiseDate == null" ng-model="claim.promiseDate" name="promiseDate" />
+                        <p class="input-group input-group-sm">
+                            <input type="text" class="form-control input-sm" ng-show="read.promiseDate == null" ng-model="claim.promiseDate" name="promiseDate" datepicker-popup="yyyy-MM-dd" datepicker-localdate />
+                        </p>
                     </div>
                 </div>
 

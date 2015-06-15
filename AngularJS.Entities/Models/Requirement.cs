@@ -22,7 +22,7 @@ namespace AngularJS.Entities.Models
         public Int32? ClaimAmount { get; set; }
         public DateTime? ReportDate { get; set; }
         public String Note { get; set; }
-        public int CreateBy { get; set; }
+        public Int16? CreateBy { get; set; }
         public DateTime? CreateTime { get; set; }
         public Int16? LastEditBy { get; set; }
         public DateTime? LastEditTime { get; set; }

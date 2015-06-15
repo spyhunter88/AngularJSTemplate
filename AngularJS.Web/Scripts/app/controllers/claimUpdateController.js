@@ -7,7 +7,7 @@ function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, ve
         var dateFormat = "YYYY-MM-DD";
 
         $scope.title = "Claim Management";
-        $scope.claim = {};
+        $scope.claim = { statusID: 0 };
         $scope.options = {};
         $scope.uploadFiles = []; // keep the files while it uploading
         $scope.tab = { active: 0 };
@@ -180,24 +180,28 @@ function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, ve
 		var _saveClaim = function () {
 		    claimApi.saveClaim($scope.claim, 'Save').then(function (data) {
 		        ngToast.create('Saved');
+		        $location.path('/claim/' + $scope.claim.claimID);
 		    });
 		};
 
 		var _submitClaim = function () {
 		    claimApi.saveClaim($scope.claim, 'Submit').then(function (data) {
 		        ngToast.create('Submitted');
+                $location.path('/claim/' + $scope.claim.claimID);
 		    });
 		};
 
 		var _approveClaim = function () {
 		    claimApi.saveClaim($scope.claim, 'Approve').then(function (data) {
 		        ngToast.create('Approved');
+		        $location.path('/claim/' + $scope.claim.claimID);
 		    });
 		};
 
 		var _denyClaim = function () {
 		    claimApi.saveClaim($scope.claim, 'Deny').then(function (data) {
 		        ngToast.create('Denied');
+		        $location.path('/claim/' + $scope.claim.claimID);
 		    });
 		};
 
