@@ -159,26 +159,17 @@ namespace AngularJS.Service
         public async Task<int> PostClaim(ClaimDTO claim, string uploadPath)
         {
             Claim _claim = AutoMapper.Mapper.Map<ClaimDTO, Claim>(claim);
-            //_claim.CheckPoints = AutoMapper.Mapper.Map<List<CheckPointDTO>, ICollection<CheckPoint>>(claim.CheckPoints);
-            //_claim.Requirements = AutoMapper.Mapper.Map<List<RequirementDTO>, ICollection<Requirement>>(claim.Requirements);
-            // _claim.do
 
             _claim.StatusID = 1;
 
             _claim.ObjectState = ObjectState.Added;
-            // _claim.CheckPoints.Clear();
             foreach (CheckPoint cp in _claim.CheckPoints)
             {
-                // CheckPoint _cp = AutoMapper.Mapper.Map<CheckPointDTO, CheckPoint>(cp);
                 cp.ObjectState = ObjectState.Added;
-                // _claim.CheckPoints.Add(_cp);
             }
-            // _claim.Requirements.Clear();
             foreach (Requirement req in _claim.Requirements)
             {
-                // Requirement _req = AutoMapper.Mapper.Map<RequirementDTO, Requirement>(req);
                 req.ObjectState = ObjectState.Added;
-                // _claim.Requirements.Add(_req);
             }
 
             _unitOfWorkAsync.RepositoryAsync<Claim>().InsertOrUpdateGraph(_claim);
@@ -213,10 +204,6 @@ namespace AngularJS.Service
         public async Task<ClaimDTO> PutClaim(ClaimDTO claim, string uploadPath, int userID, string action)
         {
             Claim _claim = AutoMapper.Mapper.Map<ClaimDTO, Claim>(claim);
-            //_claim.CheckPoints = AutoMapper.Mapper.Map<List<CheckPointDTO>, ICollection<CheckPoint>>(claim.CheckPoints);
-            //_claim.Requirements = AutoMapper.Mapper.Map<List<RequirementDTO>, ICollection<Requirement>>(claim.Requirements);
-            //_claim.Payments = AutoMapper.Mapper.Map<List<PaymentDTO>, ICollection<Payment>>(claim.Payments);
-            //_claim.Allocations = AutoMapper.Mapper.Map<List<AllocationDTO>, ICollection<Allocation>>(claim.Allocations);
 
             // Load current claim
             var target = _unitOfWorkAsync.Repository<Claim>().Query(x => x.ClaimID == _claim.ClaimID).Select().FirstOrDefault();
@@ -289,7 +276,7 @@ namespace AngularJS.Service
             if (!objectConfig.Contains("allocations"))
             {
                 target.Allocations.InjectFrom(_innerei, _claim.Allocations, "AllocationID", true);
-                var ids = _claim.Payments.Select(x => x.PaymentID);
+                var ids = _claim.Allocations.Select(x => x.AllocationID);
                 foreach (Allocation aloc in target.Allocations)
                 {
                     // Check for remove

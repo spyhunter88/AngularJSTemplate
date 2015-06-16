@@ -11,7 +11,8 @@
 
         <div class="col-md-6 form-group">
             <label class="control-label">Invoice Code</label>
-            <input type="text" class="form-control input-sm" ng-model="aloc.invoiceCode" />
+			<select class="form-control input-sm" ng-model="aloc.paymentID" ng-options="pm.paymentID as pm.invoiceCode for pm in pms"></select>
+            <!-- <input type="text" class="form-control input-sm" ng-model="aloc.invoiceCode" /> -->
         </div>
     </div>
 
@@ -71,8 +72,9 @@
             <input type="text" class="form-control input-sm" ng-model="aloc.actualAmount" />
         </div>
         <div class="col-md-6">
-            <label class="control-label">Remain Amount</label>
-            <input type="text" class="form-control input-sm" ng-model="aloc.allocateAmount - aloc.calculateAmount - aloc.actualAmount" />
+            <label class="control-label">Remain Amount</label><br/>
+			<label class="control-label">{{aloc.allocateAmount - aloc.calculateAmount - aloc.actualAmount | number}}</label>
+            <!-- <input type="text" class="form-control input-sm" ng-model="aloc.allocateAmount - aloc.calculateAmount - aloc.actualAmount" /> -->
         </div>
     </div>
 

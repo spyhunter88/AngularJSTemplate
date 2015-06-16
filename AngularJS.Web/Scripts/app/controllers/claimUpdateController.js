@@ -1,4 +1,4 @@
-﻿'use strict';
+'use strict';
 
 app.controller('claimUpdateController', ['$scope', '$routeParams', '$location', 'claim.api', 'category.api', 'file.api', 
     'productLine.api', 'vendor.api', 'ngToast', 'dialogs', 'DTOptionsBuilder', 'DTColumnDefBuilder',
@@ -141,7 +141,7 @@ function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, ve
 
         // Add/Remove Allocation
 		var _editAllocation = function (aloc) {
-		    var modal = dialogs.create('dialogs/allocation.html?bust=' + Math.random().toString(36).slice(2), 'allocationCtrl', aloc);
+		    var modal = dialogs.create('dialogs/allocation.html?bust=' + Math.random().toString(36).slice(2), 'allocationCtrl', {aloc: aloc, pms: $scope.claim.payments});
 		    modal.result.then(function(data) {
 		        if (data.allocationID == 0) $scope.claim.allocations.push(data);
 		        else {
@@ -302,7 +302,7 @@ function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, ve
 .controller('paymentCtrl', function ($scope, $modalInstance, data) {
     if (data === undefined) $scope.pm = { paymentID: 0 };
     else $scope.pm = data;
-
+    
     $scope.cancel = function () {
         $modalInstance.dismiss('canceled');
     }; // end cancel
@@ -318,9 +318,11 @@ function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, ve
     }; // end hitEnter
 })
 .controller('allocationCtrl', function ($scope, $modalInstance, data) {
-    if (data === undefined) $scope.aloc = { allocationId: 0 };
-    else $scope.aloc = data;
-
+    if (data.aloc === undefined) $scope.aloc = { allocationID: 0 };
+    else $scope.aloc = data.aloc;
+    
+    $scope.pms = data.pms;
+    
     $scope.cancel = function () {
         $modalInstance.dismiss('canceled');
     }; // end cancel
