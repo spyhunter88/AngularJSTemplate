@@ -28,6 +28,13 @@ namespace AngularJS.Web.Api
             {
                 _result = _unitOfWorkAsync.Repository<Category>().Query().Select().ToList();
             }
+            else if (type.Contains(","))
+            {
+                List<string> types = type.Split(new char[] { ',' }).ToList();
+                _result = _unitOfWorkAsync.Repository<Category>()
+                    .Query(x => types.Contains(x.Type))
+                    .Select().ToList();
+            }
             else
             {
                 _result = _unitOfWorkAsync.Repository<Category>()

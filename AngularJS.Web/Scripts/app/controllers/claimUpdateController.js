@@ -29,28 +29,47 @@ function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, ve
         ];
 
         var _init = function () {
-            catApi.getCategories({ type: 'UNIT' }).then(function (data) {
-                $scope.options.units = data;
-            }, function (error) {
-                ngToast.create('Error due loading UNIT!');
-            });
+            //catApi.getCategories({ type: 'UNIT' }).then(function (data) {
+            //    $scope.options.units = data;
+            //}, function (error) {
+            //    ngToast.create('Error due loading UNIT!');
+            //});
 
-            catApi.getCategories({ type: 'PARTICIPANT' }).then(function (data) {
-                $scope.options.participants = data;
-            }, function (error) {
-                ngToast.create('Error due loading PARTICIPANT!');
-            });
+            //catApi.getCategories({ type: 'PARTICIPANT' }).then(function (data) {
+            //    $scope.options.participants = data;
+            //}, function (error) {
+            //    ngToast.create('Error due loading PARTICIPANT!');
+            //});
 
-            catApi.getCategories({ type: 'PAYMENTMETHOD' }).then(function (data) {
-                $scope.options.paymentMethods = data;
-            }, function (error) {
-                ngToast.create('Error due loading PAYMENTMETHOD!');
-            });
+            //catApi.getCategories({ type: 'PAYMENTMETHOD' }).then(function (data) {
+            //    $scope.options.paymentMethods = data;
+            //}, function (error) {
+            //    ngToast.create('Error due loading PAYMENTMETHOD!');
+            //});
 
-            catApi.getCategories({ type: 'PROGRAMTYPE' }).then(function (data) {
-                $scope.options.programTypes = data;
+            //catApi.getCategories({ type: 'PROGRAMTYPE' }).then(function (data) {
+            //    $scope.options.programTypes = data;
+            //}, function (error) {
+            //    ngToast.create('Error due loading PROGRAMTYPE!');
+            //});
+
+            catApi.getCategories({ type: 'UNIT,PARTICIPANT,PAYMENTMETHOD,PROGRAMTYPE' }).then(function (data) {
+                $scope.options.units = [];
+                $scope.options.participants = [];
+                $scope.options.paymentMethods = [];
+                $scope.options.programTypes = [];
+
+                for (var i = 0; i < data.length; i++) {
+                    switch (data[i].type) {
+                        case 'UNIT': $scope.options.units.push(data[i]); break;
+                        case 'PARTICIPANT': $scope.options.participants.push(data[i]); break;
+                        case 'PAYMENTMETHOD': $scope.options.paymentMethods.push(data[i]); break;
+                        case 'PROGRAMTYPE': $scope.options.programTypes.push(data[i]); break;
+                    }
+                }
+
             }, function (error) {
-                ngToast.create('Error due loading PROGRAMTYPE!');
+                ngToast.create('Error due loading Unit, Participant, PaymentMethod or ProgramType!');
             });
 
             proApi.getProductLines({ type: '' }).then(function (data) {
@@ -318,49 +337,70 @@ function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, ve
             $scope.save();
     }; // end hitEnter
 })
-.controller('allocationCtrl', function ($scope, $modalInstance, data) {
-    if (data.aloc === undefined) $scope.aloc = { allocationID: 0 };
-    else $scope.aloc = data.aloc;
+.controller('allocationCtrl', ['$scope', '$modalInstance', 'data', 'category.api',
+        function ($scope, $modalInstance, data, catApi) {
+            $scope.opt = {};
+            $scope.init = function () {
+                catApi.getCategories({ type: 'CRITERIA,AREA,PARTICIPANT' }).then(function (data) {
+                    $scope.opt.criterias = [];
+                    $scope.opt.areas = [];
+                    $scope.opt.participants = [];
+
+                    for (var i = 0; i < data.length; i++) {
+                        switch (data[i].type) {
+                            case 'CRITERIA': $scope.opt.criterias.push(data[i].value); break;
+                            case 'AREA': $scope.opt.areas.push(data[i].value); break;
+                            case 'PARTICIPANT': $scope.opt.participants.push(data[i].value); break;
+                        }
+                    }
+                }, function (error) {
+                });
+            };
+
+            if (data.aloc === undefined) $scope.aloc = { allocationID: 0, paymentID: 0 };
+            else $scope.aloc = data.aloc;
     
-    $scope.pms = data.pms;
-    $scope.alocs = data.alocs;
-    $scope.remainAloc = 0;
-
-    $scope.$watch('aloc.allocationID', function (newValue, oldValue) {
-        console.log('Event');
-
-        if (newValue == 0) {
+            $scope.pms = data.pms;
+            $scope.alocs = data.alocs;
             $scope.remainAloc = 0;
-            return;
-        }
-
-        var total = 0;
-        for (var _i = 0; _i < $scope.pms.length; _i++) {
-            if ($scope.pms[_i].paymentID == newValue)
-                total = $scope.pms[_i].exchangeRate * $scope.pms[_i].vendorPayment;
-        }
-
-        for (var _j = 0; _j < $scope.alocs.length; _j++) {
-            if ($scope.alocs[_j].paymentID == newValue) total -= $scope.alocs[_j].allocateAmount;
-        }
-
-
-        // Apply new
-        // $scope.$digest();
-    });
     
-    $scope.cancel = function () {
-        $modalInstance.dismiss('canceled');
-    }; // end cancel
+            $scope.updateRemainAloc = function(paymentID) {
+                $scope.aloc.invoiceCode = '';
+                if (paymentID == 0 || paymentID === undefined || paymentID == null) {
+                    $scope.remainAloc = 0;
+                    return;
+                }
+        
+                var _total = 0;
+                for (var _i = 0; _i < $scope.pms.length; _i++) {
+                    if ($scope.pms[_i].paymentID == paymentID) {
+                        _total = $scope.pms[_i].exchangeRate * $scope.pms[_i].vendorPayment;
+                        $scope.aloc.invoiceCode = $scope.pms[_i].invoiceCode;
+                    }
+                }
+        
+                for (var _j = 0; _j < $scope.alocs.length; _j++) {
+                    if ($scope.alocs[_j].paymentID == paymentID) _total -= $scope.alocs[_j].allocateAmount;
+                }
+        
+                $scope.remainAloc = _total;
+            };
+    
+            $scope.cancel = function () {
+                $modalInstance.dismiss('canceled');
+            }; // end cancel
 
-    $scope.save = function () {
-        // TODO: take a check from server/client with remain payment
-        $modalInstance.close($scope.aloc);
-    }; // end save
+            $scope.save = function () {
+                // TODO: take a check from server/client with remain payment
+                $modalInstance.close($scope.aloc);
+            }; // end save
 
-    $scope.hitEnter = function (evt) {
-        if (angular.equals(evt.keyCode, 13) && !(angular.equals($scope.name, null) || angular.equals($scope.name, '')))
-            $scope.save();
-    }; // end hitEnter
-})
+            $scope.hitEnter = function (evt) {
+                if (angular.equals(evt.keyCode, 13) && !(angular.equals($scope.name, null) || angular.equals($scope.name, '')))
+                    $scope.save();
+            }; // end hitEnter
+    
+            $scope.updateRemainAloc($scope.aloc.paymentID);
+            $scope.init();
+}])
 ;

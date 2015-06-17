@@ -57,7 +57,7 @@ namespace AngularJS.Services.InjectConfig
     /// </summary>
     public class ClaimExcInjection : PropertyInjection
     {
-        protected string[] excludeProps;
+        public string[] ExcludeProps { get; set; }
 
         public ClaimExcInjection()
         {
@@ -65,12 +65,12 @@ namespace AngularJS.Services.InjectConfig
 
         public ClaimExcInjection(string[] excludeProps)
         {
-            this.excludeProps = excludeProps;
+            this.ExcludeProps = excludeProps;
         }
 
         protected bool IsNotExclude(string property)
         {
-            return excludeProps == null || !excludeProps.Contains(property, StringComparer.OrdinalIgnoreCase);
+            return ExcludeProps == null || !ExcludeProps.Contains(property, StringComparer.OrdinalIgnoreCase);
         }
 
         protected override void Inject(object source, object target)
@@ -84,7 +84,7 @@ namespace AngularJS.Services.InjectConfig
 
         protected override void Execute(PropertyInfo sp, object source, object target)
         {
-            if (excludeProps == null || !excludeProps.Contains(sp.Name, StringComparer.OrdinalIgnoreCase))
+            if (ExcludeProps == null || !ExcludeProps.Contains(sp.Name, StringComparer.OrdinalIgnoreCase))
             {
                 // Trace.WriteLine(sp.Name + "-" + sp.PropertyType.Name);
 

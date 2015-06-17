@@ -13,12 +13,13 @@
     <div class="row">
         <div class="col-md-6 form-group">
             <label class="control-label">Area Allocate</label>
-            <input type="text" class="form-control input-sm" ng-model="aloc.areaAllocate" />
+            <!--<input type="text" class="form-control input-sm" ng-model="aloc.areaAllocate" />-->
+            <select class="form-control input-sm" ng-model="aloc.areaAllocate" ng-options="a as a for a in opt.areas"></select>
         </div>
 
         <div class="col-md-6 form-group">
             <label class="control-label">Invoice Code</label>
-			<select class="form-control input-sm" ng-model="aloc.paymentID" ng-options="pm.paymentID as pm.invoiceCode for pm in pms"></select>
+			<select class="form-control input-sm" ng-model="aloc.paymentID" ng-options="pm.paymentID as pm.invoiceCode for pm in pms" ng-change="updateRemainAloc(aloc.paymentID)"></select>
             <!-- <input type="text" class="form-control input-sm" ng-model="aloc.invoiceCode" /> -->
         </div>
     </div>
@@ -26,12 +27,14 @@
     <div class="row">
         <div class="col-md-6">
             <label class="control-label">Participant</label>
-            <input type="text" class="form-control input-sm" ng-model="aloc.participant" />
+            <!--<input type="text" class="form-control input-sm" ng-model="aloc.participant" />-->
+            <select class="form-control input-sm" ng-model="aloc.participant" ng-options="a as a for a in opt.participants"></select>
         </div>
 
         <div class="col-md-6">
             <label class="control-label">Criteria</label>
-            <input type="text" class="form-control input-sm" ng-model="aloc.criteria" />
+            <!--<input type="text" class="form-control input-sm" ng-model="aloc.criteria" />-->
+            <select class="form-control input-sm" ng-model="aloc.criteria" ng-options="a as a for a in opt.criterias"></select>
         </div>
     </div>
 

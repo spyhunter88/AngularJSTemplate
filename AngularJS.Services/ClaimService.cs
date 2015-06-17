@@ -275,6 +275,8 @@ namespace AngularJS.Service
             }
             if (!objectConfig.Contains("allocations"))
             {
+                // Remove paymentID due not inject
+                _innerei.ExcludeProps = _innerei.ExcludeProps.Where(x => !x.Equals("paymentID")).ToArray();
                 target.Allocations.InjectFrom(_innerei, _claim.Allocations, "AllocationID", true);
                 var ids = _claim.Allocations.Select(x => x.AllocationID);
                 foreach (Allocation aloc in target.Allocations)
