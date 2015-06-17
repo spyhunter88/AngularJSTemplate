@@ -4,6 +4,13 @@
 </div>
 <div class="modal-body">
     <div class="row">
+        <div class="col-md-6">
+            <label class="control-label">Remain Allocation</label><br/>
+            <label class="control-label">{{remainAloc | number}}</label>
+        </div>
+    </div>
+
+    <div class="row">
         <div class="col-md-6 form-group">
             <label class="control-label">Area Allocate</label>
             <input type="text" class="form-control input-sm" ng-model="aloc.areaAllocate" />

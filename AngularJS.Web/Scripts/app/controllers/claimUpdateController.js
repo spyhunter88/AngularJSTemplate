@@ -141,7 +141,8 @@ function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, ve
 
         // Add/Remove Allocation
 		var _editAllocation = function (aloc) {
-		    var modal = dialogs.create('dialogs/allocation.html?bust=' + Math.random().toString(36).slice(2), 'allocationCtrl', {aloc: aloc, pms: $scope.claim.payments});
+		    var modal = dialogs.create('dialogs/allocation.html?bust=' + Math.random().toString(36).slice(2), 'allocationCtrl',
+                { aloc: aloc, pms: $scope.claim.payments, alocs: $scope.claim.allocations });
 		    modal.result.then(function(data) {
 		        if (data.allocationID == 0) $scope.claim.allocations.push(data);
 		        else {
@@ -322,6 +323,31 @@ function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, ve
     else $scope.aloc = data.aloc;
     
     $scope.pms = data.pms;
+    $scope.alocs = data.alocs;
+    $scope.remainAloc = 0;
+
+    $scope.$watch('aloc.allocationID', function (newValue, oldValue) {
+        console.log('Event');
+
+        if (newValue == 0) {
+            $scope.remainAloc = 0;
+            return;
+        }
+
+        var total = 0;
+        for (var _i = 0; _i < $scope.pms.length; _i++) {
+            if ($scope.pms[_i].paymentID == newValue)
+                total = $scope.pms[_i].exchangeRate * $scope.pms[_i].vendorPayment;
+        }
+
+        for (var _j = 0; _j < $scope.alocs.length; _j++) {
+            if ($scope.alocs[_j].paymentID == newValue) total -= $scope.alocs[_j].allocateAmount;
+        }
+
+
+        // Apply new
+        // $scope.$digest();
+    });
     
     $scope.cancel = function () {
         $modalInstance.dismiss('canceled');
