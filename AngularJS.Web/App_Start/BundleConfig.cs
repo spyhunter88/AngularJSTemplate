@@ -42,6 +42,7 @@ namespace AngularJS.Web
                     //"~/Scripts/misc/angular-strap.min.js",
                     //"~/Scripts/misc/angular-strap.tpl.min.js",
                     "~/Scripts/misc/xeditable.min.js",
+                    "~/Scripts/misc/angular-filter.min.js",
                     "~/Scripts/datatables/js/jquery.dataTables.min.js",
                     "~/Scripts/datatables/angular-datatables.min.js",
                     "~/Scripts/datatables/plugins/bootstrap/angular-datatables.bootstrap.min.js",

@@ -4,6 +4,13 @@
 </div>
 <div class="modal-body">
     <div class="row">
+        <div class="col-md-6">
+            <label class="control-label">Remain Payment</label><br/>
+            <label class="control-label">{{remainPm - pm.vendorPayment | number}}</label>
+        </div>
+    </div>
+
+    <div class="row">
         <div class="col-md-6 form-group">
             <label class="control-label">Invoice Code</label>
             <input type="text" class="form-control input-sm" ng-model="pm.invoiceCode" />

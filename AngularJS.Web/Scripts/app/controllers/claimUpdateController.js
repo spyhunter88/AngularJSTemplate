@@ -1,10 +1,11 @@
 'use strict';
 
-app.controller('claimUpdateController', ['$scope', '$routeParams', '$location', 'claim.api', 'category.api', 'file.api', 
+app.controller('claimUpdateController', ['$scope', '$filter', '$routeParams', '$location', 'claim.api', 'category.api', 'file.api', 
     'productLine.api', 'vendor.api', 'ngToast', 'dialogs', 'DTOptionsBuilder', 'DTColumnDefBuilder',
-function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, vendorApi, ngToast, dialogs,
+function ($scope, $filter, $routeParams, $location, claimApi, catApi, fileApi, proApi, vendorApi, ngToast, dialogs,
             DTOptionsBuilder, DTColumnDefBuilder) {
         var dateFormat = "YYYY-MM-DD";
+        var maxFilter = $filter('max'); // use in payment and allocation functions
 
         $scope.title = "Claim Management";
         $scope.claim = { statusID: 0 };
@@ -106,6 +107,15 @@ function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, ve
                 angular.forEach($scope.objectAction, function (obj) {
                     $scope.actions[obj.toLowerCase()] = true;
                 });
+
+                // Add inner ID to payments and allocations to process inside grid
+                for (var i = 0; i < $scope.claim.payments.length; i++) {
+                    $scope.claim.payments[i].innerID = i + 1;
+                }
+                for (var i = 0; i < $scope.claim.allocations.length; i++) {
+                    $scope.claim.allocations[i].innerID = i + 1;
+                }
+
             }, function(error) {
                 ngToast.create("Error");
             });
@@ -138,14 +148,19 @@ function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, ve
 
         // Add/Remove Payment
 		var _editPayment = function (pm) {
-		    var modal = dialogs.create('dialogs/payment.html?bust=' + Math.random().toString(36).slice(2), 'paymentCtrl', pm);
+
+		    var modal = dialogs.create('Scripts/app/views/dialogs/payment.html?bust=' + Math.random().toString(36).slice(2), 'paymentCtrl', 
+		    	{ pm: pm, pms: $scope.claim.payments, vendorConfirm: $scope.claim.vendorConfirmAmount });
 		    modal.result.then(function (data) {
-		        if (data.paymentID == 0) $scope.claim.payments.push(data);
+		        if (data.innerID == 0) {
+		            data.innerID = maxFilter($scope.claim.payments, 'innerID').innerID + 1;
+		            console.log(data);
+		            $scope.claim.payments.push(data);
+		        }
 		        else {
 		            for (var i = 0; i < $scope.claim.payments.length; i++) {
 		                console.log($scope.claim.payments[i]);
-		                if ($scope.claim.payments[i].paymentID = data.paymentID) {
-		                    console.log('hehe');
+		                if ($scope.claim.payments[i].innerID = data.innerID) {
 		                    $scope.claim.payments[i] = data;
 		                    break;
 		                }
@@ -155,29 +170,75 @@ function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, ve
 		    });
 		};
 		var _removePayment = function (pm) {
-
+		    var idx = $scope.claim.payments.indexOf(pm);
+		    $scope.claim.payments.splice(idx, 1);
 		};
 
         // Add/Remove Allocation
 		var _editAllocation = function (aloc) {
-		    var modal = dialogs.create('dialogs/allocation.html?bust=' + Math.random().toString(36).slice(2), 'allocationCtrl',
-                { aloc: aloc, pms: $scope.claim.payments, alocs: $scope.claim.allocations });
-		    modal.result.then(function(data) {
-		        if (data.allocationID == 0) $scope.claim.allocations.push(data);
-		        else {
-		            for (var i = 0; i < $scope.claim.allocations.length; i++) {
-		                if ($scope.claim.allocations[i].allocationID == data.allocationID) {
-		                    $scope.claim.allocations[i] = data;
-		                    break;
+		    if ($scope.opt === undefined) {
+		        $scope.opt = {};
+		        $scope.opt.criterias = [];
+		        $scope.opt.areas = [];
+		        $scope.opt.participants = [];
+		        $scope.opt.receiptAccs = [];
+
+		        catApi.getCategories({ type: 'CRITERIA,AREA,PARTICIPANT,RECEIPTACCOUNT' }).then(function (data) {
+		            for (var i = 0; i < data.length; i++) {
+		                switch (data[i].type) {
+		                    case 'CRITERIA': $scope.opt.criterias.push(data[i].value); break;
+		                    case 'AREA': $scope.opt.areas.push(data[i].value); break;
+		                    case 'PARTICIPANT': $scope.opt.participants.push(data[i].value); break;
+		                    case 'RECEIPTACCOUNT': $scope.opt.receiptAccs.push(data[i].value); break;
 		                }
 		            }
-		        }
-		    }, function(err) {
 
-		    });
+		            // Open allocation dialog
+		            var modal = dialogs.create('Scripts/app/views/dialogs/allocation.html?bust=' + Math.random().toString(36).slice(2), 'allocationCtrl',
+                        { aloc: aloc, pms: $scope.claim.payments, alocs: $scope.claim.allocations, opt: $scope.opt });
+		            modal.result.then(function (data) {
+		                if (data.innerID == 0) {
+		                    data.innerID = maxFilter($scope.claim.allocations, 'innerID').innerID + 1;
+		                    $scope.claim.allocations.push(data);
+		                }
+		                else {
+		                    for (var i = 0; i < $scope.claim.allocations.length; i++) {
+		                        if ($scope.claim.allocations[i].innerID == data.innerID) {
+		                            $scope.claim.allocations[i] = data;
+		                            break;
+		                        }
+		                    }
+		                }
+		            }, function (err) {
+
+		            });
+		        }, function (error) {
+		            ngToast.create('Can not open dialog due error while loading Area, Participant or Criteria!');
+		        });
+		    } else {
+		        var modal = dialogs.create('Scripts/app/views/dialogs/allocation.html?bust=' + Math.random().toString(36).slice(2), 'allocationCtrl',
+                    { aloc: aloc, pms: $scope.claim.payments, alocs: $scope.claim.allocations, opt: $scope.opt });
+		        modal.result.then(function (data) {
+		            if (data.innerID == 0) {
+		                data.innerID = maxFilter($scope.claim.allocations, 'innerID').innerID + 1;
+		                $scope.claim.allocations.push(data);
+		            }
+		            else {
+		                for (var i = 0; i < $scope.claim.allocations.length; i++) {
+		                    if ($scope.claim.allocations[i].innerID == data.innerID) {
+		                        $scope.claim.allocations[i] = data;
+		                        break;
+		                    }
+		                }
+		            }
+		        }, function (err) {
+
+		        });
+		    }
 		};
 		var _removeAllocation = function (aloc) {
-
+		    var idx = $scope.claim.allocations.indexOf(aloc);
+		    $scope.claim.allocations.splice(idx, 1);
 		};
 
         // Create new Claim
@@ -320,8 +381,14 @@ function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, ve
         $scope.init();
 }])
 .controller('paymentCtrl', function ($scope, $modalInstance, data) {
-    if (data === undefined) $scope.pm = { paymentID: 0 };
-    else $scope.pm = data;
+    if (data.pm === undefined) $scope.pm = { innerID: 0, paymentID: 0 };
+    else $scope.pm = data.pm;
+
+    $scope.remainPm = data.vendorConfirm;
+    for (var i = data.pms.length - 1; i >= 0; i--) {
+    	if (data.pms[i].innerID != $scope.pm.innerID) $scope.remainPm -= data.pms[i].vendorPayment;
+    };
+    // console.log($scope.remainPm);
     
     $scope.cancel = function () {
         $modalInstance.dismiss('canceled');
@@ -337,70 +404,52 @@ function ($scope, $routeParams, $location, claimApi, catApi, fileApi, proApi, ve
             $scope.save();
     }; // end hitEnter
 })
-.controller('allocationCtrl', ['$scope', '$modalInstance', 'data', 'category.api',
-        function ($scope, $modalInstance, data, catApi) {
-            $scope.opt = {};
-            $scope.init = function () {
-                catApi.getCategories({ type: 'CRITERIA,AREA,PARTICIPANT' }).then(function (data) {
-                    $scope.opt.criterias = [];
-                    $scope.opt.areas = [];
-                    $scope.opt.participants = [];
+.controller('allocationCtrl', function ($scope, $modalInstance, data) {
+    if (data.aloc === undefined) $scope.aloc = { innerID: 0, allocationID: 0, paymentID: 0 };
+    else $scope.aloc = data.aloc;
 
-                    for (var i = 0; i < data.length; i++) {
-                        switch (data[i].type) {
-                            case 'CRITERIA': $scope.opt.criterias.push(data[i].value); break;
-                            case 'AREA': $scope.opt.areas.push(data[i].value); break;
-                            case 'PARTICIPANT': $scope.opt.participants.push(data[i].value); break;
-                        }
-                    }
-                }, function (error) {
-                });
-            };
-
-            if (data.aloc === undefined) $scope.aloc = { allocationID: 0, paymentID: 0 };
-            else $scope.aloc = data.aloc;
+    $scope.pms = data.pms;
+    $scope.alocs = data.alocs;
+    $scope.opt = data.opt;
+    $scope.remainAloc = 0;
     
-            $scope.pms = data.pms;
-            $scope.alocs = data.alocs;
+    $scope.updateRemainAloc = function(paymentID) {
+        $scope.aloc.invoiceCode = '';
+        if (paymentID == 0 || paymentID === undefined || paymentID == null) {
             $scope.remainAloc = 0;
+            return;
+        }
+        
+        var _total = 0;
+        for (var _i = 0; _i < $scope.pms.length; _i++) {
+            if ($scope.pms[_i].paymentID == paymentID) {
+                _total = $scope.pms[_i].exchangeRate * $scope.pms[_i].vendorPayment;
+                $scope.aloc.invoiceCode = $scope.pms[_i].invoiceCode;
+            }
+        }
+        
+        for (var _j = 0; _j < $scope.alocs.length; _j++) {
+            if ($scope.alocs[_j].paymentID == paymentID && $scope.alocs[_j].innerID != $scope.aloc.innerID) 
+            	_total -= $scope.alocs[_j].allocateAmount;
+        }
+        
+        $scope.remainAloc = _total;
+    };
     
-            $scope.updateRemainAloc = function(paymentID) {
-                $scope.aloc.invoiceCode = '';
-                if (paymentID == 0 || paymentID === undefined || paymentID == null) {
-                    $scope.remainAloc = 0;
-                    return;
-                }
-        
-                var _total = 0;
-                for (var _i = 0; _i < $scope.pms.length; _i++) {
-                    if ($scope.pms[_i].paymentID == paymentID) {
-                        _total = $scope.pms[_i].exchangeRate * $scope.pms[_i].vendorPayment;
-                        $scope.aloc.invoiceCode = $scope.pms[_i].invoiceCode;
-                    }
-                }
-        
-                for (var _j = 0; _j < $scope.alocs.length; _j++) {
-                    if ($scope.alocs[_j].paymentID == paymentID) _total -= $scope.alocs[_j].allocateAmount;
-                }
-        
-                $scope.remainAloc = _total;
-            };
-    
-            $scope.cancel = function () {
-                $modalInstance.dismiss('canceled');
-            }; // end cancel
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancelled');
+    }; // end cancel
 
-            $scope.save = function () {
-                // TODO: take a check from server/client with remain payment
-                $modalInstance.close($scope.aloc);
-            }; // end save
+    $scope.save = function () {
+        // TODO: take a check from server/client with remain payment
+        $modalInstance.close($scope.aloc);
+    }; // end save
 
-            $scope.hitEnter = function (evt) {
-                if (angular.equals(evt.keyCode, 13) && !(angular.equals($scope.name, null) || angular.equals($scope.name, '')))
-                    $scope.save();
-            }; // end hitEnter
+    $scope.hitEnter = function (evt) {
+        if (angular.equals(evt.keyCode, 13) && !(angular.equals($scope.name, null) || angular.equals($scope.name, '')))
+            $scope.save();
+    }; // end hitEnter
     
-            $scope.updateRemainAloc($scope.aloc.paymentID);
-            $scope.init();
-}])
+    $scope.updateRemainAloc($scope.aloc.paymentID);
+})
 ;

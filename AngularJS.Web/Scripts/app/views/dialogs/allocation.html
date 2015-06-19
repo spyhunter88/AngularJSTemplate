@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md-6">
             <label class="control-label">Remain Allocation</label><br/>
-            <label class="control-label">{{remainAloc | number}}</label>
+            <label class="control-label">{{remainAloc - aloc.allocateAmount | number}}</label>
         </div>
     </div>
 
@@ -41,7 +41,8 @@
     <div class="row">
         <div class="col-md-6">
             <label class="control-label">Note Calculate</label>
-            <input type="text" class="form-control input-sm" ng-model="aloc.noteCalculate" />
+            <!-- <input type="text" class="form-control input-sm" ng-model="aloc.noteCalculate" /> -->
+            <select class="form-control input-sm" ng-model="aloc.noteCalculate" ng-options="a as a for a in opt.receiptAccs"></select>
         </div>
         <div class="col-md-6">
             <label class="control-label">Program Code</label>
@@ -84,7 +85,6 @@
         <div class="col-md-6">
             <label class="control-label">Remain Amount</label><br/>
 			<label class="control-label">{{aloc.allocateAmount - aloc.calculateAmount - aloc.actualAmount | number}}</label>
-            <!-- <input type="text" class="form-control input-sm" ng-model="aloc.allocateAmount - aloc.calculateAmount - aloc.actualAmount" /> -->
         </div>
     </div>
 
