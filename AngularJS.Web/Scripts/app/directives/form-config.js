@@ -56,7 +56,7 @@
                         //    $compile(obj)(scope);
                         //}
                     });
-                    console.log(scope.read);
+                    // console.log(scope.read);
 
                     // $compile(element)(scope);
                 }, true);

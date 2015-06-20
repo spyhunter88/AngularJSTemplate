@@ -107,6 +107,7 @@ function ($scope, $filter, $routeParams, $location, claimApi, catApi, fileApi, p
                 angular.forEach($scope.objectAction, function (obj) {
                     $scope.actions[obj.toLowerCase()] = true;
                 });
+                console.log($scope.actions);
 
                 // Add inner ID to payments and allocations to process inside grid
                 for (var i = 0; i < $scope.claim.payments.length; i++) {

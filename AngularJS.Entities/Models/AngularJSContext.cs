@@ -96,11 +96,12 @@ namespace AngularJS.Entities.Models
                 .WithMany(s => s.Allocations).HasForeignKey(s => s.ClaimID);
 
             // Relationship Payment 0-n Allocation
-            modelBuilder.Entity<Allocation>()
-                .HasOptional<Payment>(a => a.Payment)
-                .WithMany(s => s.Allocations)
-                .HasForeignKey(s => s.PaymentID)
-                ;
+            // Remove due problem while update PaymentID inside Allocation
+            //modelBuilder.Entity<Allocation>()
+            //    .HasOptional<Payment>(a => a.Payment)
+            //    .WithMany(s => s.Allocations)
+            //    .HasForeignKey(s => s.PaymentID)
+            //    ;
 
             modelBuilder.Entity<RequirementHistory>().HasRequired<Requirement>(s => s.Requirement)
                 .WithMany(s => s.RequirementHistories).HasForeignKey(s => s.RequirementID);

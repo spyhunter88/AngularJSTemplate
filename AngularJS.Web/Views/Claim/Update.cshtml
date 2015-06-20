@@ -254,7 +254,7 @@
     <!-- ****************************************************************************************************************** -->
 
     <tabset>
-        <tab heading="Details" ng-show="read.checkPoints == null || read.requirements == null">
+        <tab heading="Details" ng-if="read.checkPoints == null || read.requirements == null">
             <div class="row">
                 <div class="control-group">
                     <label class="col-sm-2 control-label">Program Content</label>
@@ -490,7 +490,7 @@
 
         <!-- ****************************************************************************************************************** -->
 
-        <tab heading="Payment & Allocation" active="tab.active" ng-show="claim.statusID > 14">
+        <tab heading="Payment & Allocation" active="tab.active" ng-if="claim.statusID > 14">
             <div class="row">
                 <div class="control-group">
                     <label class="col-sm-2 control-label">Program Content</label>
@@ -547,7 +547,7 @@
             </div>
 
             <h4>Payment</h4>
-            <button class="btn btn-primary" ng-click="editPayment()"><i class="glyphicon glyphicon-plus"></i></button>
+            <button class="btn btn-primary" ng-click="editPayment()" ng-if="actions.pm_add"><i class="glyphicon glyphicon-plus"></i></button>
             <table class="table table-bordered no-border">
                 <thead>
                     <tr>
@@ -569,8 +569,8 @@
                         <td>{{pm.vendorPayment * pm.exchangeRate | number}}</td>
                         <td>{{pm.note}}</td>
                         <td>
-                            <button class="btn btn-primary btn-sm" ng-click="editPayment(pm)"><i class="glyphicon glyphicon-list"></i></button>
-                            <button class="btn btn-danger btn-sm" ng-click="removePayment(pm)"><i class="glyphicon glyphicon-minus"></i></button>
+                            <button class="btn btn-primary btn-sm" ng-click="editPayment(pm)" ng-if="actions.pm_edit"><i class="glyphicon glyphicon-list"></i></button>
+                            <button class="btn btn-danger btn-sm" ng-click="removePayment(pm)" ng-if="actions.pm_delete"><i class="glyphicon glyphicon-minus"></i></button>
                         </td>
                     </tr>
                 </tbody>
@@ -579,7 +579,7 @@
             <!-- ****************************************************************************************************************** -->
 
             <h4>Allocation</h4>
-            <button class="btn btn-primary" ng-click="editAllocation()"><i class="glyphicon glyphicon-plus"></i></button>
+            <button class="btn btn-primary" ng-click="editAllocation()" ng-if="actions.aloc_add"><i class="glyphicon glyphicon-plus"></i></button>
             <table class="table table-bordered no-border">
                 <thead>
                     <tr>
@@ -613,8 +613,8 @@
                         <td>{{a.actualAmount | number}}</td>
                         <td>{{a.allocateAmount - a.calculateAmount - a.actualAmount | number}}</td>
                         <td>
-                            <button class="btn btn-primary btn-sm" ng-click="editAllocation(a)"><i class="glyphicon glyphicon-list"></i></button>
-                            <button class="btn btn-danger btn-sm" ng-click="removeAllocation(a)"><i class="glyphicon glyphicon-minus"></i></button>
+                            <button class="btn btn-primary btn-sm" ng-click="editAllocation(a)" ng-if="actions.aloc_edit"><i class="glyphicon glyphicon-list"></i></button>
+                            <button class="btn btn-danger btn-sm" ng-click="removeAllocation(a)" ng-if="actions.aloc_delete"><i class="glyphicon glyphicon-minus"></i></button>
                         </td>
                     </tr>
                 </tbody>

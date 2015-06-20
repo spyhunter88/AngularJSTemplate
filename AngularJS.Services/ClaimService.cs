@@ -332,7 +332,7 @@ namespace AngularJS.Service
                                 target.StatusID = 14;
                             break;
                         }
-                        if (target.StatusID == 15)
+                        if (target.StatusID >= 15 && target.StatusID < 100)
                         {
                             if (target.Payments.Count() != 0)
                             {
@@ -345,6 +345,8 @@ namespace AngularJS.Service
                                 // Check for complete 
                                 if (remainPayment == 0)
                                 {
+                                    target.StatusID = 30;
+
                                     // Check total first
                                     var inCompleteAloc = target.Allocations.Where(
                                         x => x.AllocateAmount - x.CalculateAmount - x.ActualAmount > 0).Select(x => x);

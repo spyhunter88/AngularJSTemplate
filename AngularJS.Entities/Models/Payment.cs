@@ -8,7 +8,7 @@ namespace AngularJS.Entities.Models
     {
         public Payment()
         {
-            this.Allocations = new List<Allocation>();
+            // this.Allocations = new List<Allocation>();
         }
 
         public int PaymentID { get; set; }
@@ -22,6 +22,6 @@ namespace AngularJS.Entities.Models
 
         // Mapping
         public virtual Claim Claim { internal get; set; }
-        public virtual ICollection<Allocation> Allocations { get; set; }
+        // public virtual ICollection<Allocation> Allocations { get; set; }
     }
 }

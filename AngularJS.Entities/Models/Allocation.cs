@@ -29,6 +29,6 @@ namespace AngularJS.Entities.Models
 
         // Mapping
         public virtual Claim Claim { internal get; set; }
-        public virtual Payment Payment { internal get; set; }
+        // public virtual Payment Payment { internal get; set; }
     }
 }
