@@ -48,8 +48,19 @@
        .config(function ($provide) {
         $provide.decorator('datepickerPopupDirective', function ($compile, $delegate) {
             var directive = $delegate[0];
+            
+            // Add readonly bind isolate-scope
+            // The two solutions below does not work by issue https://github.com/angular/angular.js/issues/10149
+            // angular.extend(directive.scope, { readOnly: '='});
+            // directive.scope.readOnly = '=';
+            
+            directive.$$isolateBindings.dateReadonly = {
+                attrName: 'dateReadonly',
+                collection: false,
+                mode: '=',
+                optional: true
+            };
 
-            var compile = directive.compile;
             var link = directive.link;
             directive.compile = function (tElement, tAttr) {
                 
@@ -59,9 +70,6 @@
 
                     // run inner directive
                     link.apply(this, arguments);
-
-                    if (attr.disabled || attr.readonly) attr.disabled = true;
-                    // scope.isOpen = false;
 
                     // Remove previous date button due scope.apply() function (this include ul and span tag)
                     var prevAppendBtn = elem.next();
@@ -75,23 +83,22 @@
                     }
 
                     // Append new one
-                    var appendBtn = angular.element('<span class="input-group-btn"><button '
-                    + (attr.disabled ? 'disabled' : '')
-                    + ' type="button" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-calendar"></i></button></span>');
+                    var appendBtn = angular.element('<span class="input-group-btn">' +
+                        '<button type="button" class="btn btn-default btn-sm">' +
+                        '<i class="glyphicon glyphicon-calendar"></i></button></span>');
 
                     var openDialog = function (event) {
                         event.stopPropagation();
-                        // console.log(event);
-                        // console.log(scope);
+                        if (scope.dateReadonly == true) return;
+                        
                         // Check if dialog is not open, but event fire after isOpen change from true -> false
                         // So we check false or not exist for first firing
-                        if ((scope.focusSource != 'inner') && !attr.disabled) {
+                        if (scope.focusSource != 'inner') {
                             scope.$apply(function () {
-                                // console.log("This cause bug here: " + scope);
-                                scope.isOpen = !attr.disabled;
+                                scope.isOpen = true;
                             });
                         } else {
-                            // reset the focus source for later on
+                            // reset the focus source for later 'on'
                             scope.focusSource = '';
                         }
                     };
@@ -99,7 +106,6 @@
                     // We should deny focus bind that come when close the date-picker dialog
                     scope.$on('datepicker.focus', function () {
                         scope.focusSource = 'inner';
-                        // console.log('Hehe', scope);
                     });
 
                     elem.after(appendBtn);
