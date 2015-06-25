@@ -254,6 +254,7 @@
     <Compile Include="App_Start\UnityWebApiActivator.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\BundleConfig.cs" />
     <Compile Include="Areas\Admin\Controllers\AccountController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Models\AccountViewModels.cs" />
@@ -281,6 +282,14 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Admin\Content\Static\Account\edit.html" />
+    <Content Include="Areas\Admin\Scripts\app\app.js" />
+    <Content Include="Areas\Admin\Scripts\app\controllers\accountController.js" />
+    <Content Include="Areas\Admin\Scripts\app\index.html" />
+    <Content Include="Areas\Admin\Scripts\app\services\accountService.js" />
+    <Content Include="Areas\Admin\Scripts\app\services\coreService.js" />
+    <Content Include="Areas\Admin\Content\Static\Account\index.html" />
+    <Content Include="Areas\Admin\Content\Static\Home\index.html" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\img\arrow_down.png" />
     <Content Include="Content\img\arrow_off.png" />
@@ -1567,6 +1576,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Content\misc\bootstrap.css.map" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Areas\Admin\Scripts\app\controllers\homeController.js" />
     <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceme40.dll" />
@@ -1642,7 +1652,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Scripts\app\" />
+    <Folder Include="Areas\Admin\ApiControllers\" />
+    <Folder Include="Areas\Admin\Scripts\app\services\models\" />
     <Folder Include="Content\bootstrap\" />
   </ItemGroup>
   <ItemGroup>

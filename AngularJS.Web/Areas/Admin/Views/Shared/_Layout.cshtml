@@ -1,17 +1,17 @@
 ﻿<!DOCTYPE html>
 
-<html ng-app="AdminApp">
+<html ng-app="adminApp">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>My ASP.NET Admin</title>
-    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/Admin/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
     <toast></toast>
 
-    <div class="cotainer body-content">
+    <div class="container body-content">
         @RenderBody()
         <hr />
         <footer>
@@ -21,8 +21,8 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/angular")
-    @Scripts.Render("~/bundles/misc")
+    @Scripts.Render("~/bundles/Admin/angular")
+    @Scripts.Render("~/bundles/Admin/misc")
     @Scripts.Render("~/bundles/Admin/app")
     @RenderSection("scripts", required: false)
 </body>

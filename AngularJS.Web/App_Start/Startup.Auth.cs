@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Data.Entity;
-using System.Threading;
-using System.Web.Http;
+using System.Web.Mvc;
 using AngularJS.Web.Security;
-using AngularJS.Web.Security.Models;
 using AngularJS.Web.Security.Providers;
-using Microsoft.AspNet.Identity;
 using Microsoft.Owin;
-using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
 
