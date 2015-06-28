@@ -1,4 +1,11 @@
 ﻿<div>
     THIS IS ACCOUNT LIST
-    {{users | json}}
+    <ad-table-lite table-name="users"
+                   local-data-source="users"
+                   enable-column-search="true"
+                   column-definition="userTableColumnDef"
+                   page-sizes="[10, 20]"
+                   pagination-btn-group-classes="pagination pagination-sm"
+                   table-classes="table table-bordered">
+    </ad-table-lite>
 </div>

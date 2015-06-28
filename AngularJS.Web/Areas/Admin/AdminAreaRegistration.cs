@@ -29,15 +29,15 @@ namespace AngularJS.Web.Areas.Admin
             // Add WebAPI Route for Areas
             context.Routes.MapHttpRoute(
                 "AdminApi_default",
-                "Admin/api/{controller}/{id}",
+                "api/Admin/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
-            context.Routes.MapHttpRoute(
-                "AdminApi_defaultGet",
-                "Admin/api/{controller}/{action}/{id}",
-                defaults: new { action = "Get" },
-                constraints: new { httpMethod = new HttpMethodConstraint("GET") }
-            );
+            //context.Routes.MapHttpRoute(
+            //    "AdminApi_defaultGet",
+            //    "Admin/api/{controller}/{action}/{id}",
+            //    defaults: new { action = "Get" },
+            //    constraints: new { httpMethod = new HttpMethodConstraint("GET") }
+            //);
 
             // Add Admin Bundle
             BundleConfig.RegisterBundles(BundleTable.Bundles);

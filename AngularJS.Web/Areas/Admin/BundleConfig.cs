@@ -15,7 +15,9 @@ namespace AngularJS.Web.Areas.Admin
                     "~/Scripts/misc/angular-local-storage.min.js",
                     "~/Scripts/misc/ui-bootstrap-tpls-0.13.0.min.js",
                     "~/Scripts/misc/ngToast.min.js",
-                    "~/Scripts/misc/dialogs.min.js"
+                    "~/Scripts/misc/dialogs.min.js",
+                    "~/Scripts/misc/adapt-strap-2.3.0/adapt-strap.min.js",
+                    "~/Scripts/misc/adapt-strap-2.3.0/adapt-strap.tpl.min.js"
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/Admin/angular").Include(
@@ -37,7 +39,8 @@ namespace AngularJS.Web.Areas.Admin
                       "~/Content/site.css",
                       "~/Content/misc/loading-bar.css",
                       "~/Content/misc/ngToast.min.css",
-                      "~/Content/misc/dialogs.min.css"
+                      "~/Content/misc/dialogs.min.css",
+                      "~/Scripts/misc/adapt-strap-2.3.0/adapt-strap.min.css"
                 ));
         }
     }

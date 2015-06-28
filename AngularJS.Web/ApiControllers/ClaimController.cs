@@ -87,8 +87,6 @@ namespace AngularJS.Web.Api
                 return NotFound();
             }
 
-
-
             return Ok(claim);
         }
 
@@ -169,7 +167,6 @@ namespace AngularJS.Web.Api
                 }
                 else
                     claim = await _claimSerivce.PutClaim(claim, uploadPath, _user.Id, action);
-                // 
             }
             catch (Exception e)
             {

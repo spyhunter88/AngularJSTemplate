@@ -258,7 +258,7 @@
     <Compile Include="Areas\Admin\Controllers\AccountController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Models\AccountViewModels.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Areas\Admin\Repository\AuthRepository.cs" />
     <Compile Include="Controllers\ClaimController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\Filter\ValidateMimeMultipartContentFilter.cs" />
@@ -1403,6 +1403,12 @@
     <Content Include="Scripts\kendo\2015.1.408\messages\kendo.messages.zh-HK.min.js" />
     <Content Include="Scripts\kendo\2015.1.408\messages\kendo.messages.zh-TW.min.js" />
     <Content Include="Scripts\kendo\2015.1.408\pako_deflate.min.js" />
+    <Content Include="Scripts\misc\adapt-strap-2.3.0\adapt-strap.css" />
+    <Content Include="Scripts\misc\adapt-strap-2.3.0\adapt-strap.js" />
+    <Content Include="Scripts\misc\adapt-strap-2.3.0\adapt-strap.min.css" />
+    <Content Include="Scripts\misc\adapt-strap-2.3.0\adapt-strap.min.js" />
+    <Content Include="Scripts\misc\adapt-strap-2.3.0\adapt-strap.tpl.js" />
+    <Content Include="Scripts\misc\adapt-strap-2.3.0\adapt-strap.tpl.min.js" />
     <Content Include="Scripts\misc\angular-datatables.js" />
     <Content Include="Scripts\misc\angular-datatables.min.js" />
     <Content Include="Scripts\misc\angular-strap.js" />

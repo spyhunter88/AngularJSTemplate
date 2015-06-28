@@ -1,4 +1,41 @@
-﻿<div>
+﻿
+<div class="modal-header">
+    <h4 class="modal-title">User</h4>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-6">
+            <label class="control-label">User Name</label><br />
+            <label class="control-label" ng-show="account.id != 0">{{account.userName}}</label>
+            <input class="form-control input-sm" ng-show="account.id == 0" ng-model="account.userName"/>
+        </div>
+    </div>
 
-    Edit page
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <label class="control-label">Email</label>
+            <input type="text" class="form-control input-sm" ng-model="account.email" />
+        </div>
+
+        <div class="col-md-6 form-group">
+            <label class="control-label">Lockout Enabled</label>
+            <input type="checkbox" class="form-control input-sm" ng-model="account.lockoutEnabled">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <label class="control-label">Phone Number</label>
+            <input class="form-control input-sm" ng-model="account.phoneNumber" />
+        </div>
+
+        <div class="col-md-6">
+            <label class="control-label">System Login Enabled</label>
+            <input type="checkbox" class="form-control input-sm" ng-model="account.systemLoginEnabled">
+        </div>
+    </div>
+
+    <hr />
+    <button class="btn btn-primary" ng-click="save()"><i class="glyphicon glyphicon-plus"></i> Save</button>
+    <button class="btn" ng-click="cancel()"><i class="glyphicon glyphicon-arrow-right"></i> Cancel</button>
 </div>

@@ -2,9 +2,9 @@
 
 app
 	.constant('admin.account.url', {
-	    getAccounts: '/Admin/api/Account',
-	    getAccount: '/Admin/api/Account/',
-	    postAccount: '/Admin/api/Account'
+	    getAccounts: '/api/Admin/Account',
+	    getAccount: '/api/Admin/Account/',
+	    postAccount: '/api/Admin/Account'
 	})
 	.factory('accountApi', ['admin.account.url', 'coreSvc',
 	function (url, coreSvc) {

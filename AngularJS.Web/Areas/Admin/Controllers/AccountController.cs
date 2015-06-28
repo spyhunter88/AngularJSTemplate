@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using AngularJS.Web.Areas.Admin.Models.AngularJS.Web.Models;
 using AngularJS.Web.Security;
 using AngularJS.Web.Security.Models;
 
@@ -12,36 +13,60 @@ namespace AngularJS.Web.Areas.Admin.Api
     // [RoutePrefix("Admin/api/Account")]
     public class AccountController : ApiController
     {
-        AuthContext authContext = new AuthContext();
+        AuthContext authContext;
+
+        public AccountController()
+        {
+            authContext = new AuthContext();
+            AutoMapper.Mapper.CreateMap<ApplicationUser, UserViewModel>().ReverseMap();
+        }
+        
 
         // GET api/<controller>
-        public IHttpActionResult Get()
+        [HttpGet]
+        public IHttpActionResult GetAccounts()
         {
-            // return new string[] { "value1", "value2" };
-            var users = authContext.Users.ToList();
-
-            return users;
+            List<ApplicationUser> users = authContext.Users.ToList();
+            var _users = AutoMapper.Mapper.Map<List<UserViewModel>>(users);
+            return Ok(_users);
         }
 
         // GET api/<controller>/5
-        public string Get(int id)
+        [HttpGet]
+        public IHttpActionResult GetAccount([FromUri]int id)
         {
-            return "value";
+            if (id == 0) return Ok();
+
+            var user = authContext.Users.Where(x => x.Id == id).FirstOrDefault();
+            var _user = AutoMapper.Mapper.Map<UserViewModel>(user);
+            return Ok(_user);
         }
 
         // POST api/<controller>
-        public void Post([FromBody]string value)
+        [HttpPost]
+        public void Post([FromBody]UserViewModel user)
         {
+            
         }
 
         // PUT api/<controller>/5
+        [HttpPut]
         public void Put(int id, [FromBody]string value)
         {
         }
 
         // DELETE api/<controller>/5
-        public void Delete(int id)
+        [HttpDelete]
+        public IHttpActionResult Delete([FromUri]int id)
         {
+            if (id == 0) return Ok("Wrong user!");
+
+            var user = authContext.Users.Find(new object[] { id });
+            if (user == null) return Ok("User not found!");
+            authContext.Users.Remove(user);
+            var count = authContext.SaveChanges();
+
+            return Ok("Delete User: " + count);
         }
     }
 }

@@ -10,7 +10,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace AngularJS.Web.Security.Repository
 {
-    public class AuthRepository : IDisposable
+    public partial class AuthRepository : IDisposable
     {
         private AuthContext _ctx;
 
