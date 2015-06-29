@@ -3,21 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using AngularJS.Web.Areas.Admin.Models.AngularJS.Web.Models;
 using AngularJS.Web.Security;
 using AngularJS.Web.Security.Models;
+using AngularJS.Web.Security.Repository;
 
 namespace AngularJS.Web.Areas.Admin.Api
 {
     // [RoutePrefix("Admin/api/Account")]
     public class AccountController : ApiController
     {
-        AuthContext authContext;
+        AuthRepository authRepository;
 
         public AccountController()
         {
-            authContext = new AuthContext();
+            authRepository = new AuthRepository();
             AutoMapper.Mapper.CreateMap<ApplicationUser, UserViewModel>().ReverseMap();
         }
         
@@ -26,7 +28,7 @@ namespace AngularJS.Web.Areas.Admin.Api
         [HttpGet]
         public IHttpActionResult GetAccounts()
         {
-            List<ApplicationUser> users = authContext.Users.ToList();
+            List<ApplicationUser> users = authRepository.GetUsers();
             var _users = AutoMapper.Mapper.Map<List<UserViewModel>>(users);
             return Ok(_users);
         }
@@ -37,16 +39,24 @@ namespace AngularJS.Web.Areas.Admin.Api
         {
             if (id == 0) return Ok();
 
-            var user = authContext.Users.Where(x => x.Id == id).FirstOrDefault();
+            var user = authRepository.FindById(id);
             var _user = AutoMapper.Mapper.Map<UserViewModel>(user);
             return Ok(_user);
         }
 
         // POST api/<controller>
         [HttpPost]
-        public void Post([FromBody]UserViewModel user)
+        public void PostAccount([FromUri] string action, [FromBody]UserViewModel user)
         {
-            
+            if (action == "create")
+            {
+                user.Id = 0;
+            }
+            else if (action == "delete")
+            {
+
+            }
+            var result = authRepository.RegisterUser(user);
         }
 
         // PUT api/<controller>/5
@@ -57,16 +67,13 @@ namespace AngularJS.Web.Areas.Admin.Api
 
         // DELETE api/<controller>/5
         [HttpDelete]
-        public IHttpActionResult Delete([FromUri]int id)
+        public IHttpActionResult DeleteAccount([FromUri]int id)
         {
             if (id == 0) return Ok("Wrong user!");
 
-            var user = authContext.Users.Find(new object[] { id });
-            if (user == null) return Ok("User not found!");
-            authContext.Users.Remove(user);
-            var count = authContext.SaveChanges();
+            var task = authRepository.DeleteUser(id).Result;
 
-            return Ok("Delete User: " + count);
+            return Ok("Delete User success!");
         }
     }
 }

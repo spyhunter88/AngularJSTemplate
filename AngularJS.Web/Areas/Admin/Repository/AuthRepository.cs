@@ -15,7 +15,7 @@ namespace AngularJS.Web.Security.Repository
     /// </summary>
     public partial class AuthRepository
     {
-        public Task<IdentityResult> RegisterUser(UserViewModel user)
+        public IdentityResult RegisterUser(UserViewModel user)
         {
             if (user.Id == 0)
             {
@@ -31,14 +31,17 @@ namespace AngularJS.Web.Security.Repository
                     EmailReceiveEnabled = user.EmailReceiveEnabled
                 };
 
-                var result = _userManager.CreateAsync(_user, user.NewPassword);
+                var result = _userManager.Create(_user, user.NewPassword);
                 return result;
             }
             else
             {
                 // Update password first
-                _userManager.RemovePassword(user.Id);
-                _userManager.AddPassword(user.Id, user.NewPassword);
+                if ((user.NewPassword ?? "") != "")
+                {
+                    _userManager.RemovePassword(user.Id);
+                    _userManager.AddPassword(user.Id, user.NewPassword);
+                }
 
                 ApplicationUser _user = _userManager.FindById(user.Id);
 
@@ -50,10 +53,23 @@ namespace AngularJS.Web.Security.Repository
                 _user.LockoutEnabled = user.LockOutEnabled;
                 _user.SystemLoginEnabled = user.SystemLoginEnabled;
 
-                var result = _userManager.UpdateAsync(_user);
+                var result = _userManager.Update(_user);
                 return result;
             }
         }
+
+        public List<ApplicationUser> GetUsers()
+        {
+            var result = _userManager.Users.Select(x => x).ToList();
+            return result;
+        }
+
+        public ApplicationUser FindById(int id)
+        {
+            var user = _userManager.FindById(id);
+            return user;
+        }
+
 
         public Task<IdentityResult> DeleteUser(int userId)
         {
