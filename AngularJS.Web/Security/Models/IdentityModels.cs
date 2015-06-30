@@ -36,6 +36,13 @@ namespace AngularJS.Web.Security.Models
     {
         public CustomRole() { }
         public CustomRole(string name) { Name = name; }
+        public CustomRole(string name, string description)
+        {
+            this.Name = name;
+            this.Description = description;
+        }
+
+        public string Description { get; set; }
     }
 
     public class CustomUserStore : UserStore<ApplicationUser, CustomRole, int,

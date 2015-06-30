@@ -47,6 +47,15 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-md-6">
+            <label class="control-label">Roles</label><br />
+            <label ng-repeat="role in roles">
+                <input type="checkbox" checklist-model="account.rolesList" checklist-value="role.name" /> {{role.name}}
+            </label>
+        </div>
+    </div>
+
     <hr />
     <button class="btn btn-primary" ng-click="save()"><i class="glyphicon glyphicon-plus"></i> Save</button>
     <button class="btn" ng-click="cancel()"><i class="glyphicon glyphicon-arrow-right"></i> Cancel</button>

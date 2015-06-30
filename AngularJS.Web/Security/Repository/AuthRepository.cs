@@ -13,12 +13,14 @@ namespace AngularJS.Web.Security.Repository
     public partial class AuthRepository : IDisposable
     {
         private AuthContext _ctx;
-
         private ApplicationUserManager _userManager;
+        private CustomRoleStore _roleStore;
+
 
         public AuthRepository()
         {
             _ctx = new AuthContext();
+            _roleStore = new CustomRoleStore(_ctx);
             _userManager = new ApplicationUserManager(new CustomUserStore(_ctx));
         }
 

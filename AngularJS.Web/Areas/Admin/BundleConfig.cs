@@ -31,6 +31,7 @@ namespace AngularJS.Web.Areas.Admin
                     "~/Areas/Admin/Scripts/app/app.js",
                     "~/Areas/Admin/Scripts/app/services/*.js",
                     "~/Areas/Admin/Scripts/app/services/models/*.js",
+                    "~/Areas/Admin/Scripts/app/directives/*.js",
                     "~/Areas/Admin/Scripts/app/controllers/*.js"
                 ));
 

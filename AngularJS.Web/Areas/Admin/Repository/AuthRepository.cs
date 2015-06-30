@@ -17,6 +17,8 @@ namespace AngularJS.Web.Security.Repository
     {
         public IdentityResult RegisterUser(UserViewModel user)
         {
+            // IdentityResult result;
+
             if (user.Id == 0)
             {
                 ApplicationUser _user = new ApplicationUser
@@ -31,8 +33,17 @@ namespace AngularJS.Web.Security.Repository
                     EmailReceiveEnabled = user.EmailReceiveEnabled
                 };
 
+                var roles = _roleStore.Roles.Where(x => user.RolesList.Contains(x.Name)).ToList();
+                foreach (CustomRole role in roles)
+                {
+                    CustomUserRole cur = new CustomUserRole();
+                    cur.RoleId = role.Id;
+                    _user.Roles.Add(cur);
+                }
+
                 var result = _userManager.Create(_user, user.NewPassword);
                 return result;
+                // user.Id = _user.Id;
             }
             else
             {
@@ -53,6 +64,19 @@ namespace AngularJS.Web.Security.Repository
                 _user.LockoutEnabled = user.LockOutEnabled;
                 _user.SystemLoginEnabled = user.SystemLoginEnabled;
 
+                var roles = _roleStore.Roles.Where(x => user.RolesList.Contains(x.Name)).ToList();
+                foreach (CustomRole role in roles)
+                {
+                    // Check exist roles
+                    if (_user.Roles.Where(x => x.RoleId == role.Id).Count() == 0)
+                    {
+                        CustomUserRole cur = new CustomUserRole();
+                        cur.RoleId = role.Id;
+                        cur.UserId = _user.Id;
+                        _user.Roles.Add(cur);
+                    }
+                }
+
                 var result = _userManager.Update(_user);
                 return result;
             }
@@ -60,8 +84,11 @@ namespace AngularJS.Web.Security.Repository
 
         public List<ApplicationUser> GetUsers()
         {
-            var result = _userManager.Users.Select(x => x).ToList();
-            return result;
+            var users = _userManager.Users
+                .Select(x => x)
+                .ToList();
+
+            return users;
         }
 
         public ApplicationUser FindById(int id)
@@ -77,5 +104,19 @@ namespace AngularJS.Web.Security.Repository
             var result = _userManager.DeleteAsync(user);
             return result;
         }
+
+        #region Roles
+        public List<CustomRole> GetRoles()
+        {
+            var roles = _roleStore.Roles.ToList();
+            return roles;
+        }
+
+        public List<string> GetRoles(int userId)
+        {
+            var roles = _userManager.GetRoles(userId);
+            return roles.ToList();
+        }
+        #endregion
     }
 }

@@ -257,6 +257,7 @@
     <Compile Include="Areas\Admin\BundleConfig.cs" />
     <Compile Include="Areas\Admin\Controllers\AccountController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\RoleController.cs" />
     <Compile Include="Areas\Admin\Models\AccountViewModels.cs" />
     <Compile Include="Areas\Admin\Repository\AuthRepository.cs" />
     <Compile Include="Controllers\ClaimController.cs" />
@@ -285,6 +286,7 @@
     <Content Include="Areas\Admin\Content\Static\Account\edit.html" />
     <Content Include="Areas\Admin\Scripts\app\app.js" />
     <Content Include="Areas\Admin\Scripts\app\controllers\accountController.js" />
+    <Content Include="Areas\Admin\Scripts\app\directives\checkboxGroup.js" />
     <Content Include="Areas\Admin\Scripts\app\index.html" />
     <Content Include="Areas\Admin\Scripts\app\services\accountService.js" />
     <Content Include="Areas\Admin\Scripts\app\services\coreService.js" />
@@ -1658,7 +1660,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\ApiControllers\" />
     <Folder Include="Areas\Admin\Scripts\app\services\models\" />
     <Folder Include="Content\bootstrap\" />
   </ItemGroup>

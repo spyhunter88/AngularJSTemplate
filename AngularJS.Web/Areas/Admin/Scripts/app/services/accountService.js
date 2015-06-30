@@ -4,7 +4,8 @@ app
 	.constant('admin.account.url', {
 	    getAccounts: '/api/Admin/Account',
 	    getAccount: '/api/Admin/Account/',
-	    postAccount: '/api/Admin/Account'
+	    postAccount: '/api/Admin/Account',
+        getRoles: '/api/Admin/Role'
 	})
 	.factory('accountApi', ['admin.account.url', 'coreSvc',
 	function (url, coreSvc) {
@@ -23,6 +24,10 @@ app
 	        },
 	        putAccount: function (account, action) {
 	            return coreSvc.callApi('PUT', url.postAccount, { action: action }, account);
+	        },
+
+	        getRoles: function () {
+	            return coreSvc.callApi('GET', url.getRoles, null, null);
 	        }
 	    };
 

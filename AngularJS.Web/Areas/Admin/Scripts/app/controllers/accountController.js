@@ -86,9 +86,15 @@ app.controller('accountController', function ($scope, accountApi, ngToast, dialo
     _getAccounts();
 })
 
-.controller('accountCtrl', function ($scope, $modalInstance, data) {
+.controller('accountCtrl', function ($scope, $modalInstance, data, accountApi) {
     if (data.account === undefined) $scope.account = { id: 0 };
     else $scope.account = data.account;
+
+    $scope.roles = [];
+    accountApi.getRoles().then(
+        function (data) { $scope.roles = data; }
+        , function (err) { ngToast.create('Can not load Roles list!') }
+    );
 
     $scope.cancel = function () {
         $modalInstance.dismiss('cancelled');

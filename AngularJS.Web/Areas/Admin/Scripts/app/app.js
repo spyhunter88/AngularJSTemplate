@@ -1,4 +1,4 @@
-﻿var app = angular.module('adminApp', ['ngRoute', 'ngSanitize', 'ngToast', 'ui.bootstrap', 'adaptv.adaptStrap', 'dialogs.main']);
+﻿var app = angular.module('adminApp', ['ngRoute', 'ngSanitize', 'ngToast', 'ui.bootstrap', 'adaptv.adaptStrap', 'dialogs.main', 'checklist-model']);
 
 app.config(function ($routeProvider) {
     $routeProvider.when("/", {

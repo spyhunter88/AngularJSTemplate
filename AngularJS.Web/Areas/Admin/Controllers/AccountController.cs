@@ -21,6 +21,7 @@ namespace AngularJS.Web.Areas.Admin.Api
         {
             authRepository = new AuthRepository();
             AutoMapper.Mapper.CreateMap<ApplicationUser, UserViewModel>().ReverseMap();
+            AutoMapper.Mapper.CreateMap<CustomRole, RoleViewModel>().ReverseMap();
         }
         
 
@@ -30,6 +31,12 @@ namespace AngularJS.Web.Areas.Admin.Api
         {
             List<ApplicationUser> users = authRepository.GetUsers();
             var _users = AutoMapper.Mapper.Map<List<UserViewModel>>(users);
+
+            foreach (UserViewModel _user in _users)
+            {
+                _user.RolesList = authRepository.GetRoles(_user.Id);
+            }
+
             return Ok(_users);
         }
 
