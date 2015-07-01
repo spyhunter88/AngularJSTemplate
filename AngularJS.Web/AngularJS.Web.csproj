@@ -257,8 +257,10 @@
     <Compile Include="Areas\Admin\BundleConfig.cs" />
     <Compile Include="Areas\Admin\Controllers\AccountController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PolicyController.cs" />
     <Compile Include="Areas\Admin\Controllers\RoleController.cs" />
     <Compile Include="Areas\Admin\Models\AccountViewModels.cs" />
+    <Compile Include="Areas\Admin\Models\PolicyViewModel.cs" />
     <Compile Include="Areas\Admin\Repository\AuthRepository.cs" />
     <Compile Include="Controllers\ClaimController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />

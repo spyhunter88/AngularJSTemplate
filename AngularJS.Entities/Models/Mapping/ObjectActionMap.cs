@@ -28,7 +28,7 @@ namespace AngularJS.Entities.Models.Mapping
             this.Property(t => t.Object).HasColumnName("Object");
             this.Property(t => t.Status).HasColumnName("Status");
             this.Property(t => t.UserID).HasColumnName("UserID");
-            this.Property(t => t.GroupID).HasColumnName("GroupID");
+            this.Property(t => t.RoleID).HasColumnName("RoleID");
             this.Property(t => t.Action).HasColumnName("Action");
             this.Property(t => t.PublicEnabled).HasColumnName("PublicEnabled");
         }

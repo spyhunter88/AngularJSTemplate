@@ -13,7 +13,7 @@ namespace AngularJS.Entities.Models
         public string Object { get; set; }
         public string Status { get; set; }
         public Int32? UserID { get; set; }
-        public Int32? GroupID { get; set; }
+        public Int32? RoleID { get; set; }
         public string ObjectField { get; set; }
         public string FieldProperty { get; set; }
         public Byte PublicEnabled { get; set; }
