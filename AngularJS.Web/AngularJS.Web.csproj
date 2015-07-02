@@ -286,9 +286,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\Content\Static\Account\edit.html" />
+    <Content Include="Areas\Admin\Content\Static\Policy\index.html" />
     <Content Include="Areas\Admin\Scripts\app\app.js" />
+    <Content Include="Areas\Admin\Scripts\app\controllers\policyController.js" />
     <Content Include="Areas\Admin\Scripts\app\controllers\accountController.js" />
     <Content Include="Areas\Admin\Scripts\app\directives\checkboxGroup.js" />
+    <Content Include="Areas\Admin\Scripts\app\directives\propsFilter.js" />
     <Content Include="Areas\Admin\Scripts\app\index.html" />
     <Content Include="Areas\Admin\Scripts\app\services\accountService.js" />
     <Content Include="Areas\Admin\Scripts\app\services\coreService.js" />
@@ -608,6 +611,7 @@
     <Content Include="Content\misc\ngToast.min.css" />
     <Content Include="Content\misc\select.css" />
     <Content Include="Content\misc\select.min.css" />
+    <Content Include="Content\misc\select2.min.css" />
     <Content Include="Content\misc\xeditable.css" />
     <Content Include="dialogs\allocation.html" />
     <Content Include="dialogs\payment.html" />

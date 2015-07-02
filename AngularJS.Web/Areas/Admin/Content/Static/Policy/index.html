@@ -1,0 +1,43 @@
+﻿<div>
+    <div class="row">
+        <div class="btn-group btn-group-justified">
+            <label ng-repeat="tp in types" class="btn btn-primary" ng-model="type" btn-radio>{{tp.vis}}</label>
+        </div>
+    </div><br />
+
+    <div class="row" ng-show="type == 'user'">
+        <div class="col-md-4 col-md-offset-4">
+            <ui-select ng-model="selectedID" theme="bootstrap" on-select="">
+                <ui-select-match placeholder="Select an user to view/edit ...">{{$select.selected.userName}}</ui-select-match>
+                <ui-select-choices repeat="user in users | propsFilter: {userName: $select.search, email: $select.search}">
+                    <div ng-bind-html="user.userName | highlight: $select.search"></div>
+                    <small>
+                        email: {{user.email}}
+                    </small>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+    </div><br />
+    
+    <div class="row">
+        <ad-table-lite table-name="objectConfig"
+                       local-data-source="objectConfigs"
+                       enable-column-search="true"
+                       column-definition="objectConfigColumnDef"
+                       page-sizes="[10, 20]"
+                       pagination-btn-group-classes="pagination pagination-sm"
+                       table-classes="table table-bordered">
+        </ad-table-lite>
+    </div><br />
+
+    <div class="row">
+        <ad-table-lite table-name="objectAction"
+                       local-data-source="objectActions"
+                       enable-column-search="true"
+                       column-definition="objectActionColumnDef"
+                       page-sizes="[10, 20]"
+                       pagination-btn-group-classes="pagination pagination-sm"
+                       table-classes="table table-bordered">
+        </ad-table-lite>
+    </div>
+</div>

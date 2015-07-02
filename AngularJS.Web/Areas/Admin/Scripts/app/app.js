@@ -1,4 +1,4 @@
-﻿var app = angular.module('adminApp', ['ngRoute', 'ngSanitize', 'ngToast', 'ui.bootstrap', 'adaptv.adaptStrap', 'dialogs.main', 'checklist-model']);
+﻿var app = angular.module('adminApp', ['ngRoute', 'ngSanitize', 'ngToast', 'ui.bootstrap', 'adaptv.adaptStrap', 'dialogs.main', 'checklist-model', 'ui.select']);
 
 app.config(function ($routeProvider) {
     $routeProvider.when("/", {
@@ -11,9 +11,9 @@ app.config(function ($routeProvider) {
         templateUrl: '/Areas/Admin/Content/Static/Account/index.html'
     });
 
-    $routeProvider.when("/account/:id", {
-        controller: 'accountController',
-        templateUrl: '/Areas/Admin/Content/Static/Account/edit.html'
+    $routeProvider.when("/policy", {
+        controller: 'policyController',
+        templateUrl: '/Areas/Admin/Content/Static/Policy/index.html'
     });
 
     $routeProvider.otherwise({ redirectTo: "/" });

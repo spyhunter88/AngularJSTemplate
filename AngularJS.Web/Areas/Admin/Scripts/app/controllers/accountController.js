@@ -32,7 +32,8 @@ app.controller('accountController', function ($scope, accountApi, ngToast, dialo
             {
                 columnHeaderTemplate: '<button class="btn btn-primary btn-sm" ng-click="editAccount()"><i class="glyphicon glyphicon-plus"></i></button>'
                         + '<button class="btn btn-sm" ng-click="getAccounts()"><i class="glyphicon glyphicon-refresh"></i></button>',
-                template: '<button class="btn btn-sm" ng-click="editAccount(item)"><i class="glyphicon glyphicon-edit"></i></button>',
+                template: '<button class="btn btn-sm" ng-click="editAccount(item)"><i class="glyphicon glyphicon-edit"></i></button>'
+                        + '<button class="btn btn-sm" ng-click="editPolicy(item)"><i class="glyphicon glyphicon-lock"></i></button>',
                 visible: true
             }
         ];
@@ -78,8 +79,13 @@ app.controller('accountController', function ($scope, accountApi, ngToast, dialo
         );
     };
 
+    var _editPolicy = function (account) {
+
+    };
+
     $scope.editAccount = _editAccount;
     $scope.getAccounts = _getAccounts;
+    $scope.editPolicy = _editPolicy;
 
     // Initialize
     _init();
