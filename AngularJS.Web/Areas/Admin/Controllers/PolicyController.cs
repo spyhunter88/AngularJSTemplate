@@ -27,10 +27,10 @@ namespace AngularJS.Web.Areas.Admin.Controllers
         {
             PolicyViewModel policyModel = new PolicyViewModel(userId, roleId);
 
-            var objectActions = _objectConfigService.GetObjectAction(userId, roleId);
-            var objectConfigs = _objectConfigService.GetObjectConfig(userId, roleId);
+            policyModel.ObjectActions = _objectConfigService.GetObjectAction(userId, roleId);
+            policyModel.ObjectConfigs = _objectConfigService.GetObjectConfig(userId, roleId);
 
-            return Ok();
+            return Ok(policyModel);
         }
 
         /// <summary>
@@ -40,7 +40,8 @@ namespace AngularJS.Web.Areas.Admin.Controllers
         [HttpPost]
         public IHttpActionResult SavePolicy([FromBody]PolicyViewModel policyViewModel)
         {
-
+            _objectConfigService.SaveObjectAction(policyViewModel.ObjectActions, policyViewModel.UserID, policyViewModel.RoleID);
+            _objectConfigService.SaveObjectConfig(policyViewModel.ObjectConfigs, policyViewModel.UserID, policyViewModel.RoleID);
 
             return Ok();
         }

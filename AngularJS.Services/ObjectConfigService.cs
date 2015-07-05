@@ -124,6 +124,7 @@ namespace AngularJS.Services
             // Add new
             foreach (ObjectAction _oa in objectActions)
             {
+                _oa.ID = 0;
                 _oa.ObjectState = ObjectState.Added;
             }
             _unitOfWorkAsync.Repository<ObjectAction>().InsertRange(objectActions);
@@ -147,6 +148,7 @@ namespace AngularJS.Services
             // Add new
             foreach (ObjectConfig _oa in objectConfigs)
             {
+                _oa.ID = 0;
                 _oa.ObjectState = ObjectState.Added;
             }
             _unitOfWorkAsync.Repository<ObjectConfig>().InsertRange(objectConfigs);

@@ -1,0 +1,45 @@
+﻿
+<div class="modal-header">
+    <h4 class="modal-title">Object Config</h4>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <label class="control-label">Object</label>
+            <input type="text" class="form-control input-sm" ng-model="object.object" />
+        </div>
+
+        <div class="col-md-6 form-group">
+            <label class="control-label">Object Status</label>
+            <input type="text" class="form-control input-sm" ng-model="object.status" />
+        </div>
+    </div>
+
+    <div class="row" ng-show="type == 'objectConfig'">
+        <div class="col-md-6">
+            <label class="control-label">Object Field</label>
+            <input type="text" class="form-control input-sm" ng-model="object.objectField" />
+        </div>
+
+        <div class="col-md-6">
+            <label class="control-label">Field Property</label>
+            <input type="text" class="form-control input-sm" ng-model="object.fieldProperty" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 form-group" ng-show="type == 'objectAction'">
+            <label class="control-label">Action</label>
+            <input type="text" class="form-control input-sm" ng-model="object.action" />
+        </div>
+
+        <div class="col-md-6 form-group">
+            <label class="control-label">Public Enabled</label>
+            <input type="checkbox" class="form-control input-sm" ng-model="object.publicEnabled" ng-true-value="1" ng-false-value="0" />
+        </div>
+    </div>
+
+    <hr />
+    <button class="btn btn-primary" ng-click="save()"><i class="glyphicon glyphicon-plus"></i> Save</button>
+    <button class="btn" ng-click="cancel()"><i class="glyphicon glyphicon-arrow-right"></i> Cancel</button>
+</div>

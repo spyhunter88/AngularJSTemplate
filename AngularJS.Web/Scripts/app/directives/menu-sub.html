@@ -1,0 +1,11 @@
+﻿
+    <a ng-if="menu.hasSub" tabindex="-1" class="dropdown-toggle" ng-href="{{menu.href}}">
+        {{menu.title}}
+        <b ng-if="menu.level == 0" class="caret"></b>
+    </a>
+    <ul ng-if="menu.hasSub" class="dropdown-menu">
+        <li class="{{menu.hasSub ? 'dropdown-submenu':''}}" ng-repeat="menu in menu.submenus" ng-include="'Scripts/app/directives/menu-sub.html'"></li>
+    </ul>
+    <a ng-if="!menu.hasSub" ng-href="{{menu.href}}">
+        {{menu.title}}
+    </a>

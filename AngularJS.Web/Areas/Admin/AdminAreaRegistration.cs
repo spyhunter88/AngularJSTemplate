@@ -1,7 +1,7 @@
 ﻿using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
-using System.Web.Routing;
+using AngularJS.Web.Extensions;
 
 namespace AngularJS.Web.Areas.Admin
 {
@@ -25,13 +25,21 @@ namespace AngularJS.Web.Areas.Admin
                 namespaces: new[] { "AngularJS.Web.Areas.Admin.Controllers" }
             );
 
-            // context.Routes.MapHttpAttributeRoutes();
             // Add WebAPI Route for Areas
-            context.Routes.MapHttpRoute(
-                "AdminApi_default",
-                "api/Admin/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
-            );
+            //context.Routes.MapHttpRoute(
+            //    "AdminApi_default",
+            //    "Admin/api/{controller}/{id}",
+            //    defaults: new { area = "admin", id = RouteParameter.Optional }
+            //);
+
+            context.MapHttpRoute(
+                    "Admin_defaultApi",
+                    "api/admin/{controller}/{id}",
+                    defaults: new { id = RouteParameter.Optional }
+                );
+
+
+
             //context.Routes.MapHttpRoute(
             //    "AdminApi_defaultGet",
             //    "Admin/api/{controller}/{action}/{id}",

@@ -19,7 +19,8 @@ namespace AngularJS.Web.Areas.Admin
                     "~/Scripts/misc/adapt-strap-2.3.0/adapt-strap.min.js",
                     "~/Scripts/misc/adapt-strap-2.3.0/adapt-strap.tpl.min.js",
                     "~/Scripts/misc/select.min.js",
-                    "~/Scripts/misc/select2.min.js"
+                    "~/Scripts/misc/select2.min.js",
+                    "~/Scripts/misc/angular-filter.min.js"
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/Admin/angular").Include(

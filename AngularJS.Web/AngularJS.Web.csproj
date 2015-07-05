@@ -268,10 +268,13 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MainController.cs" />
     <Compile Include="Controllers\RequestController.cs" />
+    <Compile Include="Extensions\AreaRegistrationContextExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Helpers\AreaHttpControllerSelector.cs" />
+    <Compile Include="Helpers\NamespaceHttpControllerSelector.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ClaimFilter.cs" />
     <Compile Include="Models\ClaimViewModels.cs" />
@@ -287,7 +290,9 @@
   <ItemGroup>
     <Content Include="Areas\Admin\Content\Static\Account\edit.html" />
     <Content Include="Areas\Admin\Content\Static\Policy\index.html" />
+    <Content Include="Areas\Admin\Content\Static\Policy\objectEdit.html" />
     <Content Include="Areas\Admin\Scripts\app\app.js" />
+    <Content Include="Areas\Admin\Scripts\app\controllers\menuController.js" />
     <Content Include="Areas\Admin\Scripts\app\controllers\policyController.js" />
     <Content Include="Areas\Admin\Scripts\app\controllers\accountController.js" />
     <Content Include="Areas\Admin\Scripts\app\directives\checkboxGroup.js" />
@@ -297,6 +302,7 @@
     <Content Include="Areas\Admin\Scripts\app\services\coreService.js" />
     <Content Include="Areas\Admin\Content\Static\Account\index.html" />
     <Content Include="Areas\Admin\Content\Static\Home\index.html" />
+    <Content Include="Areas\Admin\Scripts\app\services\menuService.js" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\img\arrow_down.png" />
     <Content Include="Content\img\arrow_off.png" />
@@ -613,8 +619,6 @@
     <Content Include="Content\misc\select.min.css" />
     <Content Include="Content\misc\select2.min.css" />
     <Content Include="Content\misc\xeditable.css" />
-    <Content Include="dialogs\allocation.html" />
-    <Content Include="dialogs\payment.html" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Site.css" />
@@ -640,10 +644,13 @@
     <Content Include="Scripts\app\directives\form-config.js" />
     <Content Include="Scripts\app\directives\form-disabled.js" />
     <Content Include="Scripts\app\directives\login-form.html" />
+    <Content Include="Scripts\app\directives\menu-sub.html" />
+    <Content Include="Scripts\app\directives\menuDirective.js" />
     <Content Include="Scripts\app\services\categoriesService.js" />
     <Content Include="Scripts\app\services\constants.js" />
     <Content Include="Scripts\app\services\coreService.js" />
     <Content Include="Scripts\app\services\fileService.js" />
+    <Content Include="Scripts\app\services\menuService.js" />
     <Content Include="Scripts\app\services\productLineService.js" />
     <Content Include="Scripts\app\services\requestService.js" />
     <Content Include="Scripts\app\services\vendorService.js" />
@@ -851,6 +858,7 @@
     <Content Include="Scripts\datatables\plugins\scroller\angular-datatables.scroller.min.js" />
     <Content Include="Scripts\datatables\plugins\tabletools\angular-datatables.tabletools.js" />
     <Content Include="Scripts\datatables\plugins\tabletools\angular-datatables.tabletools.min.js" />
+    <Content Include="Scripts\jquery\jquery.plugin.js" />
     <Content Include="Scripts\kendo\2015.1.408\angular.min.js" />
     <Content Include="Scripts\kendo\2015.1.408\cultures\kendo.culture.af-ZA.min.js" />
     <Content Include="Scripts\kendo\2015.1.408\cultures\kendo.culture.af.min.js" />

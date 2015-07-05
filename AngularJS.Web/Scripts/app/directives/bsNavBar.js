@@ -1,9 +1,9 @@
 ﻿
 (function () {
+    'use strict';
+
     angular.module('bsNavBarMod', [])
         .directive('bsNavbar', function ($location) {
-            'use strict';
-
             return {
                 restrict: 'A',
                 link: function postLink(scope, element, attrs, controller) {
