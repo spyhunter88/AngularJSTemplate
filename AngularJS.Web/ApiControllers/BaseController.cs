@@ -32,10 +32,13 @@ namespace AngularJS.Web.Api
 
         protected short GetCurrentUserId()
         {
-            // return Int16.Parse(User.Identity.GetUserId());
             var identity = (ClaimsIdentity) User.Identity;
-            IEnumerable<Claim> claims = identity.Claims;
-            string id = identity.FindFirst("id").Value;
+            if (identity == null) return 0;
+            //IEnumerable<Claim> claims = identity.Claims;
+            //if (claims.Count() == 0) return 0;
+            var claim = identity.FindFirst("id");
+            if (claim == null) return 0;
+            string id = claim.Value;
 
             return Int16.Parse(id);
         }

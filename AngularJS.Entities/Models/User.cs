@@ -12,12 +12,14 @@ namespace AngularJS.Entities.Models
         public User()
         {
             this.Roles = new HashSet<Role>();
+			this.MenuItems = new List<MenuItem>();
         }
 
         public int Id { get; set; }
         public string UserName { get; set; }
 
         public ICollection<Role> Roles { get; set; }
+		public virtual ICollection<MenuItem> MenuItems { get; set; }
     }
 
     public class Role : Entity
@@ -25,11 +27,13 @@ namespace AngularJS.Entities.Models
         public Role()
         {
             this.Users = new HashSet<User>();
+            // this.MenuItems = new List<MenuItem>();
         }
 
         public int Id { get; set; }
         public string Name { get; set; }
 
         public ICollection<User> Users { get; set; }
+        public virtual ICollection<MenuItem> MenuItems { get; set; }
     }
 }

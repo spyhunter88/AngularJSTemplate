@@ -5,40 +5,30 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using AngularJS.Entities.Models;
-using AngularJS.Web.Models;
 using System.Web.Http.Description;
+using AngularJS.Service;
+using AngularJS.Services.DTO;
 
 namespace AngularJS.Web.Api
 {
-    public class MenuController : ApiController
+    public class MenuController : BaseController
     {
+        private readonly IMenuService _menuService;
+
+        public MenuController(IMenuService menuService)
+        {
+            this._menuService = menuService;
+        }
 
         [HttpGet]
-        [ResponseType(typeof(MenuItemViewModels))]
-        public IHttpActionResult Menu()
+        // [ResponseType(typeof(MenuItemDTO))]
+        public IHttpActionResult GetMenu()
         {
-            MenuItemViewModels res = new MenuItemViewModels();
+            int userId = (int)GetCurrentUserId();
+            if (userId == 0) return Ok();
+            var menus = _menuService.GetMenuItemByUser(userId);
 
-            res.menuItems = new List<MenuItem>
-                {
-                    new MenuItem
-                    {
-                        Href = "/home",
-                        Title = "Home"
-                    },
-                    new MenuItem
-                    {
-                        Href = "/customer",
-                        Title = "Customers"
-                    },
-                    new MenuItem
-                    {
-                        Href = "/claim",
-                        Title = "Claims"
-                    }
-                };
-
-            return Ok(res);
+            return Ok(menus);
         }
     }
 }

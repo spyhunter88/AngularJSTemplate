@@ -445,6 +445,9 @@ D:\Workspace\UnitOfWork\AngularJSAuthentication\AngularJSTemplate\AngularJS.Web\
 D:\Workspace\UnitOfWork\AngularJSAuthentication\AngularJSTemplate\AngularJS.Web\obj\Debug\AngularJS.Web.csprojResolveAssemblyReference.cache
 D:\Workspace\UnitOfWork\AngularJSAuthentication\AngularJSTemplate\AngularJS.Web\obj\Debug\AngularJS.Web.dll
 D:\Workspace\UnitOfWork\AngularJSAuthentication\AngularJSTemplate\AngularJS.Web\obj\Debug\AngularJS.Web.pdb
+D:\Workspace\UnitOfWork\AngularJSAuthentication\AngularJSTemplate\AngularJS.Web\bin\Omu.ValueInjecter.dll
+D:\Workspace\UnitOfWork\AngularJSAuthentication\AngularJSTemplate\AngularJS.Web\bin\Omu.ValueInjecter.pdb
+D:\Workspace\UnitOfWork\AngularJSAuthentication\AngularJSTemplate\AngularJS.Web\bin\Omu.ValueInjecter.xml
 E:\workspace\LinhNH13\Source\Repos\AngularJSTemplate\AngularJS.Web\bin\AutoMapper.Net4.dll
 E:\workspace\LinhNH13\Source\Repos\AngularJSTemplate\AngularJS.Web\bin\AngularJS.Web.dll.config
 E:\workspace\LinhNH13\Source\Repos\AngularJSTemplate\AngularJS.Web\bin\AngularJS.Web.dll
@@ -565,6 +568,7 @@ E:\workspace\LinhNH13\Source\Repos\AngularJSTemplate\AngularJS.Web\bin\Microsoft
 E:\workspace\LinhNH13\Source\Repos\AngularJSTemplate\AngularJS.Web\bin\Microsoft.Owin.Security.Google.xml
 E:\workspace\LinhNH13\Source\Repos\AngularJSTemplate\AngularJS.Web\bin\Microsoft.Owin.Security.Twitter.xml
 E:\workspace\LinhNH13\Source\Repos\AngularJSTemplate\AngularJS.Web\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+E:\workspace\LinhNH13\Source\Repos\AngularJSTemplate\AngularJS.Web\bin\Omu.ValueInjecter.pdb
 E:\workspace\LinhNH13\Source\Repos\AngularJSTemplate\AngularJS.Web\bin\Omu.ValueInjecter.xml
 E:\workspace\LinhNH13\Source\Repos\AngularJSTemplate\AngularJS.Web\bin\de\Microsoft.Data.Edm.resources.dll
 E:\workspace\LinhNH13\Source\Repos\AngularJSTemplate\AngularJS.Web\bin\es\Microsoft.Data.Edm.resources.dll
@@ -596,7 +600,3 @@ E:\workspace\LinhNH13\Source\Repos\AngularJSTemplate\AngularJS.Web\bin\zh-Hant\S
 E:\workspace\LinhNH13\Source\Repos\AngularJSTemplate\AngularJS.Web\obj\Debug\AngularJS.Web.csprojResolveAssemblyReference.cache
 E:\workspace\LinhNH13\Source\Repos\AngularJSTemplate\AngularJS.Web\obj\Debug\AngularJS.Web.dll
 E:\workspace\LinhNH13\Source\Repos\AngularJSTemplate\AngularJS.Web\obj\Debug\AngularJS.Web.pdb
-E:\workspace\LinhNH13\Source\Repos\AngularJSTemplate\AngularJS.Web\bin\Omu.ValueInjecter.pdb
-D:\Workspace\UnitOfWork\AngularJSAuthentication\AngularJSTemplate\AngularJS.Web\bin\Omu.ValueInjecter.dll
-D:\Workspace\UnitOfWork\AngularJSAuthentication\AngularJSTemplate\AngularJS.Web\bin\Omu.ValueInjecter.pdb
-D:\Workspace\UnitOfWork\AngularJSAuthentication\AngularJSTemplate\AngularJS.Web\bin\Omu.ValueInjecter.xml

@@ -119,6 +119,26 @@ namespace AngularJS.Entities.Models
                         ur.MapRightKey("RoleId");
                         ur.ToTable("AspNetUserRoles");
                     });
+					
+			// Many-to-many between User-MenuItem
+			modelBuilder.Entity<User>()
+				.HasMany<MenuItem>(u => u.MenuItems)
+				.WithMany(m => m.Users)
+				.Map(um => 
+					{
+						um.MapLeftKey("UserId");
+						um.MapRightKey("MenuId");
+                        um.ToTable("UserMenuItem");
+					});
+            modelBuilder.Entity<Role>()
+                .HasMany<MenuItem>(u => u.MenuItems)
+                .WithMany(m => m.Roles)
+                .Map(rm =>
+                {
+                    rm.MapLeftKey("RoleId");
+                    rm.MapRightKey("MenuId");
+                    rm.ToTable("RoleMenuItem");
+                });
         }
     }
 }
