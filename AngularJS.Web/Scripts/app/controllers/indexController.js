@@ -5,27 +5,29 @@ app.controller('indexController', function ($scope, $location, menuApi, authServ
 	//$scope.navbar.push({ href: '#/claim', title: 'Claim', isActive: false });
 	//$scope.navbar.push({ href: '#/request', title: 'Request', isActive: false });
 
-    // $scope.menus = [];
+    $scope.menus = [];
 
     // Load menu from database
     menuApi.getMenus().then(
         function (data) {
-
+            if (data !== undefined && data != '') $scope.menus = data;
+            // console.log($scope.menus);
         }, function (err) {
 
         });
 
-	$scope.menus = [
-        { href: '#/', title: 'Home', route: '/' },
-        { href: '#/customer', title: 'Customer', route: '/customer' },
-        { href: '#/claim', title: 'Claim', route: '(/claim)|(/newClaim)', submenus: [] },
-        {
-            href: '#/request', title: 'Request', route: '/request', submenus: [
-                { href: '#/newRequest', title: 'New Request' },
-                { href: '#/removeRequest', title: 'Remove Request' }
-            ]
-        }
-	];
+	//$scope.menus = [
+    //    { href: '#/', title: 'Home', route: '/' },
+    //    { href: '#/customer', title: 'Customer', route: '/customer' },
+    //    { href: '#/claim', title: 'Claim', route: '(/claim)|(/newClaim)', submenus: [] },
+    //    {
+    //        href: '#/request', title: 'Request', route: '/request', submenus: [
+    //            { href: '#/newRequest', title: 'New Request' },
+    //            { href: '#/removeRequest', title: 'Remove Request' }
+    //        ]
+    //    }
+	//];
+	//console.log($scope.menus);
 	
     $scope.logout = function () {
         authService.logOut();
