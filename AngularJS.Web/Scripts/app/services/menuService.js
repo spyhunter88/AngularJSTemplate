@@ -25,8 +25,8 @@ app
                                 menu.push(data[0]);
                             } else {
                                 for (var i = 0; i < menu.length; i++) {
-                                    if (menu[i].submenu === undefined) menu[i].submenu = [];
-                                    if (data[0].parentID == menu[i].id) menu[i].submenu.push(data[0]);
+                                    if (menu[i].submenus === undefined) menu[i].submenus = [];
+                                    if (data[0].parentID == menu[i].id) menu[i].submenus.push(data[0]);
                                 }
                             }
                             data.splice(0,1);
