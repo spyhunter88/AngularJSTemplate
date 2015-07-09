@@ -89,7 +89,8 @@ namespace AngularJS.Web
                       "~/Scripts/datatables/extensions/Scroller/css/dataTables.scroller.min.css",
                       "~/Scripts/datatables/plugins/bootstrap/datatables.bootstrap.min.css",
                       "~/Content/kendo/2015.1.408/kendo.common.min.css",
-                      "~/Content/kendo/2015.1.408/kendo.silver.min.css"
+                      "~/Content/kendo/2015.1.408/kendo.silver.min.css",
+                      "~/Scripts/angular/app/directive/*.css"
                 ));
         }
     }

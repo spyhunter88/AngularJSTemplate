@@ -45,7 +45,8 @@ namespace AngularJS.Web.Areas.Admin
                       "~/Content/misc/ngToast.min.css",
                       "~/Content/misc/dialogs.min.css",
                       "~/Scripts/misc/adapt-strap-2.3.0/adapt-strap.min.css",
-                      "~/Content/misc/select.min.css"
+                      "~/Content/misc/select.min.css",
+                      "~/Scripts/angular/app/directive/*.css"
                 ));
         }
     }

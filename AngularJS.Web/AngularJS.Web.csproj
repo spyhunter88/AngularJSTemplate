@@ -296,6 +296,7 @@
     <Content Include="Areas\Admin\Scripts\app\controllers\policyController.js" />
     <Content Include="Areas\Admin\Scripts\app\controllers\accountController.js" />
     <Content Include="Areas\Admin\Scripts\app\directives\checkboxGroup.js" />
+    <Content Include="Areas\Admin\Scripts\app\directives\menuDirective.js" />
     <Content Include="Areas\Admin\Scripts\app\directives\propsFilter.js" />
     <Content Include="Areas\Admin\Scripts\app\index.html" />
     <Content Include="Areas\Admin\Scripts\app\services\accountService.js" />
@@ -639,12 +640,17 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Scripts\app\controllers\claimUpdateController.js" />
     <Content Include="Scripts\app\controllers\requestController.js" />
+    <Content Include="Scripts\app\directives\bs3-submenu.css" />
     <Content Include="Scripts\app\directives\bsNavBar.js" />
     <Content Include="Scripts\app\directives\extend-datepicker.js" />
     <Content Include="Scripts\app\directives\form-config.js" />
     <Content Include="Scripts\app\directives\form-disabled.js" />
+    <Content Include="Scripts\app\directives\jquery.plugin.js" />
     <Content Include="Scripts\app\directives\login-form.html" />
+    <Content Include="Scripts\app\directives\menu-sub.css" />
     <Content Include="Scripts\app\directives\menu-sub.html" />
+    <Content Include="Scripts\app\directives\menu-tree.css" />
+    <Content Include="Scripts\app\directives\menu-tree.html" />
     <Content Include="Scripts\app\directives\menuDirective.js" />
     <Content Include="Scripts\app\services\categoriesService.js" />
     <Content Include="Scripts\app\services\constants.js" />

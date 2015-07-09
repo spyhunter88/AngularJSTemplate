@@ -1,13 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-using AngularJS.Entities.Models;
-using System.Web.Http.Description;
+﻿using System.Web.Http;
 using AngularJS.Service;
-using AngularJS.Services.DTO;
 
 namespace AngularJS.Web.Api
 {
