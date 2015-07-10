@@ -31,7 +31,7 @@
         <td>{{item.route}}</td>
     </tr>
     <tr class="children" ng-if="item.children && item.children.length > 0">
-        <td colspan="5">
+        <td colspan="6">
             <table class="my-menu-outer">
                 <tbody ng-class="{opened: item.opened}" ng-repeat="item in item.children" ng-include="'table_tree.html'" ng-init="level=level+1"></tbody>
             </table>
