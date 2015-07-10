@@ -1,6 +1,6 @@
 var app = angular.module('AngularAuthApp', ['kendo.directives', 'ngRoute', 'LocalStorageModule', 'angular-loading-bar', 'ui.bootstrap',
-    'ngToast', 'dialogs.main', 'angularFileUpload', 'myExt', 'myMenu', 'fscaNumber', 'bsNavBarMod', 'formConfig',
-    'datatables', 'datatables.bootstrap', 'datatables.scroller', 'angular.filter']);
+    'ngToast', 'dialogs.main', 'ngFileUpload', 'myExt', 'myMenu', 'fscaNumber', 'bsNavBarMod', 'formConfig',
+    'angular.filter']);
 
 app.config(function ($routeProvider) {
 	$routeProvider.when("/", {

@@ -1,9 +1,15 @@
-﻿var app = angular.module('adminApp', ['ngRoute', 'ngSanitize', 'angular.filter', 'ngToast', 'ui.bootstrap', 'adaptv.adaptStrap', 'dialogs.main', 'checklist-model', 'ui.select']);
+﻿var app = angular.module('adminApp', ['ngRoute', 'ngSanitize', 'ngAnimate', 'angular.filter', 'ngToast', 'ui.bootstrap',
+        'adaptv.adaptStrap', 'dialogs.main', 'checklist-model', 'ui.select', 'myMenu']);
 
 app.config(function ($routeProvider) {
-    $routeProvider.when("/", {
-        controller: 'homeController',
-        templateUrl: '/Areas/Admin/Content/Static/Home/index.html'
+    //$routeProvider.when("/", {
+    //    controller: 'homeController',
+    //    templateUrl: '/Areas/Admin/Content/Static/Home/index.html'
+    //});
+
+    $routeProvider.when('/menu', {
+        controller: 'menuController',
+        templateUrl: '/Areas/Admin/Content/Static/Menu/index.html'
     });
 
     $routeProvider.when("/account", {

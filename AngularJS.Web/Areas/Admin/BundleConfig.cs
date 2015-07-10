@@ -11,16 +11,17 @@ namespace AngularJS.Web.Areas.Admin
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/Admin/misc").Include(
-                    "~/Scripts/misc/loading-bar.min.js",
-                    "~/Scripts/misc/angular-local-storage.min.js",
-                    "~/Scripts/misc/ui-bootstrap-tpls-0.13.0.min.js",
-                    "~/Scripts/misc/ngToast.min.js",
-                    "~/Scripts/misc/dialogs.min.js",
-                    "~/Scripts/misc/adapt-strap-2.3.0/adapt-strap.min.js",
-                    "~/Scripts/misc/adapt-strap-2.3.0/adapt-strap.tpl.min.js",
-                    "~/Scripts/misc/select.min.js",
-                    "~/Scripts/misc/select2.min.js",
-                    "~/Scripts/misc/angular-filter.min.js"
+                    "~/Scripts/ng-misc/loading-bar/loading-bar.min.js",
+                    "~/Scripts/ng-misc/angular-local-storage/angular-local-storage.min.js",
+                    "~/Scripts/ng-misc/ui-bootstrap/ui-bootstrap-tpls-0.13.0.min.js",
+                    "~/Scripts/ng-misc/ng-toast/ngToast.min.js",
+                    "~/Scripts/ng-misc/angular-dialog-service/dialogs.min.js",
+                    "~/Scripts/ng-misc/adapt-strap-2.3.0/adapt-strap.min.js",
+                    "~/Scripts/ng-misc/adapt-strap-2.3.0/adapt-strap.tpl.min.js",
+                    "~/Scripts/ng-misc/ui-select/select.min.js",
+                    "~/Scripts/ng-misc/ui-select/select2.min.js",
+                    "~/Scripts/ng-misc/angular-filter/angular-filter.min.js",
+                    "~/Scripts/ng-misc/my-menu/my-menu.js"
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/Admin/angular").Include(
@@ -39,14 +40,14 @@ namespace AngularJS.Web.Areas.Admin
                 ));
 
             bundles.Add(new StyleBundle("~/Content/Admin/css").Include(
-                      "~/Content/misc/bootstrap.css",
-                      "~/Content/site.css",
-                      "~/Content/misc/loading-bar.css",
-                      "~/Content/misc/ngToast.min.css",
-                      "~/Content/misc/dialogs.min.css",
-                      "~/Scripts/misc/adapt-strap-2.3.0/adapt-strap.min.css",
-                      "~/Content/misc/select.min.css",
-                      "~/Scripts/angular/app/directive/*.css"
+                    "~/Content/misc/bootstrap/css/bootstrap.min.css",
+                    "~/Content/site.css",
+                    "~/Scripts/ng-misc/loading-bar/loading-bar.min.css",
+                    "~/Scripts/ng-misc/ng-toast/ngToast.min.css",
+                    "~/Scripts/ng-misc/angular-dialog-service/dialogs.min.css",
+                    "~/Scripts/ng-misc/adapt-strap-2.3.0/adapt-strap.min.css",
+                    "~/Scripts/ng-misc/ui-select/select.min.css",
+                    "~/Scripts/ng-misc/my-menu/*.css"
                 ));
         }
     }

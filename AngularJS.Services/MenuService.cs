@@ -26,12 +26,17 @@ namespace AngularJS.Service
 		/// Load menu item and populate as tree view for each User,
 		/// userId is prefer, 'roleId' will be taken if 'userId' = 0
 		/// </summary>
-		List<MenuItemDTO> GetMenuItem(int userId, int roleId);
+		List<int> GetMenuItem(int userId, int roleId);
 		
 		/// <summary>
 		/// Save menu item for each User or Role
 		/// </summary>
-		void SaveMenuItem(int userId, int roleId, List<MenuItemDTO> menuItems);
+		void SaveMenuItem(int userId, int roleId, List<int> menuIds);
+
+        /// <summary>
+        /// Get all menu for config
+        /// </summary>
+        List<MenuItemDTO> GetAllMenu();
 	}
 	
 	
@@ -56,22 +61,81 @@ namespace AngularJS.Service
 			
 			List<MenuItem> userMI = user.MenuItems.ToList();
 
-            foreach (Role role in user.Roles)
-			{
+            //foreach (Role role in user.Roles)
+            //{
 				
-			}
+            //}
 
             return AutoMapper.Mapper.Map<List<MenuItem>, List<MenuItemDTO>>(userMI);
 		}
 		
-		public List<MenuItemDTO> GetMenuItem(int userId, int roleId)
-		{		
-			return null;
+		public List<int> GetMenuItem(int userId, int roleId)
+		{
+            if (userId != 0)
+            {
+                var user = _unitOfWorkAsync.Repository<User>()
+                        .Query(x => x.Id == userId)
+                        .Include(x => x.MenuItems)
+                        .Select().FirstOrDefault();
+
+                if (user == null) return null;
+
+                return user.MenuItems.Select(x => x.ID).ToList();
+            }
+            else if (roleId != 0)
+            {
+                var role = _unitOfWorkAsync.Repository<Role>()
+                        .Query(x => x.Id == roleId)
+                        .Include(x => x.MenuItems)
+                        .Select().FirstOrDefault();
+
+                if (role == null) return null;
+                return role.MenuItems.Select(x => x.ID).ToList();
+            }
+
+            return null;
 		}
 		
-		public void SaveMenuItem(int userId, int roleId, List<MenuItemDTO> menuItems)
+		public void SaveMenuItem(int userId, int roleId, List<int> menuIds)
 		{
-			
+            var menuItems = _unitOfWorkAsync.Repository<MenuItem>()
+                            .Query(x => menuIds.Contains(x.ID))
+                            .Select().ToList();
+
+		    if (userId != 0)
+            {
+                var user = _unitOfWorkAsync.Repository<User>()
+                        .Query(x => x.Id == userId)
+                        .Include(x => x.MenuItems)
+                        .Select().FirstOrDefault();
+
+                if (user == null) return;
+
+                // remove old
+                foreach (MenuItem mi in user.MenuItems)
+                {
+                    mi.ObjectState = ObjectState.Deleted;
+                }
+
+                // add new
+                foreach (MenuItem mi in menuItems)
+                {
+                    user.MenuItems.Add(mi);
+                }
+                user.ObjectState = ObjectState.Modified;
+
+                _unitOfWorkAsync.SaveChanges();
+            }
+            else if (roleId != 0)
+            {
+
+            }
 		}
+
+        public List<MenuItemDTO> GetAllMenu()
+        {
+            var menus = _unitOfWorkAsync.Repository<MenuItem>().Queryable().Select(x => x).ToList();
+            return AutoMapper.Mapper.Map<List<MenuItem>, List<MenuItemDTO>>(menus);
+        }
 	}
 }

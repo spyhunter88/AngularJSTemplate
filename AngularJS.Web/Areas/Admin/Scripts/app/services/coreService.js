@@ -1,4 +1,6 @@
-﻿app.factory('coreSvc', [
+﻿'use strict';
+
+app.factory('coreSvc', [
 	'$http', '$q', function ($http, $q) {
 	    var svc = {
 	        sort: function (data) { },

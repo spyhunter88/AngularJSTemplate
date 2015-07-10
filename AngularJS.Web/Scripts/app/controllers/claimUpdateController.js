@@ -1,9 +1,8 @@
 'use strict';
 
-app.controller('claimUpdateController', ['$scope', '$filter', '$routeParams', '$location', 'claim.api', 'category.api', 'file.api', 
-    'productLine.api', 'vendor.api', 'ngToast', 'dialogs', 'DTOptionsBuilder', 'DTColumnDefBuilder',
-function ($scope, $filter, $routeParams, $location, claimApi, catApi, fileApi, proApi, vendorApi, ngToast, dialogs,
-            DTOptionsBuilder, DTColumnDefBuilder) {
+app.controller('claimUpdateController', ['$scope', '$filter', '$routeParams', '$location', 'claim.api', 'category.api',
+    'file.api', 'productLine.api', 'vendor.api', 'ngToast', 'dialogs',
+function ($scope, $filter, $routeParams, $location, claimApi, catApi, fileApi, proApi, vendorApi, ngToast, dialogs) {
         var dateFormat = "YYYY-MM-DD";
         var maxFilter = $filter('max'); // use in payment and allocation functions
 
@@ -12,48 +11,7 @@ function ($scope, $filter, $routeParams, $location, claimApi, catApi, fileApi, p
         $scope.options = {};
         $scope.uploadFiles = []; // keep the files while it uploading
         $scope.tab = { active: 0 };
-
-        var dtCheckPoint = {};
-        dtCheckPoint.options = DTOptionsBuilder.newOptions()
-            // .withDisplayLength(5)
-            .withDOM('trip')
-            .withScroller()
-            // .withOptions('deferRender', true)
-            .withOption('scrollY', 400)
-            .withOption('sort', false)
-            .withBootstrap();
-        dtCheckPoint.columnDefs = [
-            DTColumnDefBuilder.newColumnDef(0).notSortable(),
-            DTColumnDefBuilder.newColumnDef(1).notSortable(),
-            DTColumnDefBuilder.newColumnDef(2).notSortable(),
-            DTColumnDefBuilder.newColumnDef(3).notSortable()
-        ];
-
         var _init = function () {
-            //catApi.getCategories({ type: 'UNIT' }).then(function (data) {
-            //    $scope.options.units = data;
-            //}, function (error) {
-            //    ngToast.create('Error due loading UNIT!');
-            //});
-
-            //catApi.getCategories({ type: 'PARTICIPANT' }).then(function (data) {
-            //    $scope.options.participants = data;
-            //}, function (error) {
-            //    ngToast.create('Error due loading PARTICIPANT!');
-            //});
-
-            //catApi.getCategories({ type: 'PAYMENTMETHOD' }).then(function (data) {
-            //    $scope.options.paymentMethods = data;
-            //}, function (error) {
-            //    ngToast.create('Error due loading PAYMENTMETHOD!');
-            //});
-
-            //catApi.getCategories({ type: 'PROGRAMTYPE' }).then(function (data) {
-            //    $scope.options.programTypes = data;
-            //}, function (error) {
-            //    ngToast.create('Error due loading PROGRAMTYPE!');
-            //});
-
             catApi.getCategories({ type: 'UNIT,PARTICIPANT,PAYMENTMETHOD,PROGRAMTYPE' }).then(function (data) {
                 $scope.options.units = [];
                 $scope.options.participants = [];
@@ -377,8 +335,6 @@ function ($scope, $filter, $routeParams, $location, claimApi, catApi, fileApi, p
 		$scope.denyClaim = _denyClaim;
 
 		$scope.createCheckpoint = _createCheckpoint;
-
-		$scope.dt = dtCheckPoint;
         $scope.init();
 }])
 .controller('paymentCtrl', function ($scope, $modalInstance, data) {

@@ -1,0 +1,1 @@
+Content all of other angular modules inside project, include its *.css and template file.

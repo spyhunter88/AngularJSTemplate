@@ -21,8 +21,8 @@ namespace AngularJS.Web
                         "~/Scripts/misc/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/misc/bootstrap.js",
-                      "~/Scripts/misc/respond.js"));
+                      // "~/Scripts/misc/bootstrap.js",
+                      "~/Scripts/misc/respond.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
                     "~/Scripts/angular/angular.min.js",
@@ -33,24 +33,17 @@ namespace AngularJS.Web
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/misc").Include(
-                    "~/Scripts/misc/loading-bar.min.js",
-                    "~/Scripts/misc/angular-local-storage.min.js",
-                    "~/Scripts/misc/ui-bootstrap-tpls-0.13.0.min.js",
-                    "~/Scripts/misc/ngToast.min.js",
-                    "~/Scripts/misc/dialogs.min.js",
                     "~/Scripts/misc/moment.js",
-                    //"~/Scripts/misc/select.min.js",
-                    //"~/Scripts/misc/angular-strap.min.js",
-                    //"~/Scripts/misc/angular-strap.tpl.min.js",
-                    "~/Scripts/misc/xeditable.min.js",
-                    "~/Scripts/misc/angular-filter.min.js",
-                    "~/Scripts/datatables/js/jquery.dataTables.min.js",
-                    "~/Scripts/datatables/angular-datatables.min.js",
-                    "~/Scripts/datatables/plugins/bootstrap/angular-datatables.bootstrap.min.js",
-                    "~/Scripts/datatables/extensions/Scroller/js/dataTables.scroller.min.js",
-                    "~/Scripts/datatables/plugins/scroller/angular-datatables.scroller.min.js",
-                    "~/Scripts/misc/angular-file-upload-shim.min.js",
-					"~/Scripts/misc/angular-file-upload.min.js"
+                    "~/Scripts/ng-misc/loading-bar/loading-bar.min.js",
+                    "~/Scripts/ng-misc/angular-local-storage/angular-local-storage.min.js",
+                    "~/Scripts/ng-misc/ui-bootstrap/ui-bootstrap-tpls-0.13.0.min.js",
+                    "~/Scripts/ng-misc/ng-toast/ngToast.min.js",
+                    "~/Scripts/ng-misc/angular-dialog-service/dialogs.min.js",
+                    "~/Scripts/ng-misc/angular-filter/angular-filter.min.js",
+                    "~/Scripts/ng-misc/ng-file-upload/ng-file-upload-shim.min.js",
+                    "~/Scripts/ng-misc/ng-file-upload/ng-file-upload.min.js",
+                    "~/Scripts/ng-misc/ui-select/select.min.js",
+                    "~/Scripts/ng-misc/my-menu/my-menu.js"
                 ));
 
             // This's still bug
@@ -76,21 +69,15 @@ namespace AngularJS.Web
                 ));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/misc/bootstrap.css",
+                      "~/Content/misc/bootstrap/css/bootstrap.min.css",
                       "~/Content/site.css",
-                      "~/Content/misc/loading-bar.css",
-                      "~/Content/misc/ngToast.min.css",
-                      "~/Content/misc/dialogs.min.css",
-                      // "~/Content/misc/ngDialog-theme-default.min.css",
-                      //"~/Content/misc/select.min.css",
-                      // "~/Content/misc/angular-strap.min.css",
-                      "~/Content/misc/xeditable.css",
-                      "~/Scripts/datatables/css/jquery.dataTables.min.css",
-                      "~/Scripts/datatables/extensions/Scroller/css/dataTables.scroller.min.css",
-                      "~/Scripts/datatables/plugins/bootstrap/datatables.bootstrap.min.css",
+                      "~/Scripts/ng-misc/loading-bar/loading-bar.min.css",
+                      "~/Scripts/ng-misc/ng-toast/ngToast.min.css",
+                      "~/Scripts/ng-misc/angular-dialog-service/dialogs.min.css",
+                      "~/Scripts/ng-misc/ui-select/select.min.css",
+                      "~/Scripts/ng-misc/my-menu/*.css",
                       "~/Content/kendo/2015.1.408/kendo.common.min.css",
-                      "~/Content/kendo/2015.1.408/kendo.silver.min.css",
-                      "~/Scripts/angular/app/directive/*.css"
+                      "~/Content/kendo/2015.1.408/kendo.silver.min.css"
                 ));
         }
     }
