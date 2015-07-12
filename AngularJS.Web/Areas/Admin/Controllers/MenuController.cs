@@ -23,11 +23,33 @@ namespace AngularJS.Web.Areas.Admin.Api
         /// Get Menu for current user
         /// </summary>
         [HttpGet]
-        public IHttpActionResult GetMenu()
+        public IHttpActionResult GetMenu(string module)
         {
-            var result = _menuService.GetAllMenu();
-            return Ok(result);
+            if ((module ?? "") == "")
+            {
+                var result = _menuService.GetAllMenu();
+                return Ok(result);
+            }
+            else
+            {
+                var userId = GetCurrentUserId();
+                if (userId == 0) return Ok();
+
+                var result = _menuService.GetMenuItemByUser(userId, module);
+                return Ok(result);
+            }
         }
+
+        // [HttpGet]
+        // [Route("Menu/UserMenu")]
+        //public IHttpActionResult GetUserMenu()
+        //{
+        //    var userId = GetCurrentUserId();
+        //    if (userId == 0) return Ok();
+
+        //    var result = _menuService.GetMenuItemByUser(userId);
+        //    return Ok(result);
+        //}
 
         [HttpGet]
         public IHttpActionResult GetMenu(int userId, int roleId)

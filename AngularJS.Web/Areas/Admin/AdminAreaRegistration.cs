@@ -33,12 +33,10 @@ namespace AngularJS.Web.Areas.Admin
             //);
 
             context.MapHttpRoute(
-                    "Admin_defaultApi",
-                    "api/admin/{controller}/{id}",
-                    defaults: new { id = RouteParameter.Optional }
-                );
-
-
+                "Admin_defaultApi",
+                "api/admin/{controller}/{id}",
+                defaults: new { id = RouteParameter.Optional }
+            );
 
             //context.Routes.MapHttpRoute(
             //    "AdminApi_defaultGet",

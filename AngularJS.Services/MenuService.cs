@@ -20,7 +20,7 @@ namespace AngularJS.Service
 		/// Load MenuItems for each User, include his roles
 		/// to generate Menu
 		/// </summary>
-		List<MenuItemDTO> GetMenuItemByUser(int userId);
+		List<MenuItemDTO> GetMenuItemByUser(int userId, string module = "");
 		
 		/// <summary>
 		/// Load menu item and populate as tree view for each User,
@@ -51,15 +51,15 @@ namespace AngularJS.Service
         }
 		#endregion
 		
-		public List<MenuItemDTO> GetMenuItemByUser(int userId)
+		public List<MenuItemDTO> GetMenuItemByUser(int userId, string module = "")
 		{
 			var user = _unitOfWorkAsync.Repository<User>()
                         .Query(x => x.Id == userId)
                         .Include(x => x.MenuItems)
                         .Include(x => x.Roles.Select(r => r.MenuItems))
                         .Select().FirstOrDefault();
-			
-			List<MenuItem> userMI = user.MenuItems.ToList();
+
+            List<MenuItem> userMI = user.MenuItems.Where(x => (x.Module ?? "") == module).ToList();
 
             //foreach (Role role in user.Roles)
             //{

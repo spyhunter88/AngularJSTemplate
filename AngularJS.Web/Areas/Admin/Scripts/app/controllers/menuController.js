@@ -9,11 +9,12 @@ app.controller('menuController', function ($scope, accountApi, menuApi, ngToast)
         $scope.roles = [];
         $scope.selected = {};
 
-        $scope.menuList = [];
+        $scope.allMenu = [];
         $scope.selectedMenu = [];
         menuApi.getAllMenus().then(
             function (data) {
-                $scope.menuList = data.nestedArray('children', 'id', 'parentID');
+                console.log(data);
+                $scope.allMenu = data.nestedArray('children', 'id', 'parentID');
             }, function (err) {
 
             });

@@ -295,13 +295,18 @@
     <Content Include="Areas\Admin\Content\Static\Policy\index.html" />
     <Content Include="Areas\Admin\Content\Static\Policy\objectEdit.html" />
     <Content Include="Areas\Admin\Scripts\app\app.js" />
+    <Content Include="Areas\Admin\Scripts\app\controllers\indexController.js" />
+    <Content Include="Areas\Admin\Scripts\app\controllers\loginController.js" />
     <Content Include="Areas\Admin\Scripts\app\controllers\menuController.js" />
     <Content Include="Areas\Admin\Scripts\app\controllers\policyController.js" />
     <Content Include="Areas\Admin\Scripts\app\controllers\accountController.js" />
     <Content Include="Areas\Admin\Scripts\app\directives\checkboxGroup.js" />
+    <Content Include="Areas\Admin\Scripts\app\directives\loginDialog.js" />
     <Content Include="Areas\Admin\Scripts\app\directives\propsFilter.js" />
     <Content Include="Areas\Admin\Scripts\app\index.html" />
     <Content Include="Areas\Admin\Scripts\app\services\accountService.js" />
+    <Content Include="Areas\Admin\Scripts\app\services\authInterceptorService.js" />
+    <Content Include="Areas\Admin\Scripts\app\services\authService.js" />
     <Content Include="Areas\Admin\Scripts\app\services\coreService.js" />
     <Content Include="Areas\Admin\Content\Static\Account\index.html" />
     <Content Include="Areas\Admin\Content\Static\Home\index.html" />
@@ -635,6 +640,7 @@
     <Content Include="Scripts\app\directives\form-disabled.js" />
     <Content Include="Scripts\app\directives\login-form.html" />
     <Content Include="Areas\Admin\Content\views\menu-tree.html" />
+    <Content Include="Scripts\app\directives\loginDialog.js" />
     <Content Include="Scripts\app\services\categoriesService.js" />
     <Content Include="Scripts\app\services\constants.js" />
     <Content Include="Scripts\app\services\coreService.js" />

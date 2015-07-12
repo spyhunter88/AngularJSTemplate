@@ -67,10 +67,6 @@ app.run(function ($rootScope, AUTH_EVENTS, authService) {
     	// var functionName = next.data.functionName;
     	if (!authService.authentication.isAuth) {
 	    	if(cur.$$route && cur.$$route.resolve && cur.$$route.resolve.authenticate) {
-	    		// event.preventDefault();
-
-	    		console.log('Route changed!');
-
 	    		// open login dialog first, the 2.0 version will come with check roles and Un Authorized
 	    		$rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
     		}

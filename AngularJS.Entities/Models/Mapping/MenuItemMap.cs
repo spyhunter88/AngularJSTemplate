@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity.ModelConfiguration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data.Entity.ModelConfiguration;
 
 namespace AngularJS.Entities.Models.Mapping
 {
@@ -27,6 +22,9 @@ namespace AngularJS.Entities.Models.Mapping
 			this.Property(t => t.Route)
 				.HasMaxLength(255);
 
+            this.Property(t => t.Module)
+                .HasMaxLength(50);
+
             // Mapping
             this.ToTable("MenuItem");
             this.Property(t => t.ID).HasColumnName("ID");
@@ -35,6 +33,7 @@ namespace AngularJS.Entities.Models.Mapping
             this.Property(t => t.Icon).HasColumnName("Icon");
             this.Property(t => t.Route).HasColumnName("Route");
             this.Property(t => t.ParentID).HasColumnName("ParentID");
+            this.Property(t => t.Module).HasColumnName("Module");
         }
     }
 }

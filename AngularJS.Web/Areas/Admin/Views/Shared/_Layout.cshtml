@@ -9,6 +9,33 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
+    <div login-modal="loginDialog" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header"><h3>Login</h3></div>
+                <form name="loginForm" ng-controller="loginController" ng-submit="login()" novalidate role="form">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="userName">Username:</label>
+                            <input type="text" id="userName" class="form-control"
+                                   ng-model="credentials.userName">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Password:</label>
+                            <input type="password" id="password" class="form-control"
+                                   ng-model="credentials.password">
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" type="submit">Login</button>
+                    </div>
+                </form>
+            </div> <!-- /.modal-content -->
+        </div> <!-- /.modal.dialog -->
+    </div>
+
     <toast></toast>
 
     <div class="container body-content">

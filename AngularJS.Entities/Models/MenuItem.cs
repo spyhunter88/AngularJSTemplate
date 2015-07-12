@@ -17,6 +17,7 @@ namespace AngularJS.Entities.Models
         public string Icon { get; set; }
 		public string Route { get; set; }
         public int? ParentID { get; set; }
+        public string Module { get; set; }
 		
 		public virtual ICollection<User> Users { get; set; }
         public virtual ICollection<Role> Roles { get; set; }

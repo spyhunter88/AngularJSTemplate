@@ -11,6 +11,7 @@ namespace AngularJS.Web.Areas.Admin
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/Admin/misc").Include(
+                    "~/Scripts/misc/moment.js",
                     "~/Scripts/ng-misc/loading-bar/loading-bar.min.js",
                     "~/Scripts/ng-misc/angular-local-storage/angular-local-storage.min.js",
                     "~/Scripts/ng-misc/ui-bootstrap/ui-bootstrap-tpls-0.13.0.min.js",
