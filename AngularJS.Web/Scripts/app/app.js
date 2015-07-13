@@ -2,6 +2,10 @@ var app = angular.module('AngularAuthApp', ['kendo.directives', 'ngRoute', 'Loca
     'ngToast', 'dialogs.main', 'ngFileUpload', 'myExt', 'myMenu', 'fscaNumber', 'bsNavBarMod', 'formConfig',
     'angular.filter']);
 
+app.constant('APP_SETTINGS', {
+    Module_Name: 'CLAIM'
+});
+
 app.config(function ($routeProvider) {
 	$routeProvider.when("/", {
         controller: "dashBoardController",
@@ -64,8 +68,9 @@ app.run(function ($rootScope, AUTH_EVENTS, authService) {
 
     // inject routeChangeStart to open login or error (unauthorize) dialog
     $rootScope.$on('$routeChangeStart', function (event, cur, prev) {
-    	// var functionName = next.data.functionName;
-    	if (!authService.authentication.isAuth) {
+        // var functionName = next.data.functionName;
+        var authen = authService.authentication;
+        if (!authen.isAuth || moment(authen.expireTime).diff(moment(), 's') < 0) {
 	    	if(cur.$$route && cur.$$route.resolve && cur.$$route.resolve.authenticate) {
 	    		// open login dialog first, the 2.0 version will come with check roles and Un Authorized
 	    		$rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);

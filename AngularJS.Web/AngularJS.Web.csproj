@@ -629,6 +629,7 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Scripts\app\controllers\claimUpdateController.js" />
+    <Content Include="Scripts\app\controllers\loginController.js" />
     <Content Include="Scripts\app\controllers\requestController.js" />
     <Content Include="Scripts\app\directives\bsNavBar.js" />
     <Content Include="Scripts\app\directives\extend-datepicker.js" />

@@ -8,7 +8,8 @@ app.factory('authService', ['$http', '$q', 'localStorageService', function ($htt
     var _authentication = {
         isAuth: false,
         userName: "",
-        useRefreshTokens: false
+        useRefreshTokens: false,
+        expireTime: 0
     };
 
     var _externalAuthData = {
@@ -51,7 +52,10 @@ app.factory('authService', ['$http', '$q', 'localStorageService', function ($htt
             _authentication.isAuth = true;
             _authentication.userName = credentials.userName;
             _authentication.useRefreshTokens = credentials.useRefreshTokens;
-            _authentication.expireTime = response.expireTime;
+            _authentication.expireTime = authorizationData.expireTime;
+
+            _reload();
+
             deferred.resolve(response);
         }).error(function (err, status) {
             _logOut();
@@ -81,6 +85,8 @@ app.factory('authService', ['$http', '$q', 'localStorageService', function ($htt
             _authentication.userName = authData.userName;
             _authentication.useRefreshTokens = authData.useRefreshTokens;
             _authentication.expireTime = authData.expireTime;
+
+            _reload();
         }
     };
 
@@ -156,13 +162,12 @@ app.factory('authService', ['$http', '$q', 'localStorageService', function ($htt
         return deferred.promise;
     };
 
-    // return false if time expire
-    var _isAuthen = function () {
-        // console.log(_authentication);
+    // reload for check with new time
+    var _reload = function () {
+        if (!_authentication.isAuth) return;
+
         var xp = moment(_authentication.expireTime).diff(moment(), 's');
-        
-        if (_authentication.isAuth && moment(_authentication.expireTime).diff(moment(), 's') > 0) return true;
-        else return false;
+        _authentication.isAuth = moment(_authentication.expireTime).diff(moment(), 's') > 0;
     };
 
     // expose function
@@ -177,7 +182,7 @@ app.factory('authService', ['$http', '$q', 'localStorageService', function ($htt
     authServiceFactory.externalAuthData = _externalAuthData;
     authServiceFactory.registerExternal = _registerExternal;
 
-    authServiceFactory.isAuthen = _isAuthen;
+    authServiceFactory.reload = _reload;
 
     return authServiceFactory;
 }]);

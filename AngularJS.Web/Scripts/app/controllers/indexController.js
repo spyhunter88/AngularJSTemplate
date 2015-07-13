@@ -7,37 +7,39 @@ app.controller('indexController', function ($scope, $location, dialogs, menuApi,
 
     $scope.menus = [];
 
-    // Load menu from database
-    menuApi.getMenus().then(
-        function (data) {
-            if (data !== undefined && data != '') $scope.menus = data;
-        }, function (err) {
+    // Load menu from database include reload authentication from authService
+    var _reloadMenu = function () {
+        $scope.authentication = authService.authentication;
+        menuApi.getMenus().then(
+            function (data) {
+                // if (data !== undefined && data != '') {
+                    // console.log('Start timeout');
+                    $scope.menus = data;
+                // }
+            }, function (err) {
 
-        });
+            });
+    };
 	
     var _logout = function () {
         authService.logOut();
+        _reloadMenu();
         $location.path('/home');
     };
     var _login = function () {
         var modal = dialogs.create(
             '/Scripts/app/views/dialogs/loginForm.html?bust=' + Math.random().toString(36).slice(2),
-            'loginController',
+            'loginModalController',
             {}, { size: 'sm' }
             );
+        modal.result.then(function (data) { $scope.authentication = authService.authentication; });
     };
 
-    // return false if time expire
-    var _isAuth = function () {
-        var xp = moment(authService.authentication.expireTime).diff(moment(), 's');
-
-        if (authService.authentication.isAuth && xp > 0) return true;
-        else return false;
-    };
+    // Run init
+    _reloadMenu();
 	
     // Get authentication information to show in menu
     $scope.authentication = authService.authentication;
-    $scope.isAuth = _isAuth;
     $scope.login = _login;
     $scope.logout = _logout;
 
@@ -45,8 +47,10 @@ app.controller('indexController', function ($scope, $location, dialogs, menuApi,
     $scope.$on(AUTH_EVENTS.notAuthenticated, _login);
     $scope.$on(AUTH_EVENTS.notAuthorized, _login);
     $scope.$on(AUTH_EVENTS.sessionTimeout, _login);
+    $scope.$on(AUTH_EVENTS.loginSuccess, _reloadMenu);
+    // $scope.$on(AUTH_EVENTS.logoutSuccess, _reloadMenu);
 })
-.controller('loginController', function ($scope, $modalInstance, $location, data, authService, AUTH_EVENTS) {
+.controller('loginModalController', function ($scope, $modalInstance, data, $rootScope, $location, authService, AUTH_EVENTS) {
     $scope.credentials = { userName: "", password: "" };
     $scope.message = '';
 
@@ -59,6 +63,8 @@ app.controller('indexController', function ($scope, $location, dialogs, menuApi,
             // return to home if login from main
             if ($location.path().indexOf('login') != -1) $location.path('/');
             else $modalInstance.close({});
+
+            $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
         }, function (err) {
             $scope.message = "Login failed!";
             // $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
