@@ -1,5 +1,5 @@
 'use strict';
-app.controller('indexController', function ($scope, $location, menuApi, authService) {
+app.controller('indexController', function ($scope, $location, dialogs, menuApi, authService, AUTH_EVENTS) {
 	//$scope.navbar = [];
 	//$scope.navbar.push({ href: '#/', title: 'Home', isActive: true });
 	//$scope.navbar.push({ href: '#/claim', title: 'Claim', isActive: false });
@@ -11,28 +11,21 @@ app.controller('indexController', function ($scope, $location, menuApi, authServ
     menuApi.getMenus().then(
         function (data) {
             if (data !== undefined && data != '') $scope.menus = data;
-            // console.log($scope.menus);
         }, function (err) {
 
         });
-
-	//$scope.menus = [
-    //    { href: '#/', title: 'Home', route: '/' },
-    //    { href: '#/customer', title: 'Customer', route: '/customer' },
-    //    { href: '#/claim', title: 'Claim', route: '(/claim)|(/newClaim)', submenus: [] },
-    //    {
-    //        href: '#/request', title: 'Request', route: '/request', submenus: [
-    //            { href: '#/newRequest', title: 'New Request' },
-    //            { href: '#/removeRequest', title: 'Remove Request' }
-    //        ]
-    //    }
-	//];
-	//console.log($scope.menus);
 	
-    $scope.logout = function () {
+    var _logout = function () {
         authService.logOut();
         $location.path('/home');
-    }
+    };
+    var _login = function () {
+        var modal = dialogs.create(
+            '/Scripts/app/views/dialogs/loginForm.html?bust=' + Math.random().toString(36).slice(2),
+            'loginController',
+            {}, { size: 'sm' }
+            );
+    };
 
     // return false if time expire
     var _isAuth = function () {
@@ -45,4 +38,31 @@ app.controller('indexController', function ($scope, $location, menuApi, authServ
     // Get authentication information to show in menu
     $scope.authentication = authService.authentication;
     $scope.isAuth = _isAuth;
-});
+    $scope.login = _login;
+    $scope.logout = _logout;
+
+    // register listener
+    $scope.$on(AUTH_EVENTS.notAuthenticated, _login);
+    $scope.$on(AUTH_EVENTS.notAuthorized, _login);
+    $scope.$on(AUTH_EVENTS.sessionTimeout, _login);
+})
+.controller('loginController', function ($scope, $modalInstance, $location, data, authService, AUTH_EVENTS) {
+    $scope.credentials = { userName: "", password: "" };
+    $scope.message = '';
+
+    // console.log($modalInstance);
+
+    $scope.login = function () {
+        authService.login($scope.credentials).then(function (response) {
+            $scope.message = "Login success!";
+
+            // return to home if login from main
+            if ($location.path().indexOf('login') != -1) $location.path('/');
+            else $modalInstance.close({});
+        }, function (err) {
+            $scope.message = "Login failed!";
+            // $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
+        });
+    };
+})
+;

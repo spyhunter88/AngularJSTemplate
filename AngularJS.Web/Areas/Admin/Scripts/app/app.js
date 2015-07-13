@@ -13,17 +13,25 @@ app.config(function ($routeProvider) {
 
     $routeProvider.when('/menu', {
         controller: 'menuController',
-        templateUrl: '/Areas/Admin/Content/Static/Menu/index.html'
+        templateUrl: '/Areas/Admin/Content/Static/Menu/index.html',
+        resolve: { authenticate: function () { return true; } }
     });
 
     $routeProvider.when("/account", {
         controller: 'accountController',
-        templateUrl: '/Areas/Admin/Content/Static/Account/index.html'
+        templateUrl: '/Areas/Admin/Content/Static/Account/index.html',
+        resolve: { authenticate: function () { return true; } }
     });
 
     $routeProvider.when("/policy", {
         controller: 'policyController',
-        templateUrl: '/Areas/Admin/Content/Static/Policy/index.html'
+        templateUrl: '/Areas/Admin/Content/Static/Policy/index.html',
+        resolve: { authenticate: function () { return true; } }
+    });
+
+    $routeProvider.when("/login", {
+        controller: "loginController",
+        templateUrl: '/Areas/Admin/Content/Static/Login/index.html'
     });
 
     $routeProvider.otherwise({ redirectTo: "/" });

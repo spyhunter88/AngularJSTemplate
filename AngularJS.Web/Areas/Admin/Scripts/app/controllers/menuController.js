@@ -13,8 +13,9 @@ app.controller('menuController', function ($scope, accountApi, menuApi, ngToast)
         $scope.selectedMenu = [];
         menuApi.getAllMenus().then(
             function (data) {
-                console.log(data);
+                // console.log(data);
                 $scope.allMenu = data.nestedArray('children', 'id', 'parentID');
+                console.log($scope.allMenu);
             }, function (err) {
 
             });
@@ -43,12 +44,19 @@ app.controller('menuController', function ($scope, accountApi, menuApi, ngToast)
     };
 
     var _saveMenu = function () {
-
+        var userId = ($scope.type == 'user') ? $scope.selected.user.id : 0;
+        var roleId = ($scope.type == 'role') ? $scope.selected.role.id : 0;
+        menuApi.saveMenus(userId, roleId, $scope.selectedMenu).then(
+            function (data) { },
+            function (err) {
+                ngToast.create('Error while saving Menu: ' + err);
+            }
+        );
     };
 
     var _changeType = function () {
         $scope.selected = {};
-        $scope.selectedId = [];
+        $scope.selectedMenu = [];
     };
 
     $scope.loadMenu = _loadMenu;

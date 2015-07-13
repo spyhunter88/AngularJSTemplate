@@ -16,7 +16,7 @@ app
 	        getMenus: function () {
 	            var deferred = $q.defer();
 
-	            coreSvc.callApi('GET', url.getMenus, null, null).then(
+	            coreSvc.callApi('GET', url.getMenus, { module: null }, null).then(
                     function (data) {
                         // processing menu
                         var menu = [];

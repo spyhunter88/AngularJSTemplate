@@ -22,7 +22,7 @@
                     <li data-match-route="/request"><a href="#/request">Request</a></li>*@
                     <ng-menu-json menus="menus"></ng-menu-json>
                     <li ng-show="isAuth()"><a href="" ng-click="logout()">{{authentication.userName}} | Sign Out</a></li>
-                    <li data-match-route="/login" ng-hide="isAuth()"><a href="#/login">Sign In</a></li>
+                    <li data-match-route="/login" ng-hide="isAuth()"><a href="" ng-click="login()">Sign In</a></li>
                 </ul>
             </div>
         </div>

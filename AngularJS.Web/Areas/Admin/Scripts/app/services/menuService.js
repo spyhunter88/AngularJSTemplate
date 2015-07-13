@@ -11,16 +11,16 @@ app
 	function (url, coreSvc, APP_SETTINGS) {
 	    var api = {
 	        getAllMenus: function() {
-	            return coreSvc.callApi('GET', url.getAllMenu, { module: "" }, null);
+	            return coreSvc.callApi('GET', url.getMenu, { module: "" }, null);
 	        },
 	        getUserMenus: function() {
-	            return coreSvc.callApi('GET', url.getUserMenu, { module: APP_SETTINGS.Module_Name }, null);
+	            return coreSvc.callApi('GET', url.getMenu, { module: APP_SETTINGS.Module_Name }, null);
 	        },
 			getMenus: function(userId, roleId) {
 			    return coreSvc.callApi('GET', url.getMenu, { userId: userId, roleId: roleId }, null);
 			},
-			postMenus: function(menus) {
-			    return coreSvc.callApi('POST', url.postMenu, { userId: userId, roleId: roleId }, menus);
+			saveMenus: function (userId, roleId, ids) {
+			    return coreSvc.callApi('POST', url.postMenu, { userId: userId, roleId: roleId }, ids);
 			}
 		};
 		

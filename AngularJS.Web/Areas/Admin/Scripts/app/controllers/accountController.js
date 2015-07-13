@@ -45,7 +45,7 @@ app.controller('accountController', function ($scope, accountApi, ngToast, dialo
             function (data) {
                 $scope.users = data;
             }, function (err) {
-                ngToast.create('Error while loading user list!');
+                ngToast.error('Error while loading user list!');
             });
     };
     
@@ -61,20 +61,20 @@ app.controller('accountController', function ($scope, accountApi, ngToast, dialo
                             console.log(data);
                             ngToast.create('Success!');
                         }, function(err) {
-                            ngToast.create('Error: ' + err);
+                            ngToast.error('Error: ' + err);
                         });
                 } else {
                     accountApi.saveAccount(data, 'save').then(
                         function(data) {
                             console.log(data);
                         }, function (err) {
-                            ngToast.create('Error: ' + err);
+                            ngToast.error('Error: ' + err);
                         }
                     );
                 }
             }, function (err) {
                 if (err != 'cancelled' && err != 'escape key press' && err != 'backdrop click')
-                    ngToast.create('Error while saving account!');
+                    ngToast.error('Error while saving account!');
             }
         );
     };
@@ -96,6 +96,8 @@ app.controller('accountController', function ($scope, accountApi, ngToast, dialo
     if (data.account === undefined) $scope.account = { id: 0 };
     else $scope.account = data.account;
 
+    $scope.account.newPassword = $scope.account.confirmPassword = '';
+
     $scope.roles = [];
     accountApi.getRoles().then(
         function (data) { $scope.roles = data; }
@@ -107,7 +109,7 @@ app.controller('accountController', function ($scope, accountApi, ngToast, dialo
     }; // end cancel
 
     $scope.save = function () {
-        if ($scope.account.newPassword != $scope.account.confirmPassword) ngToast.create('Password does not match!');
+        if ($scope.account.newPassword != $scope.account.confirmPassword) ngToast.error('Password does not match!');
         else $modalInstance.close($scope.account);
     }; // end save
 

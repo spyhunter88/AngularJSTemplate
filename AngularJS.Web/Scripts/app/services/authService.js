@@ -91,7 +91,7 @@ app.factory('authService', ['$http', '$q', 'localStorageService', function ($htt
         if (authData) {
             var data = "grant_type=refresh_token&refresh_token=" + authData.refreshToken + "&client_id=" + clientId;
             localStorageService.remove('authorizationData');
-            $http.post(serviceBase + 'token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).success(function (response) {
+            $http.post('/token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).success(function (response) {
                 var authorizationData = { token: response.access_token, userName: credentials.userName, expireIn: response.expires_in, refreshToken: response.refresh_token || "", useRefreshTokens: credentials.useRefreshTokens };
                 if (authorizationData.expireIn) {
                     authorizationData.expireTime = moment().add(authorizationData.expireIn, 's');

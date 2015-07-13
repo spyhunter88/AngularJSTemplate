@@ -295,13 +295,10 @@
     <Content Include="Areas\Admin\Content\Static\Policy\index.html" />
     <Content Include="Areas\Admin\Content\Static\Policy\objectEdit.html" />
     <Content Include="Areas\Admin\Scripts\app\app.js" />
-    <Content Include="Areas\Admin\Scripts\app\controllers\indexController.js" />
-    <Content Include="Areas\Admin\Scripts\app\controllers\loginController.js" />
     <Content Include="Areas\Admin\Scripts\app\controllers\menuController.js" />
     <Content Include="Areas\Admin\Scripts\app\controllers\policyController.js" />
     <Content Include="Areas\Admin\Scripts\app\controllers\accountController.js" />
     <Content Include="Areas\Admin\Scripts\app\directives\checkboxGroup.js" />
-    <Content Include="Areas\Admin\Scripts\app\directives\loginDialog.js" />
     <Content Include="Areas\Admin\Scripts\app\directives\propsFilter.js" />
     <Content Include="Areas\Admin\Scripts\app\index.html" />
     <Content Include="Areas\Admin\Scripts\app\services\accountService.js" />
@@ -622,7 +619,6 @@
     <Content Include="Scripts\angular\angular-animate.min.js" />
     <Content Include="Scripts\angular\angular-kendo.js" />
     <Content Include="Scripts\angular\angular-kendo.min.js" />
-    <Content Include="Scripts\angular\angular-local-storage.min.js" />
     <Content Include="Scripts\angular\angular-route.js" />
     <Content Include="Scripts\angular\angular-route.min.js" />
     <Content Include="Scripts\angular\angular-sanitize.js" />
@@ -638,9 +634,7 @@
     <Content Include="Scripts\app\directives\extend-datepicker.js" />
     <Content Include="Scripts\app\directives\form-config.js" />
     <Content Include="Scripts\app\directives\form-disabled.js" />
-    <Content Include="Scripts\app\directives\login-form.html" />
     <Content Include="Areas\Admin\Content\views\menu-tree.html" />
-    <Content Include="Scripts\app\directives\loginDialog.js" />
     <Content Include="Scripts\app\services\categoriesService.js" />
     <Content Include="Scripts\app\services\constants.js" />
     <Content Include="Scripts\app\services\coreService.js" />
@@ -650,6 +644,9 @@
     <Content Include="Scripts\app\services\requestService.js" />
     <Content Include="Scripts\app\services\vendorService.js" />
     <Content Include="Scripts\app\views\claimUpdate.html" />
+    <Content Include="Scripts\app\views\dialogs\allocation.html" />
+    <Content Include="Scripts\app\views\dialogs\loginForm.html" />
+    <Content Include="Scripts\app\views\dialogs\payment.html" />
     <Content Include="Scripts\datatables\angular-datatables.js" />
     <Content Include="Scripts\datatables\angular-datatables.min.js" />
     <Content Include="Scripts\datatables\css\jquery.dataTables.css" />
@@ -1643,7 +1640,6 @@
     <Content Include="Scripts\app\controllers\customerController.js" />
     <Content Include="Scripts\app\controllers\dashBoardController.js" />
     <Content Include="Scripts\app\controllers\indexController.js" />
-    <Content Include="Scripts\app\controllers\loginController.js" />
     <Content Include="Scripts\app\services\authInterceptorService.js" />
     <Content Include="Scripts\app\services\authService.js" />
     <Content Include="Scripts\app\services\claimService.js" />

@@ -9,11 +9,11 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div login-modal="loginDialog" class="modal fade">
+    <div login-modal ng-show="visible" class="modal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header"><h3>Login</h3></div>
-                <form name="loginForm" ng-controller="loginController" ng-submit="login()" novalidate role="form">
+                <form name="loginForm" ng-submit="login()" novalidate role="form">
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="userName">Username:</label>
