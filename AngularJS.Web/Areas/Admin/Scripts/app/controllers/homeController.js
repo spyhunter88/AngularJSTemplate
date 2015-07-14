@@ -19,7 +19,7 @@ app.controller('homeController', function ($rootScope, $scope, $location, AUTH_E
     var _login = function () {
         var modal = dialogs.create(
             '/Scripts/app/views/dialogs/loginForm.html?bust=' + Math.random().toString(36).slice(2),
-            'loginController',
+            'loginModalController',
             {}, { size: 'sm'}
             );
     };
@@ -43,7 +43,7 @@ app.controller('homeController', function ($rootScope, $scope, $location, AUTH_E
     $scope.$on(AUTH_EVENTS.sessionTimeout, _login);
 	// $scope.$on(AUTH_EVENTS.loginSuccess, hideDialog);
 })
-.controller('loginController', function ($scope, $modalInstance, data, authService, AUTH_EVENTS) {
+.controller('loginModalController', function ($scope, $modalInstance, data, $location, authService, AUTH_EVENTS) {
     $scope.credentials = { userName: "", password: "" };
     $scope.message = '';
 

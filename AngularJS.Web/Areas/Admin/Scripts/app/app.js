@@ -49,8 +49,8 @@ app.run(function ($rootScope, AUTH_EVENTS, authService) {
 
     // inject routeChangeStart to open login or error (unauthorize) dialog
     $rootScope.$on('$routeChangeStart', function (event, cur, prev) {
-        // var functionName = next.data.functionName;
-        if (!authService.authentication.isAuth) {
+        var authData = authService.authentication;
+        if (!authData.isAuth || moment(authData.expireTime).diff(moment(), 's') < 0) {
             if (cur.$$route && cur.$$route.resolve && cur.$$route.resolve.authenticate) {
                 // open login dialog first, the 2.0 version will come with check roles and Un Authorized
                 $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);

@@ -24,7 +24,8 @@ app.constant('AUTH_EVENTS', {
     var _authentication = {
         isAuth: false,
         userName: "",
-        useRefreshTokens: false
+        useRefreshTokens: false,
+		expireTime: 0
     };
 
     var _externalAuthData = {
@@ -67,7 +68,8 @@ app.constant('AUTH_EVENTS', {
             _authentication.isAuth = true;
             _authentication.userName = credentials.userName;
             _authentication.useRefreshTokens = credentials.useRefreshTokens;
-            _authentication.expireTime = response.expireTime;
+            _authentication.expireTime = authorizationData.expireTime;
+			_reload();
             deferred.resolve(response);
         }).error(function (err, status) {
             _logOut();
@@ -97,6 +99,7 @@ app.constant('AUTH_EVENTS', {
             _authentication.userName = authData.userName;
             _authentication.useRefreshTokens = authData.useRefreshTokens;
             _authentication.expireTime = authData.expireTime;
+			_reload();
         }
     };
 
@@ -113,6 +116,7 @@ app.constant('AUTH_EVENTS', {
                     authorizationData.expireTime = moment().add(authorizationData.expireIn, 's');
                 }
                 localStorageService.set('authorizationData', authorizationData);
+				_reload();
                 deferred.resolve(response);
             }).error(function (err, status) {
                 _logOut();
@@ -137,8 +141,9 @@ app.constant('AUTH_EVENTS', {
             _authentication.isAuth = true;
             _authentication.userName = response.userName;
             _authentication.useRefreshTokens = false;
-            _authentication.expireTime = response.expireTime;
-
+            _authentication.expireTime = authorizationData.expireTime;
+			_reload();
+			
             deferred.resolve(response);
         }).error(function (err, status) {
             _logOut();
@@ -161,7 +166,8 @@ app.constant('AUTH_EVENTS', {
             _authentication.isAuth = true;
             _authentication.userName = response.userName;
             _authentication.useRefreshTokens = false;
-            _authentication.expireTime = response.expireTime;
+            _authentication.expireTime = authorizationData.expireTime;
+			_reload();
 
             deferred.resolve(response);
         }).error(function (err, status) {
@@ -172,14 +178,11 @@ app.constant('AUTH_EVENTS', {
         return deferred.promise;
     };
 
-    // return false if time expire
-    var _isAuthen = function () {
-        // console.log(_authentication);
-        var xp = moment(_authentication.expireTime).diff(moment(), 's');
-        
-        if (_authentication.isAuth && moment(_authentication.expireTime).diff(moment(), 's') > 0) return true;
-        else return false;
-    };
+	var _reload = function() {
+		if (!_authentication.isAuth) return;
+		
+		if (moment(_authentication.expireTime).diff(moment(), 's') < 0) _authentication.isAuth = false;
+	};
 
     // expose function
     authServiceFactory.saveRegistration = _saveRegistration;
@@ -193,7 +196,7 @@ app.constant('AUTH_EVENTS', {
     authServiceFactory.externalAuthData = _externalAuthData;
     authServiceFactory.registerExternal = _registerExternal;
 
-    authServiceFactory.isAuthen = _isAuthen;
+    authServiceFactory.reload = _reload;
 
     return authServiceFactory;
 }]);
