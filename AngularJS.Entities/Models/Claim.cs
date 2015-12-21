@@ -13,6 +13,7 @@ namespace AngularJS.Entities.Models
             this.Requirements = new List<Requirement>();
             this.Payments = new List<Payment>();
             this.Allocations = new List<Allocation>();
+            this.ClaimDocuments = new List<ClaimDocument>();
         }
 
         public int ClaimID { get; set; }
@@ -64,5 +65,6 @@ namespace AngularJS.Entities.Models
         public virtual ICollection<Requirement> Requirements { get; set; }
         public virtual ICollection<Payment> Payments { get; set; }
         public virtual ICollection<Allocation> Allocations { get; set; }
+        public virtual ICollection<ClaimDocument> ClaimDocuments { get; set; }
     }
 }

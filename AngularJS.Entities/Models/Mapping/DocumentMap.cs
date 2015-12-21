@@ -9,8 +9,8 @@ namespace AngularJS.Entities.Models.Mapping
         {
             this.HasKey(t => t.DocumentID);
 
-            this.Property(t => t.ReferenceName)
-                .HasMaxLength(255);
+            //this.Property(t => t.ReferenceName)
+            //    .HasMaxLength(255);
 
             this.Property(t => t.FileName)
                 .HasMaxLength(255);
@@ -25,10 +25,10 @@ namespace AngularJS.Entities.Models.Mapping
                 .HasMaxLength(255);
 
             // Mapping
-            this.ToTable("Document");
+            this.ToTable("Documents");
             this.Property(t => t.DocumentID).HasColumnName("ID");
             this.Property(t => t.ReferenceID).HasColumnName("ReferenceID");
-            this.Property(t => t.ReferenceName).HasColumnName("ReferenceName");
+            // this.Property(t => t.ReferenceName).HasColumnName("ReferenceName");
             this.Property(t => t.FileName).HasColumnName("FileName");
             this.Property(t => t.FileType).HasColumnName("FileType");
             this.Property(t => t.Description).HasColumnName("Description");

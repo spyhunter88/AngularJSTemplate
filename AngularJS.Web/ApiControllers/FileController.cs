@@ -13,6 +13,7 @@ using System.Web.Http.Description;
 
 namespace AngularJS.Web.Api
 {
+    [AllowAnonymous]
 	[RoutePrefix("api/File")]
 	public class FileController : BaseController
 	{

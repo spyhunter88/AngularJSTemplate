@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using Repository.Pattern.Ef6;
 
 namespace AngularJS.Entities.Models
@@ -9,8 +8,9 @@ namespace AngularJS.Entities.Models
     {
         public Request()
         {
-        //   this.Orders = new List<Order>();
-        //   this.CustomerDemographics = new List<CustomerDemographic>();
+            //   this.Orders = new List<Order>();
+            //   this.CustomerDemographics = new List<CustomerDemographic>();
+            this.RequestDocuments = new List<RequestDocument>();
         }
 		
 		public int RequestID { get; set; }
@@ -34,5 +34,6 @@ namespace AngularJS.Entities.Models
 		public DateTime LastEditTime { get; set; }
 
 		// public virtual Claim Claim { get; set; }
-	}
+        public virtual ICollection<RequestDocument> RequestDocuments { get; set; }
+    }
 }

@@ -95,6 +95,9 @@ namespace AngularJS.Entities.Models
             modelBuilder.Entity<Allocation>().HasRequired<Claim>(s => s.Claim)
                 .WithMany(s => s.Allocations).HasForeignKey(s => s.ClaimID);
 
+            modelBuilder.Entity<ClaimDocument>().HasRequired<Claim>(s => s.Claim)
+                .WithMany(s => s.ClaimDocuments).HasForeignKey(s => s.ClaimID);
+
             // Relationship Payment 0-n Allocation
             // Remove due problem while update PaymentID inside Allocation
             //modelBuilder.Entity<Allocation>()

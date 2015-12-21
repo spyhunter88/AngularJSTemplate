@@ -10,13 +10,20 @@ function ($scope, $filter, $routeParams, $location, claimApi, catApi, fileApi, p
         $scope.claim = { statusID: 0 };
         $scope.options = {};
         $scope.uploadFiles = []; // keep the files while it uploading
-        $scope.tab = { active: 0 };
+        $scope.tab = { 
+            detail: true,
+            payment: false,
+            document: false,
+            comment: false
+        };
         var _init = function () {
-            catApi.getCategories({ type: 'UNIT,PARTICIPANT,PAYMENTMETHOD,PROGRAMTYPE' }).then(function (data) {
+            catApi.getCategories({ type: 'UNIT,PARTICIPANT,PAYMENTMETHOD,PROGRAMTYPE,CURRENCY,DOCUMENTTYPE' }).then(function (data) {
                 $scope.options.units = [];
                 $scope.options.participants = [];
                 $scope.options.paymentMethods = [];
                 $scope.options.programTypes = [];
+                $scope.options.currencies = [];
+                $scope.options.documentTypes = [];
 
                 for (var i = 0; i < data.length; i++) {
                     switch (data[i].type) {
@@ -24,11 +31,13 @@ function ($scope, $filter, $routeParams, $location, claimApi, catApi, fileApi, p
                         case 'PARTICIPANT': $scope.options.participants.push(data[i]); break;
                         case 'PAYMENTMETHOD': $scope.options.paymentMethods.push(data[i]); break;
                         case 'PROGRAMTYPE': $scope.options.programTypes.push(data[i]); break;
+                        case 'CURRENCY': $scope.options.currencies.push(data[i]); break;
+                        case 'DOCUMENTTYPE': $scope.options.documentTypes.push(data[i]); break;
                     }
                 }
 
             }, function (error) {
-                ngToast.create('Error due loading Unit, Participant, PaymentMethod or ProgramType!');
+                ngToast.create('Error due loading Unit, Participant, PaymentMethod, ProgramType or Currency!');
             });
 
             proApi.getProductLines({ type: '' }).then(function (data) {
@@ -58,7 +67,8 @@ function ($scope, $filter, $routeParams, $location, claimApi, catApi, fileApi, p
         $scope.load = function (claimId) {
             claimApi.getClaim(claimId).then(function (data) {
                 $scope.claim = data;
-                $scope.tab.active = $scope.claim.statusID < 15 ? 0 : 1; // Prepare Claim toward
+                $scope.tab.detail = $scope.claim.statusID < 15; // Detail tab active
+                $scope.tab.payment = $scope.claim.statusID >= 15; // Prepare Claim will take Payment and Allocation Tab
                 $scope.objectConfig = data.objectConfig;
                 $scope.objectAction = angular.fromJson(data.objectAction);
                 $scope.actions = {};

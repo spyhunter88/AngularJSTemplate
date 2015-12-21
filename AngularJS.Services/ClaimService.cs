@@ -11,6 +11,7 @@ using System.IO;
 using Omu.ValueInjecter;
 using AngularJS.Services.InjectConfig;
 using AngularJS.Services.Utility;
+using AngularJS.Services.General;
 
 namespace AngularJS.Service
 {
@@ -47,7 +48,7 @@ namespace AngularJS.Service
                                     .SelectPage(page, pageSize, out totalCount)
             );
 
-            Random rand = new Random(100);
+           //  Random rand = new Random(100);
 
             List<ClaimLiteDTO> result = AutoMapper.Mapper.Map<List<Claim>, List<ClaimLiteDTO>>(_claims);
 
@@ -117,6 +118,7 @@ namespace AngularJS.Service
             if (excList.Where(x => String.Equals(x.ObjectField, "Requirements", StringComparison.OrdinalIgnoreCase)).Count() == 0) query.Include(x => x.Requirements);
             if (excList.Where(x => String.Equals(x.ObjectField, "Payments", StringComparison.OrdinalIgnoreCase)).Count() == 0) query.Include(x => x.Payments);
             if (excList.Where(x => String.Equals(x.ObjectField, "Allocations", StringComparison.OrdinalIgnoreCase)).Count() == 0) query.Include(x => x.Allocations);
+            if (excList.Where(x => String.Equals(x.ObjectField, "Documents", StringComparison.OrdinalIgnoreCase)).Count() == 0) query.Include(x => x.ClaimDocuments);
 
             var _claim = (await query.SelectAsync()).FirstOrDefault();
 
@@ -148,6 +150,16 @@ namespace AngularJS.Service
                     .FirstOrDefault();
             }
 
+            foreach (DocumentDTO doc in claim.Documents)
+            {
+                DocumentDTO docDTO = AutoMapper.Mapper.Map<DocumentDTO>(doc);
+                docDTO.UploadUser = _unitOfWorkAsync.Repository<User>().Query(x => x.Id == doc.UploadBy)
+                    .Select(x => x.UserName)
+                    .FirstOrDefault();
+
+                // claim.Documents.Add(docDTO);
+            }
+
             return claim;
         }
 
@@ -160,7 +172,7 @@ namespace AngularJS.Service
         {
             Claim _claim = AutoMapper.Mapper.Map<ClaimDTO, Claim>(claim);
 
-            _claim.StatusID = 1;
+            _claim.StatusID = (short)Status.CLAIM_DRAFT;
 
             _claim.ObjectState = ObjectState.Added;
             foreach (CheckPoint cp in _claim.CheckPoints)
@@ -171,25 +183,24 @@ namespace AngularJS.Service
             {
                 req.ObjectState = ObjectState.Added;
             }
+            foreach (ClaimDocument doc in _claim.ClaimDocuments)
+            {
+                doc.ObjectState = ObjectState.Added;
+            }
 
             _unitOfWorkAsync.RepositoryAsync<Claim>().InsertOrUpdateGraph(_claim);
             int record = _unitOfWorkAsync.SaveChanges();
             int newId = _claim.ClaimID;
 
             // Rename and move documents to Claim's folder
-            string source = uploadPath + "/Temps", dest = uploadPath + "/Claim/" + newId;
+            string source = uploadPath + "/Temps", dest = uploadPath + "/Claims/" + newId;
+            Directory.CreateDirectory(dest);
             foreach (DocumentDTO doc in claim.Documents)
             {
-                Directory.CreateDirectory(dest);
                 File.Move(source + "/" + doc.TempName, dest + "/" + doc.FileName);
-                Document _doc = AutoMapper.Mapper.Map<DocumentDTO, Document>(doc);
-                _doc.ReferenceID = (short) newId;
-                _doc.ReferenceName = "Claim";
-                _doc.ObjectState = ObjectState.Added;
-                _unitOfWorkAsync.Repository<Document>().Insert(_doc);
             }
 
-            record = await _unitOfWorkAsync.SaveChangesAsync();
+            // record = await _unitOfWorkAsync.SaveChangesAsync();
 
             return newId;
         }
@@ -223,6 +234,7 @@ namespace AngularJS.Service
             if (!objectConfig.Contains("requirements")) query.Include(x => x.Requirements);
             if (!objectConfig.Contains("payments")) query.Include(x => x.Payments);
             if (!objectConfig.Contains("allocations")) query.Include(x => x.Allocations);
+            if (!objectConfig.Contains("documents")) query.Include(x => x.ClaimDocuments);
             target = query.Select().FirstOrDefault();
 
             // Inject from DTO to current
@@ -286,6 +298,37 @@ namespace AngularJS.Service
 
                     // Add new of Update
                     aloc.ObjectState = aloc.AllocationID == 0 ? ObjectState.Added : ObjectState.Modified;
+                }
+            }
+
+            // Copy new upload file to Claim's folder
+            // Manual copy Document because Document entity don't use any association with particular entity
+            if (!objectConfig.Contains("documents"))
+            {
+                String dir = uploadPath + "/Claims/" + claim.ClaimID + "/";
+                Directory.CreateDirectory(dir);
+                foreach (DocumentDTO doc in claim.Documents)
+                {
+                    if ((doc.TempName ?? "") != "")
+                    {
+                        File.Move(uploadPath + "/Temps/" + doc.TempName, dir + doc.FileName);
+                    }
+                    doc.ReferenceID = claim.ClaimID;
+                    doc.ReferenceName = "Claim";
+                    doc.UploadTime = DateTime.Now;
+                    doc.UploadBy = userID;
+                }
+
+                target.ClaimDocuments.InjectFrom(_innerei, claim.Documents, "DocumentID", true);
+                var ids = claim.Documents.Select(x => x.DocumentID);
+
+                foreach (Document doc in target.ClaimDocuments)
+                {
+                    // Check for remove
+                    if (!ids.Contains(doc.DocumentID)) { doc.ObjectState = ObjectState.Deleted; continue; }
+
+                    // Add new
+                    doc.ObjectState = doc.DocumentID == 0 ? ObjectState.Added : ObjectState.Modified;
                 }
             }
 

@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System;
+using Microsoft.Practices.Unity;
+using Microsoft.Practices.Unity.Configuration;
+using Repository.Pattern.DataContext;
 using AngularJS.Entities.Models;
+using Repository.Pattern.UnitOfWork;
+using Repository.Pattern.Ef6;
+using Repository.Pattern.Repositories;
 using AngularJS.Service;
 using AngularJS.Services;
-using Microsoft.Practices.Unity;
-using Repository.Pattern.DataContext;
-using Repository.Pattern.Ef6;
-using Repository.Pattern.Ef6.Factories;
-using Repository.Pattern.Repositories;
-using Repository.Pattern.UnitOfWork;
 
-namespace AngularJS.Web
+namespace AngularJS.Web.App_Start
 {
     /// <summary>
     /// Specifies the Unity configuration for the main container.
@@ -47,10 +44,6 @@ namespace AngularJS.Web
 
             container
                 .RegisterType<IDataContextAsync, AngularJSContext>(new PerRequestLifetimeManager())
-                .RegisterType<IRepositoryProvider, RepositoryProvider>(
-                    new PerRequestLifetimeManager(),
-                    new InjectionConstructor(new object[] { new RepositoryFactories() })
-                    )
                 .RegisterType<IUnitOfWorkAsync, UnitOfWork>(new PerRequestLifetimeManager())
                 .RegisterType<IRepositoryAsync<Customer>, Repository<Customer>>()
                 .RegisterType<IRepositoryAsync<Product>, Repository<Product>>()

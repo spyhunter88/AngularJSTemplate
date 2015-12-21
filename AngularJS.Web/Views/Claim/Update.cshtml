@@ -1,4 +1,4 @@
-﻿<style type="text/css">
+<style type="text/css">
     .custom-modal { 
 	    display: block;
     }
@@ -254,7 +254,7 @@
     <!-- ****************************************************************************************************************** -->
 
     <tabset>
-        <tab heading="Details" ng-if="read.checkPoints == null || read.requirements == null">
+        <tab heading="Details" active="tab.detail" ng-if="read.checkPoints == null || read.requirements == null">
             <div class="row">
                 <div class="control-group">
                     <label class="col-sm-2 control-label">Program Content</label>
@@ -269,7 +269,8 @@
                     <label class="col-md-2 control-label">Currency Unit</label>
                     <div class="col-md-4">
                         <label class="control-label" ng-show="read.currencyUnit != null">{{claim.currencyUnit}}</label>
-                        <input type="text" class="form-control input-sm" ng-show="read.currencyUnit == null" ng-model="claim.currencyUnit" name="currencyUnit" />
+                        <!-- <input type="text" class="form-control input-sm" ng-show="read.currencyUnit == null" ng-model="claim.currencyUnit" name="currencyUnit" /> -->
+                        <select class="form-control input-sm" ng-show="read.currencyUnit == null" ng-model="claim.currencyUnit" ng-options="unit.code as unit.value for unit in options.currencies"></select>
                     </div>
                 </div>
                 <div class="control-group">
@@ -490,7 +491,7 @@
 
         <!-- ****************************************************************************************************************** -->
 
-        <tab heading="Payment & Allocation" active="tab.active" ng-if="claim.statusID > 14">
+        <tab heading="Payment & Allocation" active="tab.payment" ng-if="claim.statusID > 14">
             <div class="row">
                 <div class="control-group">
                     <label class="col-sm-2 control-label">Program Content</label>
@@ -505,7 +506,7 @@
                     <label class="col-md-2 control-label">Currency Unit</label>
                     <div class="col-md-4">
                         <label class="control-label" ng-show="read.currencyUnit != null">{{claim.currencyUnit}}</label>
-                        <input type="text" class="form-control input-sm" ng-show="read.currencyUnit == null" ng-model="claim.currencyUnit" name="currencyUnit" />
+                        <select class="form-control input-sm" ng-show="read.currencyUnit == null" ng-model="claim.currencyUnit" ng-options="unit.code as unit.value for unit in options.currencies"></select>
                     </div>
                 </div>
                 <div class="control-group">
@@ -622,7 +623,7 @@
 
         </tab>
 
-        <tab heading="Documents">
+        <tab heading="Documents" active="tab.document">
             <br />
             <button class="btn btn-success" ngf-select ng-model="uploadFiles" ngf-change="fileSelected($files, $event)" multiple="true">
                 Upload
@@ -645,7 +646,8 @@
                         </td>
                         <td>
                             <div class="control-group">
-                                <input type="text" class="form-control input-sm" ng-model="file.fileType" />
+                                <!-- <input type="text" class="form-control input-sm" ng-model="file.fileType" /> -->
+								<select class="form-control input-sm" ng-model="file.fileType" ng-options="unit.code as unit.value for unit in options.documentTypes"></select>
                             </div>
                         </td>
                         <td style="vertical-align: middle">
@@ -663,7 +665,7 @@
             </table>
         </tab>
 
-        <tab heading="Comments" ng-show="claim.claimId != null && claim.claimId != 0">
+        <tab heading="Comments" active="tab.comment" ng-show="claim.claimId != null && claim.claimId != 0">
             <br />
 
         </tab>

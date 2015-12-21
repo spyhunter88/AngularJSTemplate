@@ -15,7 +15,7 @@ namespace AngularJS.Services.DTO
         public string FileType { get; set; }
         public string Description { get; set; }
         public string RelativePath { get; set; }
-        public DateTime? UploadTime { get; set; }
+        public DateTime UploadTime { get; set; }
         public int UploadBy { get; set; }
 
         // Extra
