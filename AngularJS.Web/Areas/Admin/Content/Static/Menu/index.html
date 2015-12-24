@@ -1,44 +1,98 @@
-﻿<h2>Menu Management</h2>
+﻿<tabset>
+    <!-- MENU ITEM -->
+    <tab heading="Menu Item">
+        <div class="row">
+            <h2 ng-cloak>{{title}}</h2>
+            <div>
+                <div class="demo-section">
+                    <div class="k-content" style="width: 100%">
+                        <div kendo-grid="grid"
+                             k-sortable="true"
+                             k-pageable="true"
+                             k-filterable="true"
+                             k-editable="'inline'"
+                             k-selectable="true"
+                             k-toolbar='[ { template: toolbarTemplate } ]'
+                             k-columns='[
+                        { field: "ID", title: "ID", width: "75px" },
+                        { field: "Href", title: "Href" },
+                        { field: "Title", title: "Title" },
+                        { field: "Route", title: "Route" },
+                        { field: "ParentID" },
+                        { field: "Module" } ]'
+                             k-data-source="dataSource"
+                             k-on-data-bound="onDataBound(kendoEvent)"
+                             k-on-change="onChange(kendoEvent)">
+                        </div>
+                        <style scoped>
+                            .toolbar {
+                                padding: 15px;
+                                float: right;
+                            }
+                        </style>
+                    </div>
+                </div>
 
-<div class="row">
-    <div class="btn-group btn-group-justified">
-        <label ng-repeat="tp in types" class="btn btn-primary" ng-model="$parent.type" btn-radio="tp.data" ng-click="changeType()">{{tp.vis}}</label>
-    </div>
-</div><br />
+                <script type="text/x-kendo-template" id="toolbar">
+                    <div>
+                        <div class="toolbar">
+                            <button kendo-button ng-click="edit(this)"><span class="k-icon k-i-tick"></span>Edit</button>
+                            <button kendo-button ng-click="destroy(this)"><span class="k-icon k-i-tick"></span>Delete</button>
+                            <!--<button kendo-button ng-click="details(this)"><span class="k-icon k-i-tick"></span>Edit Details</button>-->
+                        </div>
+                        <div class="toolbar" style="display:none">
+                            <button kendo-button ng-click="save(this)"><span class="k-icon k-i-tick"></span>Save</button>
+                            <button kendo-button ng-click="cancel(this)"><span class="k-icon k-i-tick"></span>Cancel</button>
+                        </div>
+                    </div>
+                </script>
+            </div>
+        </div>
+    </tab>
 
-<div class="row">
-    <div class="col-md-4 col-md-offset-1">
-        <ui-select ng-model="selected.user" theme="bootstrap" on-select="loadMenu($item.id, 0)" ng-disabled="type != 'user'">
-            <ui-select-match placeholder="Select an user to view/edit ...">{{$select.selected.userName}}</ui-select-match>
-            <ui-select-choices repeat="user in users | propsFilter: {userName: $select.search, email: $select.search}">
-                <div ng-bind-html="user.userName | highlight: $select.search"></div>
-                <small>
-                    email: {{user.email}}
-                </small>
-            </ui-select-choices>
-        </ui-select>
-    </div>
+    <!-- MENU CONFIG FOR USER/ROLE -->
+    <tab heading="Menu Config">
+        <div class="row">
+            <div class="btn-group btn-group-justified">
+                <label ng-repeat="tp in types" class="btn btn-primary" ng-model="$parent.type" btn-radio="tp.data" ng-click="changeType()">{{tp.vis}}</label>
+            </div>
+        </div><br />
 
-    <div class="col-md-4 col-md-offset-2">
-        <ui-select ng-model="selected.role" theme="bootstrap" on-select="loadMenu(0, $item.id)" ng-disabled="type != 'role'">
-            <ui-select-match placeholder="Select a role to view/edit ...">{{$select.selected.name}}</ui-select-match>
-            <ui-select-choices repeat="role in roles | propsFilter: {name: $select.search}">
-                <div ng-bind-html="role.name | highlight: $select.search"></div>
-                <small>
-                    description: {{role.description}}
-                </small>
-            </ui-select-choices>
-        </ui-select>
-    </div>
-</div><br />
-    
-<div class="row">
-    <div class="col-md-12">
-        <ng-menu-table menu="allMenu" selected-id="selectedMenu"></ng-menu-table>
-    </div>
-</div><br />
+        <div class="row">
+            <div class="col-md-4 col-md-offset-1">
+                <ui-select ng-model="selected.user" theme="bootstrap" on-select="loadMenu($item.id, 0)" ng-disabled="type != 'user'">
+                    <ui-select-match placeholder="Select an user to view/edit ...">{{$select.selected.userName}}</ui-select-match>
+                    <ui-select-choices repeat="user in users | propsFilter: {userName: $select.search, email: $select.search}">
+                        <div ng-bind-html="user.userName | highlight: $select.search"></div>
+                        <small>
+                            email: {{user.email}}
+                        </small>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
 
-<hr />
-<div class="row">
-    <button class="btn btn-primary" ng-click="saveMenu()" ng-disabled="selected.user == undefined && selected.role == undefined">Save</button>
-</div>
+            <div class="col-md-4 col-md-offset-2">
+                <ui-select ng-model="selected.role" theme="bootstrap" on-select="loadMenu(0, $item.id)" ng-disabled="type != 'role'">
+                    <ui-select-match placeholder="Select a role to view/edit ...">{{$select.selected.name}}</ui-select-match>
+                    <ui-select-choices repeat="role in roles | propsFilter: {name: $select.search}">
+                        <div ng-bind-html="role.name | highlight: $select.search"></div>
+                        <small>
+                            description: {{role.description}}
+                        </small>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div><br />
+
+        <div class="row">
+            <div class="col-md-12">
+                <ng-menu-table menu="allMenu" selected-id="selectedMenu"></ng-menu-table>
+            </div>
+        </div><br />
+
+        <hr />
+        <div class="row">
+            <button class="btn btn-primary" ng-click="saveMenu()" ng-disabled="selected.user == undefined && selected.role == undefined">Save</button>
+        </div>
+    </tab>
+</tabset>

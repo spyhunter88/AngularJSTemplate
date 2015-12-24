@@ -11,11 +11,13 @@ using System.IO;
 using Omu.ValueInjecter;
 using AngularJS.Services.InjectConfig;
 using AngularJS.Services.Utility;
+using Service.Pattern;
+using Repository.Pattern.Repositories;
 
 namespace AngularJS.Service
 {
-	public interface IMenuService
-	{
+	public interface IMenuService: IService<MenuItem>
+    {
 		/// <summary>
 		/// Load MenuItems for each User, include his roles
 		/// to generate Menu
@@ -40,15 +42,22 @@ namespace AngularJS.Service
 	}
 	
 	
-	public class MenuService : IMenuService
+	public class MenuService : Service<MenuItem>, IMenuService
 	{
 		#region Unity injector
 		private readonly IUnitOfWorkAsync _unitOfWorkAsync;
+        private readonly IRepositoryAsync<MenuItem> _repository;
 		
-		public MenuService(IUnitOfWorkAsync unitOfWorkAsync)
+		public MenuService(IUnitOfWorkAsync unitOfWorkAsync, IRepositoryAsync<MenuItem> repository) : base(repository)
         {
             _unitOfWorkAsync = unitOfWorkAsync;
+            _repository = repository;
         }
+
+        //public MenuService(IRepositoryAsync<MenuItem> repository) : base(repository)
+        //{
+        //    _repository = repository;
+        //}
 		#endregion
 		
 		public List<MenuItemDTO> GetMenuItemByUser(int userId, string module = "")

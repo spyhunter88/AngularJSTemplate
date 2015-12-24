@@ -3,11 +3,6 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using AngularJS.Web.Extensions;
 using System.Web.Http.OData.Builder;
-using System.Web.Http.Dispatcher;
-using AngularJS.Web.Helpers;
-using System.Web.Http.OData.Routing.Conventions;
-using System.Web.Http.OData.Routing;
-using System.Collections.Generic;
 
 namespace AngularJS.Web.Areas.Admin
 {
@@ -56,13 +51,12 @@ namespace AngularJS.Web.Areas.Admin
             
             ODataModelBuilder builder = new ODataConventionModelBuilder();
             builder.EntitySet<Entities.Models.Category>(typeof(Entities.Models.Category).Name);
+            builder.EntitySet<Entities.Models.MenuItem>(typeof(Entities.Models.MenuItem).Name);
+            builder.EntitySet<Entities.Models.User>(typeof(Entities.Models.User).Name);
+            builder.EntitySet<Entities.Models.Role>(typeof(Entities.Models.Role).Name);
             var model = builder.GetEdmModel();
-
-            IList<IODataRoutingConvention> routingConventions = ODataRoutingConventions.CreateDefault();
-            routingConventions.Insert(0, new CustomControllerRoutingConvention("Admin"));
+            
             config.Routes.MapODataRoute("Admin_odata", "odata/Admin", model);
-                // new DefaultODataPathHandler(), routingConventions);
-
             config.EnableQuerySupport();
 
             // Add Admin Bundle

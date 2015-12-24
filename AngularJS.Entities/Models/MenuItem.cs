@@ -8,7 +8,7 @@ namespace AngularJS.Entities.Models
 		public MenuItem() 
 		{
 			this.Users = new List<User>();
-            // this.Roles = new List<Role>();
+            this.Roles = new List<Role>();
 		}
 		
         public int ID { get; set; }
