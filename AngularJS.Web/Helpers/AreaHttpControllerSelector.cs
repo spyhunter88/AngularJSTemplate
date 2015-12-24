@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Dispatcher;
+using System.Web.Http.OData.Routing;
 
 namespace AngularJS.Web.Helpers
 {
@@ -38,6 +39,18 @@ namespace AngularJS.Web.Helpers
         public static string GetAreaName(HttpRequestMessage request)
         {
             var data = request.GetRouteData();
+
+            // Customize for select area path in odata
+           if (typeof(ODataRoute).IsAssignableFrom(data.Route.GetType()))
+            {
+                var oData = (ODataRoute)data.Route;
+                if (oData.RoutePrefix.Equals("odata"))
+                {
+                    return "";
+                }
+                var areaName = oData.RoutePrefix.Replace("odata/", "");
+                return areaName;
+            }
 
             if (data.Route.DataTokens == null)
             {

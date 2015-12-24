@@ -29,7 +29,8 @@ namespace AngularJS.Web.Areas.Admin
                     "~/Scripts/angular/angular.min.js",
                     "~/Scripts/angular/angular-route.min.js",
                     "~/Scripts/angular/angular-animate.min.js",
-                    "~/Scripts/angular/angular-sanitize.min.js"
+                    "~/Scripts/angular/angular-sanitize.min.js",
+                    "~/Scripts/kendo/2015.1.408/kendo.angular.min.js"
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/Admin/app").Include(
@@ -40,6 +41,11 @@ namespace AngularJS.Web.Areas.Admin
                     "~/Areas/Admin/Scripts/app/controllers/*.js"
                 ));
 
+            bundles.Add(new ScriptBundle("~/bundles/Admin/kendo").Include(
+                    "~/Scripts/kendo/2015.1.408/kendo.web.min.js",
+                    "~/Scripts/kendo/2015.1.408/kendo.data.odata.min.js"
+                ));
+
             bundles.Add(new StyleBundle("~/Content/Admin/css").Include(
                     "~/Content/misc/bootstrap/css/bootstrap.min.css",
                     "~/Content/site.css",
@@ -48,7 +54,9 @@ namespace AngularJS.Web.Areas.Admin
                     "~/Scripts/ng-misc/angular-dialog-service/dialogs.min.css",
                     "~/Scripts/ng-misc/adapt-strap-2.3.0/adapt-strap.min.css",
                     "~/Scripts/ng-misc/ui-select/select.min.css",
-                    "~/Scripts/ng-misc/my-menu/*.css"
+                    "~/Scripts/ng-misc/my-menu/*.css",
+                    "~/Content/kendo/2015.1.408/kendo.common.min.css",
+                    "~/Content/kendo/2015.1.408/kendo.silver.min.css"
                 ));
         }
     }

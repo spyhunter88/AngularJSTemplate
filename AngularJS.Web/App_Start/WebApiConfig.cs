@@ -5,6 +5,7 @@ using System.Web.Http.Dispatcher;
 using System.Web.Routing;
 using AngularJS.Web.Helpers;
 using Newtonsoft.Json.Serialization;
+using NamespaceControllerSelectorSample;
 
 namespace AngularJS.Web
 {
@@ -15,6 +16,7 @@ namespace AngularJS.Web
             // Web API configuration and services
             config.Services.Replace(typeof(IHttpControllerSelector),
                 new AreaHttpControllerSelector(config));
+                // new NamespaceHttpControllerSelector(config));
 
             // Web API routes
             config.MapHttpAttributeRoutes();

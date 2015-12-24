@@ -1,8 +1,10 @@
-﻿using System;
+﻿using AngularJS.Web.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Dispatcher;
 using System.Web.Http.OData.Builder;
 
 namespace AngularJS.Web
@@ -11,6 +13,9 @@ namespace AngularJS.Web
     {
         public static void Register(HttpConfiguration config)
         {
+            // config.Services.Replace(typeof(IOdataServ))
+            
+
             ODataModelBuilder builder = new ODataConventionModelBuilder();
 
             builder.EntitySet<Entities.Models.Customer>(typeof(Entities.Models.Customer).Name);
@@ -25,7 +30,7 @@ namespace AngularJS.Web
             var productBuilder = builder.EntitySet<Entities.Models.Product>(typeof(Entities.Models.Product).Name);
             productBuilder.EntityType.HasKey(t => t.ProductID);
 
-            builder.EntitySet<Entities.Models.Category>(typeof(Entities.Models.Category).Name);
+            // builder.EntitySet<Entities.Models.Category>(typeof(Entities.Models.Category).Name);
             builder.EntitySet<Entities.Models.Supplier>(typeof(Entities.Models.Supplier).Name);
 
             builder.EntitySet<Entities.Models.Employee>(typeof(Entities.Models.Employee).Name);

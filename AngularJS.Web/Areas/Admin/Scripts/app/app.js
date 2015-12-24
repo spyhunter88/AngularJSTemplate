@@ -1,5 +1,5 @@
-﻿var app = angular.module('adminApp', ['ngRoute', 'ngSanitize', 'ngAnimate', 'LocalStorageModule', 'angular.filter', 'ngToast', 'ui.bootstrap',
-        'adaptv.adaptStrap', 'dialogs.main', 'checklist-model', 'ui.select', 'myMenu']);
+var app = angular.module('adminApp', ['ngRoute', 'ngSanitize', 'ngAnimate', 'LocalStorageModule', 'angular.filter', 'ngToast', 'ui.bootstrap',
+        'adaptv.adaptStrap', 'dialogs.main', 'checklist-model', 'ui.select', 'myMenu', 'kendo.directives']);
 
 app.constant('APP_SETTINGS', {
     Module_Name: 'Admin'
@@ -27,6 +27,12 @@ app.config(function ($routeProvider) {
         controller: 'policyController',
         templateUrl: '/Areas/Admin/Content/Static/Policy/index.html',
         resolve: { authenticate: function () { return true; } }
+    });
+
+    $routeProvider.when("/category", {
+        controller: 'categoryController',
+        templateUrl: '/Areas/Admin/Content/Static/Category/index.html',
+        resolve: { authenticate: function () { return true;} }
     });
 
     $routeProvider.when("/login", {

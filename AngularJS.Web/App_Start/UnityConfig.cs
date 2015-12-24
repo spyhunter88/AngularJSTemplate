@@ -55,12 +55,14 @@ namespace AngularJS.Web.App_Start
                 .RegisterType<IRepositoryAsync<ObjectConfig>, Repository<ObjectConfig>>()
                 .RegisterType<IRepositoryAsync<User>, Repository<User>>()
                 .RegisterType<IRepositoryAsync<ClaimStatus>, Repository<ClaimStatus>>()
+                .RegisterType<IRepositoryAsync<Category>, Repository<Category>>()
 
                 .RegisterType<IMenuService, MenuService>()
                 .RegisterType<IProductService, ProductService>()
                 .RegisterType<ICustomerService, CustomerService>()
                 .RegisterType<IClaimService, ClaimService>()
                 .RegisterType<IObjectConfigService, ObjectConfigService>()
+                .RegisterType<ICategoryService, CategoryService>()
 
                 .RegisterType<IAngularJSStoredProcedures, AngularJSContext>(new PerRequestLifetimeManager())
                 .RegisterType<IStoredProcedureService, StoredProcedureService>();
