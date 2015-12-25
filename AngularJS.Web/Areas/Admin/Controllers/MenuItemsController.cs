@@ -80,6 +80,9 @@ namespace AngularJS.Web.Areas.Admin.Controllers
                 return BadRequest(ModelState);
             }
 
+            // kendo can not send empty when use inline-edit
+            if (menuItem.ParentID == 0) menuItem.ParentID = null;
+
             menuItem.ObjectState = ObjectState.Added;
             _menuService.Insert(menuItem);
 

@@ -14,7 +14,7 @@ app.config(function ($routeProvider) {
     $routeProvider.when('/menu', {
         cache: false,
         controller: 'menuController',
-        templateUrl: '/Areas/Admin/Content/Static/Menu/index.html?bust=12123123',
+        templateUrl: '/Areas/Admin/Content/Static/Menu/index.html',
         resolve: { authenticate: function () { return true; } }
     });
 

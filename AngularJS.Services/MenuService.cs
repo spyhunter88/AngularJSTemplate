@@ -121,10 +121,11 @@ namespace AngularJS.Service
                 if (user == null) return;
 
                 // remove old
-                foreach (MenuItem mi in user.MenuItems)
-                {
-                    mi.ObjectState = ObjectState.Deleted;
-                }
+                //user.MenuItems.Clear();
+                //foreach (MenuItem mi in user.MenuItems)
+                //{
+                //    mi.ObjectState = ObjectState.Deleted;
+                //}
 
                 // add new
                 foreach (MenuItem mi in menuItems)

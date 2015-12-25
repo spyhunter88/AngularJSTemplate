@@ -111,15 +111,17 @@
                     var idx = $scope.selectedId.indexOf(id);
                     if (addOrRemove && idx == -1) $scope.selectedId.push(id);
                     if (!addOrRemove && idx != -1) $scope.selectedId.splice(idx, 1);
+                    console.log($scope.selectedId);
                 };
 
                 $scope.toggleAllCheckboxes = function($event) {
                     var item, selected = $event.target.checked;
+                    if (!selected) $scope.selectedId = [];
                     for (var i = 0, len = $scope.menu.length; i < len; i++) {
                         item = $scope.menu[i];
                         item.selected = selected;
                         if (selected) $scope.selectedId.push(item.id);
-                        else $scope.selectedId = [];
+                        // else $scope.selectedId = [];
                         if (item.children)
                             $scope.$broadcast('changeChildren', item);
                     }

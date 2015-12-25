@@ -4,6 +4,7 @@ app.factory('menuItemModel', function () {
     return kendo.data.Model.define({
         id: "ID",
         fields: {
+            ID: { editable: false },
             Href: { type: "string", nullable: false },
             Title: { type: "string", nullable: false },
             Route: { type: "string" },
@@ -52,9 +53,19 @@ app
 			                    }
 			                }
 			            },
+			            create: {
+			                async: false,
+			                url: url.crudServiceBaseUrl,
+			                dataType: 'json',
+                            beforeSend: function (xhr) {
+                                if (authData) {
+                                    xhr.setRequestHeader("Authorization", 'Bearer ' + authData.token);
+                                }
+                            }
+			            },
 			            update: {
 			                url: function (data) {
-			                    return crudServiceBaseUrl + '(' + data.ID + ')';
+			                    return url.crudServiceBaseUrl + '(' + data.ID + ')';
 			                },
 			                type: 'patch',
 			                dataType: 'json',
@@ -66,7 +77,7 @@ app
 			            },
 			            destroy: {
 			                url: function (data) {
-			                    return crudServiceBaseUrl + '(' + data.ID + ')';
+			                    return url.crudServiceBaseUrl + '(' + data.ID + ')';
 			                },
 			                dataType: 'json',
 			                beforeSend: function (xhr) {

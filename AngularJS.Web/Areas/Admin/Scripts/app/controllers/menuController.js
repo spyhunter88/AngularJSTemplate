@@ -1,74 +1,89 @@
 'use strict';
-app.controller('menuController', 
-        function ($scope, $rootScope, accountApi, menuApi, ngToast) {
-    menuApi.odataService().filter({});
+
+app.controller('menuController', function ($scope, $rootScope, accountApi, menuApi, ngToast) {
 
     /* Menu Item List function */
-    var onClick = function (event, delegate) {
-        var grid = event.grid;
-        var selectedRow = grid.select();
-        var dataItem = grid.dataItem(selectedRow);
+    function _menuGridInit() {
+        var odataService = menuApi.odataService();
+        odataService.filter({});
 
-        if (selectedRow.length > 0) {
-            delegate(grid, selectedRow, dataItem);
-        } else {
-            alert("Please select a row.");
-        }
-    };
+        var onClick = function (event, delegate) {
+            var grid = event.grid;
+            var selectedRow = grid.select();
+            var dataItem = grid.dataItem(selectedRow);
 
-    $scope.title = 'Menu Item List';
-    $scope.toolbarTemplate = kendo.template($('#toolbar').html());
-
-    $scope.save = function (e) {
-        onClick(e, function (grid) {
-            grid.saveRow();
-            $('.toolbar').toggle();
-        });
-    };
-
-    $scope.cancel = function (e) {
-        onClick(e, function (grid) {
-            grid.cancelRow();
-            $('.toolbar').toggle();
-        });
-    };
-
-    $scope.edit = function (e) {
-        onClick(e, function (grid, row) {
-            grid.editRow(row);
-            $('.toolbar').toggle();
-        });
-    };
-
-    $scope.destroy = function (e) {
-        onClick(e, function (grid, row, dataItem) {
-            grid.dataSource.remove(dataItem);
-            grid.dataSource.sync();
-        });
-    };
-
-    $scope.onChange = function (e) {
-        var grid = e.sender;
-        $rootScope.lastSelectedDataItem = grid.dataItem(grid.select());
-    };
-
-    $scope.dataSource = menuApi.odataService;
-
-    $scope.onDataBound = function (e) {
-        if ($rootScope.lastSelectedDataItem == null) {
-            return;
-        }
-
-        var view = this.dataSource.view(); // get all the rows
-
-        for (var i = 0; i < view.length; i++) {
-            if (view[i].ID == $rootScope.lastSelectedDataItem.ID) {
-                var grid = e.sender;
-
-                grid.select(grid.table.find("tr[data-uid='" + view[i].uid + "']"));
-                break;
+            if (selectedRow.length > 0) {
+                delegate(grid, selectedRow, dataItem);
+            } else {
+                alert("Please select a row.");
             }
-        }
+        };
+
+        $scope.title = 'Menu Item List';
+        $scope.toolbarTemplate = kendo.template($('#grid_toolbar').html());
+
+        $scope.add = function (e) {
+            var grid = e.grid;
+            var row = grid.dataSource.add();
+            var menuItem = grid.table.find('tr[data-uid="' + row.uid + '"]');
+            // Set default ID = 0 to EF works
+            row.ID = 0;
+            grid.select(menuItem);
+            grid.editRow(menuItem);
+            $('.toolbar').toggle();
+        };
+
+        $scope.save = function (e) {
+            onClick(e, function (grid) {
+                grid.saveRow();
+                $('.toolbar').toggle();
+            });
+        };
+
+        $scope.cancel = function (e) {
+            onClick(e, function (grid) {
+                grid.cancelRow();
+                $('.toolbar').toggle();
+            });
+        };
+
+        $scope.edit = function (e) {
+            onClick(e, function (grid, row) {
+                grid.editRow(row);
+                $('.toolbar').toggle();
+            });
+        };
+
+        $scope.destroy = function (e) {
+            onClick(e, function (grid, row, dataItem) {
+                grid.dataSource.remove(dataItem);
+                grid.dataSource.sync();
+            });
+        };
+
+        $scope.onChange = function (e) {
+            var grid = e.sender;
+            $rootScope.lastSelectedDataItem = grid.dataItem(grid.select());
+        };
+
+        $scope.dataSource = odataService;
+
+        $scope.onDataBound = function (e) {
+            if ($rootScope.lastSelectedDataItem == null) {
+                return;
+            }
+
+            var view = this.dataSource.view(); // get all the rows
+
+            for (var i = 0; i < view.length; i++) {
+                if (view[i].ID == $rootScope.lastSelectedDataItem.ID) {
+                    var grid = e.sender;
+
+                    grid.select(grid.table.find("tr[data-uid='" + view[i].uid + "']"));
+                    break;
+                }
+            }
+        };
     };
 
     /* Menu config function */
@@ -114,6 +129,7 @@ app.controller('menuController',
     };
 
     var _saveMenu = function () {
+        console.log($scope.selectedMenu);
         var userId = ($scope.type == 'user') ? $scope.selected.user.id : 0;
         var roleId = ($scope.type == 'role') ? $scope.selected.role.id : 0;
         menuApi.saveMenus(userId, roleId, $scope.selectedMenu).then(
@@ -134,5 +150,6 @@ app.controller('menuController',
 
     $scope.changeType = _changeType;
 
+    _menuGridInit();
     _init();
 });
