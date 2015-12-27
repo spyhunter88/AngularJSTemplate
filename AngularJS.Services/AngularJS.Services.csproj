@@ -72,6 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoMapperConfiguration.cs" />
+    <Compile Include="CategoryService.cs" />
     <Compile Include="ClaimService.cs" />
     <Compile Include="CustomerService.cs" />
     <Compile Include="DTO\AllocationDTO.cs" />

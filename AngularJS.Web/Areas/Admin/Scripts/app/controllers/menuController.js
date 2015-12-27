@@ -22,6 +22,12 @@ app.controller('menuController', function ($scope, $rootScope, accountApi, menuA
         $scope.title = 'Menu Item List';
         $scope.toolbarTemplate = kendo.template($('#grid_toolbar').html());
 
+        $scope.refresh = function (e) {
+            var grid = e.grid;
+            grid.dataSource.read();
+            grid.refresh();
+        };
+
         $scope.add = function (e) {
             var grid = e.grid;
             var row = grid.dataSource.add();
@@ -35,7 +41,13 @@ app.controller('menuController', function ($scope, $rootScope, accountApi, menuA
 
         $scope.save = function (e) {
             onClick(e, function (grid) {
+                var dataItem = grid.dataItem(grid.select());
                 grid.saveRow();
+                // this will work if grid.saveRow() is synchronous
+                if (dataItem.ID == 0) {
+                    grid.dataSource.read();
+                    grid.refresh();
+                }
                 $('.toolbar').toggle();
             });
         };

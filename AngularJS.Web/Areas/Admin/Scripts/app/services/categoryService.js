@@ -21,6 +21,16 @@ app.factory('categoriesService', ['categoryModel', 'localStorageService',
         return new kendo.data.DataSource({
             type: 'odata',
             transport: {
+                create: {
+                    async: false,
+                    url: crudServiceBaseUrl,
+                    dataType: "json",
+                    beforeSend: function (xhr) {
+                        if (authData) {
+                            xhr.setRequestHeader("Authorization", 'Bearer ' + authData.token);
+                        }
+                    }
+                },
                 read: {
                     async: false,
                     url: crudServiceBaseUrl,

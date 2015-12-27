@@ -121,11 +121,7 @@ namespace AngularJS.Service
                 if (user == null) return;
 
                 // remove old
-                //user.MenuItems.Clear();
-                //foreach (MenuItem mi in user.MenuItems)
-                //{
-                //    mi.ObjectState = ObjectState.Deleted;
-                //}
+                user.MenuItems.Clear();
 
                 // add new
                 foreach (MenuItem mi in menuItems)
@@ -138,7 +134,23 @@ namespace AngularJS.Service
             }
             else if (roleId != 0)
             {
+                var role = _unitOfWorkAsync.Repository<Role>()
+                        .Query(x => x.Id == roleId)
+                        .Include(x => x.MenuItems)
+                        .Select().FirstOrDefault();
 
+                if (role == null) return;
+
+                // remove old
+                role.MenuItems.Clear();
+
+                // Add 
+                foreach (MenuItem mi in menuItems)
+                {
+                    role.MenuItems.Add(mi);
+                }
+                role.ObjectState = ObjectState.Modified;
+                _unitOfWorkAsync.SaveChanges();
             }
 		}
 

@@ -34,6 +34,11 @@ AngularJSAuthentication.v12.suo
 *.msp
 
 # =========================
+# Files're different on each enviroment
+# =========================
+AngularJS.Web/web.config
+
+# =========================
 # Operating System Files
 # =========================
 

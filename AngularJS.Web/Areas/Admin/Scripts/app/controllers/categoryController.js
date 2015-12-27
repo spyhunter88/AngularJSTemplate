@@ -19,9 +19,31 @@ app.controller('categoryController',
         $scope.title = 'Category List';
         $scope.toolbarTemplate = kendo.template($('#toolbar').html());
 
+        $scope.refresh = function (e) {
+            var grid = e.grid;
+            grid.dataSource.read();
+            grid.refresh();
+        };
+
+        $scope.create = function (e) {
+            var grid = e.grid;
+            var row = grid.dataSource.add();
+            var category = grid.table.find('tr[data-uid="' + row.uid + '"]');
+            // Set default ID = 0 to EF works
+            row.CategoryID = 0;
+            grid.select(category);
+            grid.editRow(category);
+            $('.toolbar').toggle();
+        };
+
         $scope.save = function (e) {
             onClick(e, function (grid) {
+                var category = grid.dataItem(grid.select());
                 grid.saveRow();
+                if (category.CategoryID == 0) {
+                    grid.dataSource.read();
+                    grid.refresh();
+                }
                 $('.toolbar').toggle();
             });
         };
